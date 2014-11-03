@@ -3,8 +3,10 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0.beta2'
-# Use sqlite3 as the database for Active Record
+# Use sqlite3 as the database for Active Record in development
 gem 'sqlite3', group: :development
+# Use mysql in production
+gem 'mysql2', group: :production
 # Use LESS for stylesheets
 gem 'less-rails'
 
@@ -27,12 +29,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # User authentication
 gem 'devise'
 
@@ -40,6 +36,15 @@ gem 'devise'
 gem 'less-rails-bootstrap'
 
 gem 'angular-rails-templates'
+
+# Use unicorn as the app server
+gem 'unicorn', group: :production
+
+# Use Capistrano for deployment
+gem 'capistrano-rails', group: :development
+gem 'capistrano-nginx-unicorn', group: :development
+gem 'capistrano-rbenv', group: :development
+gem 'capistrano-bundler', group: :development
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
