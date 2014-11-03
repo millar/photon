@@ -12,8 +12,15 @@
   .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $location) {
       $routeProvider.
-        when('/', {
+        when('/admin/', {
           templateUrl: 'admin/index.html'
+        }).
+        when('/admin/:path*?', {
+          templateUrl: 'admin/404.html'
+        }).
+        otherwise({
+          templateUrl: 'admin/index.html',
+          controller: 'UserForwardController'
         });
 
       $location.html5Mode(true).hashPrefix('!');
@@ -25,12 +32,16 @@ angular.module('userApp', [
  'templates',
  'ngRoute',
 
- 'adminControllers'
+ 'userControllers'
 ])
  .config(['$routeProvider', '$locationProvider',
    function($routeProvider, $location) {
      $routeProvider.
        when('/', {
+         templateUrl: 'user/index.html'
+       }).
+       when('/admin/:path*?', {
+         controller: 'AdminForwardController',
          templateUrl: 'user/index.html'
        });
 
