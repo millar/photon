@@ -1,0 +1,62 @@
+<div class="full-gradient">
+  <div class="container text-center">
+
+    <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+      <div class="modal show">
+        <div class="embellishment">
+          <a href="/"><i class="octicon octicon-device-camera"></i></a>
+        </div>
+
+        <div class="modal-dialog modal-sm">
+          <div class="alert-holder">
+            <% unless resource.errors.full_messages.length > 0 %>
+            <div class="alert alert-success">
+              You have been invited to join Photon!
+            </div>
+            <% end %>
+
+            <% flash.each do |type, message| %>
+              <div class="alert <%= bootstrap_class_for(type) %>">
+                <%= message %>
+              </div>
+            <% end %>
+
+            <% resource.errors.full_messages.each do |message| %>
+              <div class="alert alert-danger">
+                <%= message %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Choose account password</h4>
+            </div>
+
+            <%= f.hidden_field :invitation_token %>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <p class="form-control-static">
+                  <%= resource.email %>
+                </p>
+              </div>
+
+              <div class="form-group">
+                <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder: "Password" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", placeholder: "Password Confirmation" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.button "Complete Registration", class: "btn btn-primary" %>
+              </div>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    <% end %>
+  </div>
+</div>

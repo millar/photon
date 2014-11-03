@@ -11,3 +11,81 @@
 body {
   padding-top: @navbar-height + 10;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+	display: none !important;
+}
+
+.dark {
+  color: #eee;
+}
+
+.primary-bg {
+  // Styles for items with a background set to @brand-primary
+
+  .dark;
+  .btn-primary {
+    background: transparent;
+    border: 2px solid #eee;
+    color: #eee;
+  }
+}
+
+.hero {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding-top: 60px;
+  padding-bottom: 40px;
+
+  &.hero-inverse-to-dark {
+    #gradient > .vertical(@brand-primary, darken(@brand-primary, 6%));
+
+    .primary-bg;
+  }
+}
+
+.modal-title {
+	font-size: 115%;
+	font-weight: 600;
+}
+
+.modal-content {
+	.form-control {
+		border: none !important;
+		box-shadow: none !important;
+		background: rgba(255,255,255, 0.95);
+	}
+
+	.has-error .form-control {
+		background: @state-danger-bg;
+	}
+}
+
+.modal-header,
+.modal-body,
+.modal-footer {
+	padding: 15px 22px;
+}
+
+.full-gradient {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+  z-index: @zindex-navbar-fixed + 2;
+
+	#gradient > .vertical(#353a43, #292d34);
+}
+
+.embellishment {
+	color: #222 !important;
+	margin-top: 100px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .04);
+	font-weight: 600;
+
+	i {
+		font-size: 32px;
+    color: #222 !important;
+	}
+}

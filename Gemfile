@@ -31,11 +31,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # User authentication
 gem 'devise'
+# User invitation
+gem 'devise_invitable'
 
 # Bootstrap LESS framework
 gem 'less-rails-bootstrap'
 
 gem 'angular-rails-templates'
+
+gem 'mailgun_rails'
 
 # Use unicorn as the app server
 gem 'unicorn', group: :production
