@@ -27,4 +27,4 @@ production:
   socket: /var/run/mysqld/mysqld.sock
   database: photon_production
   username: root
-  password: 
+  password:
