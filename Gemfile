@@ -43,7 +43,7 @@ gem 'mailgun_rails'
 
 gem 'font-awesome-rails'
 
-gem 'rmagick', '2.13.2'
+gem 'rmagick', '2.13.2', require: 'RMagick'
 
 gem 'paperclip', '~> 4.2'
 gem 'exifr'
