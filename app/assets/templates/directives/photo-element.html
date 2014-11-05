@@ -1,0 +1,7 @@
+<div class="background" ng-style="{width: width, height: height}">
+  <div ng-if="labels" class="labels">
+    <span ng-if="!photo.processed" class="label label-warning">NEW</span>
+  </div>
+
+  <img ng-style="{width: width, height: height}" ng-src="{{photo.sizes.medium_640}}">
+</div>

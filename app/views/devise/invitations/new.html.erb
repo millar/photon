@@ -1,12 +1,23 @@
-<h2><%= t "devise.invitations.new.header" %></h2>
+<div class="container text-center">
+  <h2>Invite New Administrator</h2>
+  <p class="text-danger"><strong>Warning:</strong> This user will be able to add, publish and delete photos on the site.</p>
 
-<%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
-  <%= devise_error_messages! %>
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {method: :post, class: "form-horizontal", style: "margin-top: 40px;"} do |f| %>
+    <%= devise_error_messages! %>
 
-<% resource.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
-<% end -%>
+  <% resource.class.invite_key_fields.each do |field| -%>
+    <div class="form-group">
+      <%= f.label field, class: "control-label col-sm-4" %>
+      <div class="col-sm-4">
+        <%= f.text_field field, class: "form-control", placeholder: "Invitee's email address" %></p>
+      </div>
+    </div>
+  <% end -%>
 
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
-<% end %>
+  <div class="form-group">
+    <div class="col-sm-offset-4 col-sm-4 text-center">
+      <%= f.button t("devise.invitations.new.submit_button"), class: "btn btn-primary" %>
+    </div>
+  </div>
+  <% end %>
+</div>

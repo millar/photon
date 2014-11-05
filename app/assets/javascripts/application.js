@@ -17,10 +17,16 @@
 //= require angular-route/angular-route
 //= require angular-resource/angular-resource
 //= require angular-animate/angular-animate
+//= require angular-cookies/angular-cookies
 
 //= require twitter/bootstrap
 
 //= require angular-rails-templates
 //= require_tree ../templates
+
+//= require dropzone/downloads/dropzone
+
+//= require moment/moment
+//= require livestampjs/livestamp
 
 //= require_tree .

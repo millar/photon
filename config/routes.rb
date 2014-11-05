@@ -1,14 +1,26 @@
 Rails.application.routes.draw do
-  devise_for :users, :skip => [:registrations]
-  as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    put 'users' => 'devise/registrations#update', :as => 'user_registration'
+  scope '/api' do
+    namespace :admin do
+      resources :photos do
+        collection do
+          get 'unprocessed', to: 'photos#index', params: {unprocessed: true}
+        end
+      end
+    end
   end
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
+  scope '/admin' do
+    devise_for :users, :skip => [:registrations]
+    as :user do
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+      put 'users' => 'devise/registrations#update', :as => 'user_registration'
+    end
 
-  get 'admin(/*path)', to: 'site#admin'
+    post 'upload', to: 'upload#photos'
+
+    get '(/*path)', to: 'site#admin'
+  end
+
   get '(*path)', to: 'site#user'
 
   # You can have the root of your site routed with "root"

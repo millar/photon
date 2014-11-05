@@ -1,6 +1,10 @@
-<p><%= t("devise.mailer.invitation_instructions.hello", email: @resource.email) %></p>
+<p>Hello there!</p>
 
-<p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %></p>
+<p>
+  Someone has invited you to join <%= root_url %>. If you accept this invitation,
+you will be asked to create an Administrator account on the site. This account
+will allow you to upload photos as well as manage existing photos.
+</p>
 
 <p><%= link_to t("devise.mailer.invitation_instructions.accept"), accept_invitation_url(@resource, :invitation_token => @token) %></p>
 

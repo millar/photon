@@ -1,0 +1,30 @@
+<div class="hero hero-inverse-to-dark">
+  <div class="container text-center">
+    <loading-icon></loading-icon>
+
+    <div ng-if="loaded" class="reveal-animation">
+      <photo-element photo="photo" size="640" labels="true"></photo-element>
+
+      <div class="photo-meta-strip">
+        <h3 class="name" ng-class="{'text-muted': !photo.title}" title="Original filename: {{photo.original_file_name}}">
+          {{photo.title || photo.original_file_name}}
+        </h3>
+
+        <ul class="list-inline">
+          <li ng-if="photo.taken_at">Taken: <span isodate="photo.taken_at"></span></li>
+          <li ng-if="photo.model">Camera: {{photo.model}}</li>
+          <li>{{photo.width}}x{{photo.height}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="loaded">
+  <div class="container text-center">
+    <ul class="list-inline">
+      <li>Uploaded <span isodate="photo.created_at"></span></li>
+      <li>by {{photo.user.username}}</li>
+    </ul>
+  </div>
+</div>

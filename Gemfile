@@ -41,6 +41,13 @@ gem 'angular-rails-templates'
 
 gem 'mailgun_rails'
 
+gem 'font-awesome-rails'
+
+gem 'rmagick', '2.13.2'
+
+gem 'paperclip', '~> 4.2'
+gem 'exifr'
+
 # Use unicorn as the app server
 gem 'unicorn', group: :production
 

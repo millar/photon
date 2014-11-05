@@ -32,7 +32,8 @@
   </head>
   <body ng-app="adminApp">
     <div ng-controller="MainController">
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <% if user_signed_in? %>
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,23 +46,26 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li ng-class="{ active: isActive('/admin/')}"><a href="/admin/">Dashboard</a></li>
+              <li ng-class="{ active: isActive('/admin/photos/')}"><a href="/admin/photos/">Photos</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+              <li ng-class="{ active: isActive('/admin/upload/')}"><a href="/admin/upload/">Upload</a></li>
               <li class="dropdown">
-                <a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.email %> <span class="caret"></span></a>
+                <a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.username %> <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#">View Profile</a></li>
-                  <li><%= link_to('Edit Profile', edit_user_registration_path) %></li>
+                  <li><%= link_to('Edit Profile', edit_user_registration_path, target: "_self") %></li>
+                  <li><%= link_to('Invite New Admin', new_user_invitation_path, target: "_self") %></li>
                   <li class="divider"></li>
-                  <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+                  <li><%= link_to('Logout', destroy_user_session_path, method: :delete, target: "_self") %></li>
                 </ul>
               </li>
-              <li><a href="/">View Site</a></li>
+              <!-- <li><a href="/" target="_self">View Site</a></li> -->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
+      <% end %>
 
       <div class="container alert-holder">
         <% flash.each do |type, message| %>
@@ -72,7 +76,8 @@
         <% end %>
       </div>
 
-      <%= yield %>
+      <div ng-view></div>
+      <div id="yield"><%= yield %></div>
     </div>
   </body>
 </html>

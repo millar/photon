@@ -1,0 +1,17 @@
+<loading-icon></loading-icon>
+
+<div class="container reveal-animation" ng-if="loaded">
+
+  <div class="text-center">
+    <h1>All Photos</h1>
+    <p class="lead">View all photos stored in system.</p>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2 img-preview" ng-repeat="photo in photos">
+      <photo-square photo="photo" href="'/admin/photos/' + photo.id">
+        <div class="caption">{{photo.title || photo.original_file_name}}</div>
+      </photo-square>
+    </div>
+  </div>
+</div>
