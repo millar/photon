@@ -78,6 +78,14 @@
 
       <div ng-view></div>
       <div id="yield"><%= yield %></div>
+
+      <script type="text/javascript">
+        <% if user_signed_in? %>
+        window.$adminApp.current_user = <%= current_user.to_json.html_safe %>;
+        <% else %>
+        window.$adminApp.current_user = null;
+        <% end %>
+      </script>
     </div>
   </body>
 </html>

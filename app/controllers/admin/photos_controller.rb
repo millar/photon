@@ -15,6 +15,18 @@ class Admin::PhotosController < ApplicationController
     @photo = Photo.find(params[:id])
   end
 
-  def edit
+  def update
+    @photo = Photo.find(params[:id])
+    @photo.processed = true
+
+    if @photo.update(photo_params)
+      render action: :show
+    end
+  end
+
+  protected
+
+  def photo_params
+    params.permit(:title, :description, :slug)
   end
 end

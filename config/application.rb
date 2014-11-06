@@ -31,5 +31,9 @@ module Photon
       api_key: 'key-a0ad6409f0d186af7b5b67148cbf741f',
       domain: 'millar.io'
     }
+
+    # be sure to have the adapter gem in your Gemfile and follow
+    # the adapter specific installation and deployment instructions
+    config.active_job.queue_adapter = :resque
   end
 end

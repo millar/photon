@@ -1,0 +1,11 @@
+<loading-icon></loading-icon>
+
+<div class="container reveal-animation" ng-if="loaded">
+
+  <div class="text-center">
+    <h1>Unpublished Uploads</h1>
+    <p>These photos have not yet been categorized since being uploaded.</p>
+  </div>
+
+  <ng-include src="'admin/photos/_list.html'" onload="photos = photos"></ng-include>
+</div>

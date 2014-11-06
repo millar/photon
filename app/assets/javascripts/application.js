@@ -29,4 +29,7 @@
 //= require moment/moment
 //= require livestampjs/livestamp
 
+//= require app
+//= require controllers
+
 //= require_tree .

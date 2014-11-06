@@ -1,5 +1,5 @@
 <div class="container text-center">
-  <h2>Upload Photos</h2>
+  <h1>Upload Photos</h1>
   <p class="lead">Photos will not be visible to viewers until published later.</p>
 
   <form action="/admin/upload" method="post" class="dropzone" id="photo-uploader">
@@ -7,4 +7,13 @@
       <input name="photo[original]" type="file" multiple />
     </div>
   </form>
+
+  <div ng-if="started && !loaded">
+    <p><i class="fa fa-circle-o-notch fa-spin"></i></p>
+    <p>Uploading photos (<span id="upload-percentage">0</span>%)</p>
+  </div>
+
+  <p class="view-uploaded reveal-animation" ng-if="loaded && started">
+    <a href="/admin/photos/uploaded" class="btn btn-primary">Manage Uploaded Photos</a>
+  </p>
 </div>

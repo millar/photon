@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0.beta2'
+gem 'rails', '4.2.0.beta4'
 # Use sqlite3 as the database for Active Record in development
 gem 'sqlite3', group: :development
 # Use mysql in production
@@ -44,9 +44,10 @@ gem 'mailgun_rails'
 gem 'font-awesome-rails'
 
 gem 'rmagick', '2.13.2', require: 'RMagick'
-
 gem 'paperclip', '~> 4.2'
+gem 'delayed_paperclip'
 gem 'exifr'
+gem "resque", "~>1"
 
 # Use unicorn as the app server
 gem 'unicorn', group: :production

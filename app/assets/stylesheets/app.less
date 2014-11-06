@@ -5,7 +5,7 @@
 @import "variables";
 
 .navbar-brand {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 body {
@@ -38,7 +38,7 @@ body {
   padding-bottom: 40px;
 
   &.hero-inverse-to-dark {
-    #gradient > .vertical(@brand-primary, darken(@brand-primary, 6%));
+    #gradient > .vertical(#353a43, darken(#353a43, 6%));
 
     .primary-bg;
   }
@@ -121,6 +121,7 @@ footer {
   border: 3px dashed #ddd;
   background-color: transparent;
   margin-top: 30px;
+  margin-bottom: 30px;
 
   .dz-preview {
     padding: 0;
@@ -167,12 +168,16 @@ footer {
 }
 
 photo-square {
+  display: block;
+
   a.background, .background {
     display: block;
     box-shadow: 0 0 10px 2px rgba(0,0,0, .07);
     border-radius: @border-radius-base;
     overflow: hidden;
     position: relative;
+    margin-left: auto;
+    margin-right: 0;
   }
 
   .inside {
@@ -196,6 +201,7 @@ photo-square {
 }
 
 photo-element {
+  display: block;
   margin-bottom: 20px;
 
   .background {
@@ -235,6 +241,10 @@ photo-element {
   }
 }
 
+.fade-op {
+  transition: opacity 0.2s linear;
+}
+
 .reveal-animation.ng-enter {
   -webkit-animation: enter_sequence 0.2s linear; /* Safari/Chrome */
   animation: enter_sequence 0.2s linear; /* IE10+ and Future Browsers */
@@ -246,4 +256,8 @@ photo-element {
 @keyframes enter_sequence {
   from { opacity:0; }
   to { opacity:1; }
+}
+
+.separated {
+  margin-top: 40px;
 }

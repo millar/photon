@@ -2,7 +2,7 @@
 
 /* Admin Controllers */
 
-angular.module('adminControllers', [])
+window.$adminApp.controllers = angular.module('adminControllers', [])
   .controller('MainController', ['$scope', '$location',
     function($scope, $location) {
 
@@ -15,25 +15,12 @@ angular.module('adminControllers', [])
         $scope.loaded = true;
       }
     }])
-  .controller('PhotosIndexController', ['$scope', 'Photo',
-    function($scope, Photo) {
-      $scope.loaded = false;
-
-      $scope.photos = Photo.query(function(photos){
-        $scope.loaded = true;
-      });
-    }])
-  .controller('PhotosShowController', ['$scope', '$routeParams', 'Photo',
-    function($scope, $routeParams, Photo) {
-      $scope.loaded = false;
-
-      $scope.photo = Photo.get({id: $routeParams.id}, function(photo){
-        $scope.loaded = true;
-      });
-    }])
   .controller('UploadController', ['$scope', '$cookies',
     function($scope, $cookies) {
-      $('#photo-uploader').dropzone({
+      $scope.loaded = true;
+      $scope.started = false;
+
+      $scope.dropzone = new Dropzone('#photo-uploader', {
         headers: {
           'X-CSRF-Token': $cookies['XSRF-TOKEN']
         },
@@ -42,7 +29,22 @@ angular.module('adminControllers', [])
 
         thumbnailWidth: 150,
         thumbnailHeight: 150,
+
+        parallelUploads: 1
       });
+
+      $scope.dropzone.on('addedfile', function(){
+        $scope.started = true;
+        $scope.loaded = false;
+      })
+
+      $scope.dropzone.on('queuecomplete', function(){
+        $scope.loaded = true;
+      })
+
+      $scope.dropzone.on('totaluploadprogress', function(percent){
+        $('#upload-percentage').text((percent + "").split('.')[0]);
+      })
     }]);
 
 

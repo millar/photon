@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105140422) do
+ActiveRecord::Schema.define(version: 20141106223103) do
+
+  create_table "album_photos", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "position"
+    t.integer  "photo_id"
+    t.integer  "album_id"
+    t.datetime "published_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "albums", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "published_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "slug"
+  end
 
 # Could not dump table "photos" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass

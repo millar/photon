@@ -6,15 +6,23 @@ angular.module('directives', [])
   })
   .directive('photoSquare', function(){
     function link(scope, element, attrs){
-      scope.size = $(element).parent().width();
+      $el = $(element);
+      if (!scope.size) scope.size = $el.parent().width();
 
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
-        $(element).find('.background')
+        $el.find('.background')
           .css(
             "background-image",
             "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
           )
       }
+
+      $el.find('.image')
+        .css('opacity', 0)
+        .on('load', function(){
+          this.className += " fade-op"
+          this.style.opacity = 1;
+        })
     }
 
     return {
@@ -22,7 +30,8 @@ angular.module('directives', [])
       scope: {
         photo: '=',
         caption: '=',
-        href: '='
+        href: '=',
+        size: '=?'
       },
       transclude: true,
       restrict: 'E',

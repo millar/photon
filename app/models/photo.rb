@@ -29,12 +29,21 @@ class Photo < ActiveRecord::Base
   validates_attachment_content_type :original, :content_type => /\Aimage\/.*\Z/
   validates :original, :attachment_presence => true
 
+  process_in_background :original
+
   belongs_to :user
+
+  has_many :album_photos
+  has_many :albums, through: :album_photos
 
   before_save :save_geometry
 
-  after_save :save_exif
-  after_save :save_averages
+  after_save :process
+
+  def process
+    self.save_averages
+    self.save_exif
+  end
 
   def save_geometry
     if self.width == nil

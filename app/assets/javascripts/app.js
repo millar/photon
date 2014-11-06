@@ -3,6 +3,8 @@
  *
  */
 
+window.$adminApp = {current_user: null};
+
  angular.module('adminApp', [
   'templates',
   'ngRoute',
@@ -14,9 +16,17 @@
   'adminControllers',
   'adminServices'
  ])
-  .config(['$routeProvider', '$locationProvider',
-    function($routeProvider, $location) {
+  .config(['$routeProvider', '$locationProvider', '$httpProvider',
+    function($routeProvider, $location, $httpProvider) {
       $routeProvider.
+        when('/admin/photos/uploaded', {
+          controller: 'PhotosUploadedController',
+          templateUrl: 'admin/photos/uploaded.html'
+        }).
+        when('/admin/photos/:id/edit', {
+          controller: 'PhotosEditController',
+          templateUrl: 'admin/photos/edit.html'
+        }).
         when('/admin/photos/:id', {
           controller: 'PhotosShowController',
           templateUrl: 'admin/photos/show.html'
@@ -38,11 +48,14 @@
         });
 
       $location.html5Mode(true).hashPrefix('!');
+
+      $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
     }
   ])
   .run(['$rootScope',
     function($rootScope){
       $rootScope.changes = 0;
+      $rootScope.current_user = window.$adminApp.current_user;
 
       $rootScope.$on('$locationChangeStart', function(){
         if ($rootScope.changes) $('#yield').remove();
