@@ -2,10 +2,14 @@
 
 <div class="container reveal-animation" ng-if="loaded">
 
-  <div class="text-center">
-    <h1>All Photos</h1>
-    <p class="lead">View all photos stored in system.</p>
-  </div>
+  <h1>Manage Albums</h1>
 
-  <ng-include src="'admin/photos/_list.html'" onload="photos = photos"></ng-include>
+  <div class="row">
+    <div class="col-md-8">
+      <ng-include src="'admin/albums/_list.html'" onload="albums = albums"></ng-include>
+    </div>
+    <div class="col-md-4">
+      <a href="/admin/albums/new" class="btn btn-primary">Create new album</a>
+    </div>
+  </div>
 </div>

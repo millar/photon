@@ -19,6 +19,24 @@ window.$adminApp = {current_user: null};
   .config(['$routeProvider', '$locationProvider', '$httpProvider',
     function($routeProvider, $location, $httpProvider) {
       $routeProvider.
+        when('/admin/albums/new', {
+          controller: 'AlbumsNewController',
+          templateUrl: 'admin/albums/new.html'
+        }).
+        when('/admin/albums/:id/edit', {
+          controller: 'AlbumsEditController',
+          templateUrl: 'admin/albums/edit.html'
+        }).
+        when('/admin/albums/:id', {
+          controller: 'AlbumsShowController',
+          templateUrl: 'admin/albums/show.html'
+        }).
+        when('/admin/albums', {
+          controller: 'AlbumsIndexController',
+          templateUrl: 'admin/albums/index.html'
+        }).
+
+
         when('/admin/photos/uploaded', {
           controller: 'PhotosUploadedController',
           templateUrl: 'admin/photos/uploaded.html'
@@ -35,10 +53,14 @@ window.$adminApp = {current_user: null};
           controller: 'PhotosIndexController',
           templateUrl: 'admin/photos/index.html'
         }).
+
+
         when('/admin/upload', {
           controller: 'UploadController',
           templateUrl: 'admin/upload.html'
         }).
+
+
         when('/admin/', {
           templateUrl: 'admin/index.html'
         }).

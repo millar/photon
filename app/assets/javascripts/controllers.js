@@ -5,7 +5,9 @@
 window.$adminApp.controllers = angular.module('adminControllers', [])
   .controller('MainController', ['$scope', '$location',
     function($scope, $location) {
-
+      $scope.isActive = function (viewLocation) {
+        return $location.path().match(viewLocation);
+	    };
     }])
   .controller('UserForwardController', ['$scope', '$location', '$rootScope',
     function($scope, $location, $rootScope) {

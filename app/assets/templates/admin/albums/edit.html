@@ -3,16 +3,16 @@
 <div class="container reveal-animation separated" ng-if="loaded">
   <div class="row">
     <div class="col-md-3 img-preview">
-      <photo-square class="text-right" photo="photo" href="'/admin/photos/' + photo.id" size="75"></photo-square>
+      <album-square class="text-right" album="album" href="'/admin/albums/' + album.id" size="75"></album-square>
     </div>
     <div class="col-md-6">
-      <h2 style="margin-top: 0;" ng-class="{'text-muted': !photo.title}">{{photo.title || photo.original_file_name}}</h2>
+      <h2 style="margin-top: 0;" ng-class="{'text-muted': !album.title}">{{album.title || album.original_file_name}}</h2>
       <ul class="list-inline">
-        <li>Uploaded <span isodate="photo.created_at"></span></li>
+        <li>Uploaded <span isodate="album.created_at"></span></li>
         <li>
           by
-          <span ng-if="photo.user.id == current_user.id">you</span>
-          <span ng-if="photo.user.id != current_user.id">{{photo.user.username}}</span>
+          <span ng-if="album.user.id == current_user.id">you</span>
+          <span ng-if="album.user.id != current_user.id">{{album.user.username}}</span>
         </li>
       </ul>
     </div>
@@ -23,20 +23,20 @@
     <div class="form-group">
       <label class="control-label col-sm-3" for="title">Title</label>
       <div class="col-sm-6">
-        <input type="text" ng-model="photo.title" class="form-control">
+        <input type="text" ng-model="album.title" class="form-control">
       </div>
     </div>
 
     <div class="form-group">
       <label class="control-label col-sm-3" for="title">Description</label>
       <div class="col-sm-6">
-        <textarea ng-model="photo.description" class="form-control"></textarea>
+        <textarea ng-model="album.description" class="form-control"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <div class="col-sm-6 col-sm-offset-3">
-        <button type="submit" class="btn btn-primary">Update Photo</button>
+        <button type="submit" class="btn btn-primary">Update album</button>
       </div>
     </div>
   </form>

@@ -19,6 +19,10 @@ window.$adminApp.controllers
         $scope.loaded = true;
       });
     }])
+  .controller('AlbumsNewController', ['$scope', 'Album',
+    function($scope, Album) {
+      $scope.album = new Album();
+    }])
   .controller('AlbumsEditController', ['$scope', '$location', '$routeParams', 'Album',
     function($scope, $location, $routeParams, Album) {
       $scope.loaded = false;

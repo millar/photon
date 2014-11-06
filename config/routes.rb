@@ -1,18 +1,8 @@
 Rails.application.routes.draw do
-  namespace :admin do
-  get 'album/index'
-  end
-
-  namespace :admin do
-  get 'album/show'
-  end
-
-  get 'album/index'
-
-  get 'album/show'
-
   scope '/api' do
     namespace :admin do
+      resources :albums
+
       resources :photos do
         collection do
           get 'unprocessed', to: 'photos#index', params: {unprocessed: true}

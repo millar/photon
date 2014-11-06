@@ -8,4 +8,10 @@ angular.module('adminServices', ['ngResource'])
       return $resource('/api/admin/photos/:id.json', {}, {
         'update': { params: {id:'@id'}, method:'PUT' }
       });
+    }])
+  .factory('Album', ['$resource',
+    function($resource){
+      return $resource('/api/admin/albums/:id.json', {}, {
+        'update': { params: {id:'@id'}, method:'PUT' }
+      });
     }]);
