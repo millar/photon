@@ -1,9 +1,9 @@
 <loading-icon></loading-icon>
 
 <div ng-if="loaded" class="reveal-animation">
-  <div class="hero hero-inverse-to-dark">
+  <div class="hero hero-inverse-to-dark text-center">
     <div class="container">
-      <h3 style="margin-top: 0;">{{album.title}}</h3>
+      <h2 style="margin-top: 0;">{{album.title}}</h2>
       <ul class="list-inline">
         <li>Created <span isodate="album.created_at"></span></li>
         <li>by {{album.user.username}}</li>
@@ -14,6 +14,32 @@
       </div>
     </div>
   </div>
+
+  <div class="meta-row">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="list-inline" style="margin: 0; line-height: 33px">
+            <li>
+              <a class="text-default" ng-href="/admin/albums/{{album.id}}">
+                <i class="fa fa-photo"></i>
+                <strong>{{album.photo_count}}</strong>
+
+                <ng-pluralize count="album.photo_count" when="{
+                  '1': 'photo',
+                  'other': 'photos'
+                }"></ng-pluralize>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-right">
+          <a class="btn btn-default btn-sm" ng-href="/admin/albums/{{album.id}}/edit">Edit Album Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="container text-center">
 

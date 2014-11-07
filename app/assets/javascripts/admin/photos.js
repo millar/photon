@@ -19,8 +19,8 @@ window.$adminApp.controllers
         $scope.loaded = true;
       });
     }])
-  .controller('PhotosEditController', ['$scope', '$location', '$routeParams', 'Photo',
-    function($scope, $location, $routeParams, Photo) {
+  .controller('PhotosEditController', ['$scope', '$location', '$routeParams', 'Photo', 'Album',
+    function($scope, $location, $routeParams, Photo, Album) {
       $scope.loaded = false;
 
       $scope.submit = function(){
@@ -34,6 +34,17 @@ window.$adminApp.controllers
       $scope.photo = Photo.get({id: $routeParams.id}, function(photo){
         $scope.loaded = true;
       });
+
+      $scope.albumsLoaded = false;
+      $scope.loadAlbums = function(){
+        $scope.albums = Album.query(function(albums){
+          $scope.albumsLoaded = true;
+        });
+      }
+
+      $scope.addToAlbum = function(albumId){
+        
+      }
     }])
   .controller('PhotosUploadedController', ['$scope', '$routeParams', 'Photo',
     function($scope, $routeParams, Photo) {

@@ -20,11 +20,18 @@
   </div>
 </div>
 
-<div ng-if="loaded">
-  <div class="container text-center">
-    <ul class="list-inline">
-      <li>Uploaded <span isodate="photo.created_at"></span></li>
-      <li>by {{photo.user.username}}</li>
-    </ul>
+<div ng-if="loaded" class="meta-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="list-inline" style="margin: 0; line-height: 33px">
+          <li>Uploaded <span isodate="photo.created_at"></span></li>
+          <li>by {{photo.user.username}}</li>
+        </ul>
+      </div>
+      <div class="col-md-6 text-right">
+        <a class="btn btn-default btn-sm" ng-href="/admin/photos/{{photo.id}}/edit">Edit Photo Details</a>
+      </div>
+    </div>
   </div>
 </div>

@@ -8,6 +8,9 @@ window.$adminApp.controllers = angular.module('adminControllers', [])
       $scope.isActive = function (viewLocation) {
         return $location.path().match(viewLocation);
 	    };
+      $scope.isFragment = function (viewLocation) {
+        return $location.hash().match(viewLocation);
+      };
     }])
   .controller('UserForwardController', ['$scope', '$location', '$rootScope',
     function($scope, $location, $rootScope) {

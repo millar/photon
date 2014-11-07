@@ -1,7 +1,7 @@
 <loading-icon></loading-icon>
 
-<div class="container reveal-animation separated" ng-if="loaded">
-  <div class="row">
+<div class="container reveal-animation" ng-if="loaded">
+  <div class="row separated">
     <div class="col-md-3 img-preview">
       <photo-square class="text-right" photo="photo" href="'/admin/photos/' + photo.id" size="75"></photo-square>
     </div>
@@ -41,4 +41,39 @@
     </div>
   </form>
 
+  <div class="row separated">
+    <div class="col-md-6 col-md-offset-3">
+      <h4>
+        Featured in
+      </h4>
+      <div></div>
+      <p ng-if="!photo.albums.length" class="text-muted">No albums</p>
+      <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addAlbumModal" ng-click="loadAlbums()">Add to album</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="addAlbumModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add to album</h4>
+      </div>
+      <loading-icon loaded="albumsLoaded">
+        <table class="table table-modal" ng-if="albumsLoaded">
+          <tr>
+            <th>Title</th>
+          </tr>
+          <tr ng-repeat="album in albums">
+            <td><a ng-click="addToAlbum(album.id)">{{album.title}}</a></td>
+          </tr>
+        </table>
+      </loading-icon>
+      <div class="modal-footer text-left">
+        <small>Click on album to add this photograph</small>
+      </div>
+    </div>
+  </div>
 </div>

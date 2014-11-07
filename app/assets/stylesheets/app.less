@@ -67,6 +67,10 @@ body {
 	padding: 15px 22px;
 }
 
+.modal-backdrop {
+  z-index: 1039 !important;
+}
+
 .full-gradient {
 	position: fixed;
 	height: 100%;
@@ -286,4 +290,107 @@ photo-element {
 			padding: 4px 16px !important;
 		}
 	}
+}
+
+.meta-row {
+  background: #eee;
+  margin-top: -10px;
+  padding: 20px 0;
+}
+
+#subnav {
+  height: 55px;
+}
+
+.subnav-nav {
+	display:inline-block;
+
+	.nav;
+
+	> li {
+	    float: left;
+	    display: inline;
+
+	    // Links rendered as pills
+	    > a {
+	      padding: 0 5px;
+        line-height: 55px;
+	      margin: 0 10px;
+	      font-weight: 400;
+	      color: #777;
+	      float: left;
+
+        strong {
+          color: #333;
+        }
+
+        i {
+          color: #777;
+          // padding-right: 5px;
+        }
+
+	      &::after {
+	      	z-index: 10;
+    		border-bottom: 2px solid @brand-primary;
+    		width: 100%;
+    		bottom: -1px;
+    		left: 0;
+    		position: absolute;
+    		content: " ";
+	      	opacity: 0;
+
+	      	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+			    transition: opacity 0.3s, transform 0.3s;
+	      }
+
+	      &:hover,
+		  &:focus {
+		    text-decoration: none;
+		    background-color: inherit;
+		  }
+	    }
+	    + li {
+	      margin-left: 2px;
+	    }
+
+	    &:first-child {
+	    	margin-left: -15px;
+	    }
+
+	    // Active state
+	    &.active > a {
+	    	&::after {
+	    		opacity: 0.55;
+	    	}
+
+	      &,
+	      &:hover,
+	      &:focus {
+	      	color: #444;
+	      }
+	    }
+  	}
+}
+
+.text-default {
+  color: @text-color !important;
+  text-decoration: none !important;
+}
+
+.table-modal {
+  tr {
+    td,th {
+      &:first-child {
+        padding-left: 22px;
+      }
+
+      &:last-child {
+        padding-right: 22px;
+      }
+    }
+  }
+}
+
+a[ng-click] {
+  cursor: pointer;
 }

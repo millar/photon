@@ -1,7 +1,19 @@
 angular.module('directives', [])
   .directive('loadingIcon', function() {
+    function link(scope){
+      if (scope.loaded == undefined){
+        scope.loaded = true;
+      }
+    }
+
     return {
-      template: '<div ng-if="!loaded" class="text-center"><span class="fa fa-circle-o-notch fa-spin text-muted"></span></div>'
+      template: '<div ng-if="!loaded || !$parent.loaded" class="text-center"><span class="fa fa-circle-o-notch fa-spin text-muted"></span></div>' +
+                '<div ng-if="loaded && $parent.loaded" ng-transclude></div>',
+      scope: {
+        loaded: '=?'
+      },
+      link: link,
+      transclude: true
     };
   })
   .directive('photoSquare', function(){

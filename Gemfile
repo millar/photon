@@ -57,6 +57,7 @@ gem 'capistrano-rails', group: :development
 gem 'capistrano-nginx-unicorn', group: :development
 gem 'capistrano-rbenv', group: :development
 gem 'capistrano-bundler', group: :development
+gem "capistrano-resque", "~> 0.2.1", group: :development
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console

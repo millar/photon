@@ -14,4 +14,10 @@ angular.module('adminServices', ['ngResource'])
       return $resource('/api/admin/albums/:id.json', {}, {
         'update': { params: {id:'@id'}, method:'PUT' }
       });
+    }])
+  .factory('AlbumPhoto', ['$resource',
+    function($resource){
+      return $resource('/api/admin/albums/:albumId/photos/:id.json', {}, {
+        'update': { params: {id:'@id'}, method:'PUT' }
+      });
     }]);
