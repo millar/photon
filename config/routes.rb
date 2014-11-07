@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get '(/*path)', to: 'site#admin'
   end
 
+  get 'photo-img/(*path)', to: 'site#not_found'
   get '(*path)', to: 'site#user'
 
   # You can have the root of your site routed with "root"

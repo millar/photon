@@ -1,15 +1,18 @@
-<loading-icon></loading-icon>
-
-<div class="container reveal-animation" ng-if="loaded">
-
-  <h1>Manage Albums</h1>
-
-  <div class="row">
-    <div class="col-md-8">
-      <ng-include src="'admin/albums/_list.html'" onload="albums = albums"></ng-include>
-    </div>
-    <div class="col-md-4">
-      <a href="/admin/albums/new" class="btn btn-primary">Create new album</a>
+<loading-icon class="'reveal-animation'">
+  <div class="hero hero-inverse-to-dark text-center">
+    <div class="container">
+      <h2 style="margin-top: 0;">All Albums</h2>
     </div>
   </div>
-</div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <ng-include src="'admin/albums/_list.html'" onload="albums = albums"></ng-include>
+      </div>
+      <div class="col-md-4">
+        <a href="/admin/albums/new" class="btn btn-primary">Create new album</a>
+      </div>
+    </div>
+  </div>
+</loading-icon>

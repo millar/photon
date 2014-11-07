@@ -14,6 +14,10 @@ class Admin::PhotosController < ApplicationController
       @photos = @photos.limit(params[:limit])
     end
 
+    if params[:query]
+      @photos = @photos.where("title LIKE ? or original_file_name LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
+    end
+
     if params[:not_in]
       @photos = @photos.where.not(id: Album.find(params[:not_in]).photos)
     end

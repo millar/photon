@@ -6,5 +6,5 @@ json.user do
 end
 
 json.albums @photo.albums do |album|
-  json.(album, :id, :title)
+  json.(album, :id, :title, :photo_count, :created_at)
 end

@@ -35,8 +35,11 @@ angular.module('directives', [])
       $el.find('.image')
         .css('opacity', 0)
         .on('load', function(){
-          this.className += " fade-op"
+          this.className += " fade-op";
           this.style.opacity = 1;
+        })
+        .on('error', function(){
+          this.style.display = "none";
         })
     }
 
@@ -55,8 +58,9 @@ angular.module('directives', [])
   })
   .directive('photoElement', function(){
     function link(scope, element, attrs){
+      $el = $(element);
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
-        $(element).find('.background')
+        $el.find('.background')
           .css(
             "background-image",
             "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
@@ -66,6 +70,16 @@ angular.module('directives', [])
       var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
       scope.width = scope.photo.width * sf;
       scope.height = scope.photo.height * sf;
+
+      $el.find('.image')
+        .css('opacity', 0)
+        .on('load', function(){
+          this.className += " fade-op";
+          this.style.opacity = 1;
+        })
+        .on('error', function(){
+          this.style.display = "none";
+        })
     }
 
     return {

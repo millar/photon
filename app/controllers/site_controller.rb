@@ -8,4 +8,8 @@ class SiteController < ApplicationController
   def admin
     render :layout => 'admin'
   end
+
+  def not_found
+    head :not_found
+  end
 end

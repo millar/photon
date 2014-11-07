@@ -1,7 +1,7 @@
 json.(@album_photo, :photo_id, :album_id)
 
 json.album do
-  json.(@album_photo.album, :id, :title)
+  json.(@album_photo.album, :id, :title, :photo_count, :created_at)
 end
 
 json.photo do

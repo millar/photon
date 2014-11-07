@@ -19,10 +19,29 @@ window.$adminApp.controllers
         $scope.loaded = true;
       });
 
+      $scope.togglePublish = function(){
+        $('.togglepub-btn').addClass('pending');
+
+        if (!$scope.album.published){
+          $scope.album.published_at = new Date();
+        } else {
+          $scope.album.published_at = null;
+        }
+
+        $scope.album.$update(function(album){
+          $scope.album.published = album.published;
+          $('.togglepub-btn').removeClass('pending');
+        });
+      };
+
+      $scope.$watch('newPhotoQuery', function(){
+        $scope.loadPhotos();
+      });
+
       $scope.photosLoaded = false;
       $scope.loadPhotos = function(){
-        if ($scope.photosLoaded) return;
-        $scope.photos = Photo.query({limit: 20, order: "created_at", not_in: $scope.album.id}, function(albums){
+        $scope.photosLoaded = false;
+        $scope.photos = Photo.query({query: $scope.newPhotoQuery, limit: 20, order: "created_at", not_in: $scope.album.id}, function(albums){
           $scope.photosLoaded = true;
         });
       }
@@ -57,9 +76,9 @@ window.$adminApp.controllers
 
       $scope.submit = function(){
         if ($scope.album.published){
-          $scope.album.published = new Date();
+          $scope.album.published_at = new Date();
         } else {
-          $scope.album.published = null;
+          $scope.album.published_at = null;
         }
 
         $scope.$broadcast('show-errors');
@@ -76,9 +95,9 @@ window.$adminApp.controllers
 
       $scope.submit = function(){
         if ($scope.album.published){
-          $scope.album.published = new Date();
+          $scope.album.published_at = new Date();
         } else {
-          $scope.album.published = null;
+          $scope.album.published_at = null;
         }
 
         $scope.$broadcast('show-errors');

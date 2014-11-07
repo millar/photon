@@ -1,4 +1,5 @@
 json.merge! @album.attributes
+json.published @album.published
 
 json.user do
   json.(@album.user, :id, :username)

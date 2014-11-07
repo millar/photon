@@ -23,11 +23,21 @@ window.$adminApp.controllers
     function($scope, $location, $routeParams, Photo, Album, AlbumPhoto) {
       $scope.loaded = false;
 
+      $scope.saved = false;
+      $scope.saving = 0;
+
       $scope.submit = function(){
-        $scope.photo.$update(function(){
-          var redirectTo = $location.path().split('/');
-          redirectTo.pop();
-          $location.path(redirectTo.join('/'));
+        if (!$scope.photoForm.$dirty) return;
+        $scope.saving += 1;
+        $scope.photoForm.$setPristine();
+
+        $scope.photo.$update(function(photo){
+          $scope.photo = photo;
+          // var redirectTo = $location.path().split('/');
+          // redirectTo.pop();
+          // $location.path(redirectTo.join('/'));
+          $scope.saving -= 1;
+          $scope.saved = true;
         });
       }
 
