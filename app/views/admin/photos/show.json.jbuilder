@@ -4,3 +4,7 @@ json.sizes Hash[@photo.original.styles.map {|style, _| [style, "http://#{request
 json.user do
   json.(@photo.user, :id, :username)
 end
+
+json.albums @photo.albums do |album|
+  json.(album, :id, :title)
+end

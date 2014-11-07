@@ -6,7 +6,7 @@ angular.module('adminServices', ['ngResource'])
   .factory('Photo', ['$resource',
     function($resource){
       return $resource('/api/admin/photos/:id.json', {}, {
-        'update': { params: {id:'@id'}, method:'PUT' }
+        'update': { params: {id:'@id'}, method:'PUT' },
       });
     }])
   .factory('Album', ['$resource',
@@ -17,7 +17,8 @@ angular.module('adminServices', ['ngResource'])
     }])
   .factory('AlbumPhoto', ['$resource',
     function($resource){
-      return $resource('/api/admin/albums/:albumId/photos/:id.json', {}, {
-        'update': { params: {id:'@id'}, method:'PUT' }
+      return $resource('/api/admin/albums/:albumId/photos/:photoId.json', {}, {
+        'create': { params: {albumId:'@album_id'}, method:'POST' },
+        'destroy': { params: {photoId:'@photo_id', albumId:'@album_id'}, method:'DELETE' }
       });
     }]);

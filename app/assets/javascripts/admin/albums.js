@@ -11,13 +11,45 @@ window.$adminApp.controllers
         $scope.loaded = true;
       });
     }])
-  .controller('AlbumsShowController', ['$scope', '$routeParams', 'Album',
-    function($scope, $routeParams, Album) {
+  .controller('AlbumsShowController', ['$scope', '$routeParams', 'Album', 'Photo', 'AlbumPhoto',
+    function($scope, $routeParams, Album, Photo, AlbumPhoto) {
       $scope.loaded = false;
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
         $scope.loaded = true;
       });
+
+      $scope.photosLoaded = false;
+      $scope.loadPhotos = function(){
+        if ($scope.photosLoaded) return;
+        $scope.photos = Photo.query({limit: 20, order: "created_at", not_in: $scope.album.id}, function(albums){
+          $scope.photosLoaded = true;
+        });
+      }
+
+      $scope.addToAlbum = function(photoId){
+        var ap = new AlbumPhoto({photo_id: photoId, album_id: $scope.album.id});
+
+        $('[data-pending=photo-'+photoId+']').addClass('pending');
+
+        ap.$create(function(ap){
+          $scope.album.photos.push(ap.photo);
+          $('[data-pending=photo-'+photoId+']').removeClass('pending');
+        });
+      }
+
+      $scope.removeFromAlbum = function(photoId){
+        var ap = new AlbumPhoto({photo_id: photoId, album_id: $scope.album.id});
+
+        $('[data-pending=photo-'+photoId+']').addClass('pending');
+
+        ap.$destroy(function(){
+          $scope.album.photos = $.grep($scope.album.photos, function(photo){
+            return photo.id != photoId;
+          });
+          $('[data-pending=photo-'+photoId+']').removeClass('pending');
+        });
+      }
     }])
   .controller('AlbumsNewController', ['$scope', 'Album', '$location',
     function($scope, Album, $location) {

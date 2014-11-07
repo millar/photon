@@ -2,12 +2,20 @@ class Admin::PhotosController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @photos = Photo.all
+    @photos = Photo.includes(:user, :albums).all
 
     if params[:processed]
       @photos = @photos.where(processed: true)
     elsif params[:unprocessed]
       @photos = @photos.where(processed: false)
+    end
+
+    if params[:limit]
+      @photos = @photos.limit(params[:limit])
+    end
+
+    if params[:not_in]
+      @photos = @photos.where.not(id: Album.find(params[:not_in]).photos)
     end
   end
 

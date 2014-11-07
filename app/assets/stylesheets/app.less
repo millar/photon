@@ -171,6 +171,15 @@ footer {
   margin-bottom: 25px;
 }
 
+.text-right {
+  photo-square {
+    .background {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
+}
+
 photo-square {
   display: block;
 
@@ -180,8 +189,6 @@ photo-square {
     border-radius: @border-radius-base;
     overflow: hidden;
     position: relative;
-    margin-left: auto;
-    margin-right: 0;
   }
 
   .inside {
@@ -198,8 +205,16 @@ photo-square {
       width: 100%;
       padding: 8px 10px;
       color: #fff;
-      .small;
       text-shadow: 0 0 1px #000;
+      font-weight: 600;
+    }
+  }
+}
+
+.col-md-2 {
+  photo-square {
+    .caption {
+      .small;
     }
   }
 }
@@ -391,6 +406,10 @@ photo-element {
   }
 }
 
-a[ng-click] {
+a[ng-click], photo-square[ng-click] {
   cursor: pointer;
+}
+
+.pending {
+  opacity: 0.3;
 }

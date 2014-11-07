@@ -2,7 +2,7 @@
 
 <div class="container reveal-animation" ng-if="loaded">
   <div class="row separated">
-    <div class="col-md-3 img-preview">
+    <div class="col-md-3 img-preview text-right">
       <photo-square class="text-right" photo="photo" href="'/admin/photos/' + photo.id" size="75"></photo-square>
     </div>
     <div class="col-md-6">
@@ -46,7 +46,17 @@
       <h4>
         Featured in
       </h4>
-      <div></div>
+      <div ng-if="photo.albums.length">
+        <table class="table">
+          <tr>
+            <th colspan="2">Album Title</th>
+          </tr>
+          <tr ng-repeat="album in photo.albums" data-pending="album-{{album.id}}">
+            <td><a ng-href="/admin/albums/{{album.id}}"><strong>{{album.title}}</strong></a></td>
+            <td class="text-right"><a ng-click="removeFromAlbum(album.id)"><span class="octicon octicon-x text-muted"></span></a></td>
+          </tr>
+        </table>
+      </div>
       <p ng-if="!photo.albums.length" class="text-muted">No albums</p>
       <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addAlbumModal" ng-click="loadAlbums()">Add to album</button>
     </div>
@@ -62,17 +72,20 @@
         <h4 class="modal-title" id="myModalLabel">Add to album</h4>
       </div>
       <loading-icon loaded="albumsLoaded">
-        <table class="table table-modal" ng-if="albumsLoaded">
+        <table class="table table-modal" ng-if="albumsLoaded && (albums | notInArray:photo.albums).length">
           <tr>
             <th>Title</th>
           </tr>
-          <tr ng-repeat="album in albums">
+          <tr ng-repeat="album in albums | notInArray:photo.albums" data-pending="album-{{album.id}}">
             <td><a ng-click="addToAlbum(album.id)">{{album.title}}</a></td>
           </tr>
         </table>
+        <div class="modal-body" ng-if="!(albums | notInArray:photo.albums).length">
+          No<span ng-if="albums.length"> more</span> albums available.
+        </div>
       </loading-icon>
-      <div class="modal-footer text-left">
-        <small>Click on album to add this photograph</small>
+      <div class="modal-footer" style="text-align:center;">
+        <small class="text-muted">Click on an album to add this photograph</small>
       </div>
     </div>
   </div>

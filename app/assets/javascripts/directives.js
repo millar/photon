@@ -4,13 +4,16 @@ angular.module('directives', [])
       if (scope.loaded == undefined){
         scope.loaded = true;
       }
+
+      scope.class = scope.class || "";
     }
 
     return {
       template: '<div ng-if="!loaded || !$parent.loaded" class="text-center"><span class="fa fa-circle-o-notch fa-spin text-muted"></span></div>' +
-                '<div ng-if="loaded && $parent.loaded" ng-transclude></div>',
+                '<div ng-if="loaded && $parent.loaded" class="{{class}}" ng-transclude></div>',
       scope: {
-        loaded: '=?'
+        loaded: '=?',
+        class: '=?'
       },
       link: link,
       transclude: true
@@ -111,5 +114,24 @@ angular.module('directives', [])
           el.toggleClass('has-error', formCtrl[inputName].$invalid);
         });
       }
+    }
+  })
+
+  .filter('inArray', function(){
+    return function(array, notIn, attr){
+      attr = attr || "id";
+      notInIds = $.map(notIn, function(o){return o[attr]});
+      return $.grep(array, function(obj){
+        return $.inArray(obj[attr], notInIds) !== -1;
+      });
+    }
+  })
+  .filter('notInArray', function(){
+    return function(array, notIn, attr){
+      attr = attr || "id";
+      notInIds = $.map(notIn, function(o){return o[attr]});
+      return $.grep(array, function(obj){
+        return $.inArray(obj[attr], notInIds) == -1;
+      });
     }
   });

@@ -1,6 +1,4 @@
-<loading-icon></loading-icon>
-
-<div ng-if="loaded" class="reveal-animation">
+<loading-icon class="'reveal-animation'">
   <div class="hero hero-inverse-to-dark text-center">
     <div class="container">
       <h2 style="margin-top: 0;">{{album.title}}</h2>
@@ -34,6 +32,7 @@
           </ul>
         </div>
         <div class="col-md-6 text-right">
+          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addPhotoModal" ng-click="loadPhotos()">Add Photos</button>
           <a class="btn btn-default btn-sm" ng-href="/admin/albums/{{album.id}}/edit">Edit Album Details</a>
         </div>
       </div>
@@ -41,6 +40,43 @@
   </div>
 
 
-  <div class="container text-center">
-
+  <div class="container separated">
+    <div class="row">
+      <div class="col-md-3 img-preview" ng-repeat="photo in album.photos">
+        <photo-square photo="photo" href="'/admin/photos/' + photo.id">
+          <div class="caption">{{photo.title || photo.original_file_name}}</div>
+        </photo-square>
+      </div>
+    </div>
   </div>
+</loading-icon>
+
+
+<div class="modal fade" id="addPhotoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add photos to {{album.title}}</h4>
+      </div>
+      <loading-icon loaded="photosLoaded">
+        <div class="modal-body">
+          <div class="row" ng-if="photosLoaded && (photos | notInArray:album.photos).length">
+            <div class="col-md-3 img-preview" ng-repeat="photo in photos | notInArray:album.photos">
+              <photo-square photo="photo" ng-click="addToAlbum(photo.id)" data-pending="photo-{{photo.id}}">
+                <div class="caption">{{photo.title || photo.original_file_name}}</div>
+              </photo-square>
+            </div>
+          </div>
+
+          <div ng-if="!(photos | notInArray:album.photos).length">
+            No<span ng-if="photos.length"> more</span> photos available to add.
+          </div>
+        </div>
+      </loading-icon>
+      <div class="modal-footer" style="text-align:center;">
+        <small class="text-muted">Click on a photo to add it to this album</small>
+      </div>
+    </div>
+  </div>
+</div>

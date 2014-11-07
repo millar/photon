@@ -19,8 +19,8 @@ window.$adminApp.controllers
         $scope.loaded = true;
       });
     }])
-  .controller('PhotosEditController', ['$scope', '$location', '$routeParams', 'Photo', 'Album',
-    function($scope, $location, $routeParams, Photo, Album) {
+  .controller('PhotosEditController', ['$scope', '$location', '$routeParams', 'Photo', 'Album', 'AlbumPhoto',
+    function($scope, $location, $routeParams, Photo, Album, AlbumPhoto) {
       $scope.loaded = false;
 
       $scope.submit = function(){
@@ -37,13 +37,34 @@ window.$adminApp.controllers
 
       $scope.albumsLoaded = false;
       $scope.loadAlbums = function(){
+        if ($scope.albumsLoaded) return;
         $scope.albums = Album.query(function(albums){
           $scope.albumsLoaded = true;
         });
       }
 
       $scope.addToAlbum = function(albumId){
-        
+        var ap = new AlbumPhoto({photo_id: $scope.photo.id, album_id: albumId});
+
+        $('[data-pending=album-'+albumId+']').addClass('pending');
+
+        ap.$create(function(ap){
+          $scope.photo.albums.push(ap.album);
+          $('[data-pending=album-'+albumId+']').removeClass('pending');
+        });
+      }
+
+      $scope.removeFromAlbum = function(albumId){
+        var ap = new AlbumPhoto({photo_id: $scope.photo.id, album_id: albumId});
+
+        $('[data-pending=album-'+albumId+']').addClass('pending');
+
+        ap.$destroy(function(){
+          $scope.photo.albums = $.grep($scope.photo.albums, function(album){
+            return album.id != albumId;
+          });
+          $('[data-pending=album-'+albumId+']').removeClass('pending');
+        });
       }
     }])
   .controller('PhotosUploadedController', ['$scope', '$routeParams', 'Photo',
