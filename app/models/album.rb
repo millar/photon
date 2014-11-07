@@ -3,4 +3,6 @@ class Album < ActiveRecord::Base
 
   has_many :album_photos
   has_many :photos, through: :album_photos
+
+  validates :title, presence: true
 end

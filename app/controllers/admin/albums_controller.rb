@@ -3,12 +3,6 @@ class Admin::AlbumsController < ApplicationController
 
   def index
     @albums = Album.all
-
-    if params[:processed]
-      @albums = @albums.where(processed: true)
-    elsif params[:unprocessed]
-      @albums = @albums.where(processed: false)
-    end
   end
 
   def show
@@ -25,7 +19,6 @@ class Admin::AlbumsController < ApplicationController
 
   def update
     @album = Album.find(params[:id])
-    @album.processed = true
 
     if @album.update(album_params)
       render action: :show

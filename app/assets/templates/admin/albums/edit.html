@@ -2,37 +2,26 @@
 
 <div class="container reveal-animation separated" ng-if="loaded">
   <div class="row">
-    <div class="col-md-3 img-preview">
-      <album-square class="text-right" album="album" href="'/admin/albums/' + album.id" size="75"></album-square>
-    </div>
-    <div class="col-md-6">
-      <h2 style="margin-top: 0;" ng-class="{'text-muted': !album.title}">{{album.title || album.original_file_name}}</h2>
+    <div class="col-md-6 col-md-offset-3">
+      <h2 style="margin-top: 0;"><a ng-href="/admin/albums/{{album.id}}">{{album.title}}</a></h2>
       <ul class="list-inline">
-        <li>Uploaded <span isodate="album.created_at"></span></li>
+        <li>Created <span isodate="album.created_at"></span></li>
         <li>
           by
           <span ng-if="album.user.id == current_user.id">you</span>
           <span ng-if="album.user.id != current_user.id">{{album.user.username}}</span>
         </li>
+        <li ng-pluralize count="album.photo_count" when="{
+          '1': '{} photo',
+          'other': '{} photos'
+        }"></li>
       </ul>
     </div>
   </div>
 
 
-  <form class="form-horizontal" ng-submit="submit()">
-    <div class="form-group">
-      <label class="control-label col-sm-3" for="title">Title</label>
-      <div class="col-sm-6">
-        <input type="text" ng-model="album.title" class="form-control">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="control-label col-sm-3" for="title">Description</label>
-      <div class="col-sm-6">
-        <textarea ng-model="album.description" class="form-control"></textarea>
-      </div>
-    </div>
+  <form name="$parent.albumForm" class="form-horizontal" novalidate ng-submit="submit()">
+    <ng-include src="'admin/albums/_form.html'" onload="album = album"></ng-include>
 
     <div class="form-group">
       <div class="col-sm-6 col-sm-offset-3">

@@ -1,7 +1,5 @@
-<div class="row">
-  <div class="col-md-2 img-preview" ng-repeat="album in albums">
-    <album-square album="album" href="'/admin/albums/' + album.id">
-      <div class="caption">{{album.title || album.original_file_name}}</div>
-    </album-square>
-  </div>
-</div>
+<table class="table table-blocks">
+  <tr ng-repeat="album in albums">
+    <td><a ng-href="/admin/albums/{{album.id}}"><strong>{{album.title}}</strong></a></td>
+  </tr>
+</table>

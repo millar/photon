@@ -1,3 +1,3 @@
-json.array! @album do |album|
+json.array! @albums do |album|
   json.merge! album.attributes
 end

@@ -1,30 +1,20 @@
-<div class="hero hero-inverse-to-dark">
-  <div class="container text-center">
-    <loading-icon></loading-icon>
+<loading-icon></loading-icon>
 
-    <div ng-if="loaded" class="reveal-animation">
-      <album-element album="album" size="640" labels="true"></album-element>
+<div ng-if="loaded" class="reveal-animation">
+  <div class="hero hero-inverse-to-dark">
+    <div class="container">
+      <h3 style="margin-top: 0;">{{album.title}}</h3>
+      <ul class="list-inline">
+        <li>Created <span isodate="album.created_at"></span></li>
+        <li>by {{album.user.username}}</li>
+      </ul>
 
-      <div class="album-meta-strip">
-        <h3 class="name" ng-class="{'text-muted': !album.title}" title="Original filename: {{album.original_file_name}}">
-          {{album.title || album.original_file_name}}
-        </h3>
-
-        <ul class="list-inline">
-          <li ng-if="album.taken_at">Taken: <span isodate="album.taken_at"></span></li>
-          <li ng-if="album.model">Camera: {{album.model}}</li>
-          <li>{{album.width}}x{{album.height}}</li>
-        </ul>
+      <div>
+        {{album.description}}
       </div>
     </div>
   </div>
-</div>
 
-<div ng-if="loaded">
   <div class="container text-center">
-    <ul class="list-inline">
-      <li>Uploaded <span isodate="album.created_at"></span></li>
-      <li>by {{album.user.username}}</li>
-    </ul>
+
   </div>
-</div>

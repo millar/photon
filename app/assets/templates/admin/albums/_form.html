@@ -1,21 +1,22 @@
-<form class="form-horizontal" ng-submit="submit()">
-  <div class="form-group">
-    <label class="control-label col-sm-3" for="title">Title</label>
-    <div class="col-sm-6">
-      <input type="text" ng-model="album.title" class="form-control">
-    </div>
+<div class="form-group" show-errors>
+  <label class="control-label col-sm-3" for="album-title">Title</label>
+  <div class="col-sm-6">
+    <input type="text" ng-model="album.title" id="album-title" name="title" class="form-control" required>
   </div>
+</div>
 
-  <div class="form-group">
-    <label class="control-label col-sm-3" for="title">Description</label>
-    <div class="col-sm-6">
-      <textarea ng-model="album.description" class="form-control"></textarea>
-    </div>
+<div class="form-group">
+  <label class="control-label col-sm-3" for="album-description">Description</label>
+  <div class="col-sm-6">
+    <textarea ng-model="album.description" class="form-control" id="album-description" rows="10"></textarea>
   </div>
+</div>
 
-  <div class="form-group">
-    <div class="col-sm-6 col-sm-offset-3">
-      <button type="submit" class="btn btn-primary">Update album</button>
-    </div>
+<div class="form-group">
+  <div class="col-sm-6 col-sm-offset-3">
+    <label for="album-published">
+      <input type="checkbox" ng-model="album.published" id="album-published">
+      Published
+    </label>
   </div>
-</form>
+</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141106223103) do
+ActiveRecord::Schema.define(version: 20141107000946) do
 
   create_table "album_photos", force: true do |t|
     t.string   "title"
@@ -29,9 +29,10 @@ ActiveRecord::Schema.define(version: 20141106223103) do
     t.text     "description"
     t.integer  "user_id"
     t.datetime "published_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "slug"
+    t.integer  "photo_count",  default: 0
   end
 
 # Could not dump table "photos" because of following NoMethodError
