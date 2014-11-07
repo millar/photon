@@ -5,14 +5,30 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8">
-        <ng-include src="'admin/albums/_list.html'" onload="albums = albums"></ng-include>
-      </div>
-      <div class="col-md-4">
-        <a href="/admin/albums/new" class="btn btn-primary">Create new album</a>
+  <div class="meta-row">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="list-inline" style="margin: 0; line-height: 33px">
+            <li>
+              <i class="fa fa-photo"></i>
+              <strong>{{albums.length}}</strong>
+
+              <ng-pluralize count="albums.length" when="{
+                '1': 'album',
+                'other': 'albums'
+              }"></ng-pluralize>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6 text-right">
+          <a href="/admin/albums/new" class="btn btn-primary btn-sm">Create new album</a>
+        </div>
       </div>
     </div>
+  </div>
+
+  <div class="container separated">
+    <ng-include src="'admin/albums/_list.html'" onload="albums = albums"></ng-include>
   </div>
 </loading-icon>

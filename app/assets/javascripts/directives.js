@@ -106,6 +106,19 @@ angular.module('directives', [])
       link: link
     }
   })
+  .directive('tooltip', function(){
+    function link(scope, element, attrs){
+      $(element).tooltip({title: scope.message, placement: 'bottom'});
+    }
+
+    return {
+      scope: {
+        message: '@tooltip'
+      },
+      restrict: 'A',
+      link: link
+    }
+  })
   .directive('showErrors', function() {
     return {
       restrict: 'A',
