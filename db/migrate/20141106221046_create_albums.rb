@@ -4,6 +4,8 @@ class CreateAlbums < ActiveRecord::Migration
       t.string :title
       t.text :description
 
+      # t.string :client
+
       t.references :user
 
       t.datetime :published_at

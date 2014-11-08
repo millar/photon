@@ -27,11 +27,25 @@
         <ul class="list-inline" style="margin: 0; line-height: 33px">
           <li>Uploaded <span isodate="photo.created_at"></span></li>
           <li>by {{photo.user.username}}</li>
+          <li ng-if="photo.album_count" ng-pluralize count="photo.album_count" when="{
+            '1': 'contained in {{photo.albums[0].title}}',
+            'other': 'contained in {} albums'
+          }">
+          </li>
+          <li ng-if="!photo.album_count" class="text-danger">
+            not in an album
+          </li>
         </ul>
       </div>
       <div class="col-md-6 text-right">
         <a class="btn btn-default btn-sm" ng-href="/admin/photos/{{photo.id}}/edit">Edit Photo Details</a>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="container separated">
+  <div class="text-center">
+    {{photo.description}}
   </div>
 </div>
