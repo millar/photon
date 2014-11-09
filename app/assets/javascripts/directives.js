@@ -60,7 +60,8 @@ angular.module('directives', [])
         photo: '=',
         caption: '=',
         href: '=',
-        size: '=?'
+        size: '=?',
+        height: '@?'
       },
       transclude: true,
       restrict: 'E',
@@ -184,23 +185,27 @@ angular.module('directives', [])
 
         $timeout(function(){
           var $next = $el.next();
-
-          $el.affix({
-            offset: {
-              top: $(scope.aboveTag).outerHeight() + $('.navbar-fixed-top').outerHeight() - $el.outerHeight()
-            }
-          });
-
           var marginTop = parseInt($next.css('margin-top'));
           var metaHeight = $el.outerHeight();
+          // var affixPad = $(scope.aboveTag).outerHeight();
 
           $el.on('affixed.bs.affix', function(){
+            $('body').addClass('hero-passed');
             $next.css('margin-top', marginTop + metaHeight);
+            // $('.affix-pad').style('height', affixPad);
           })
 
           $el.on('affixed-top.bs.affix', function(){
+            $('body').removeClass('hero-passed');
             $next.css('margin-top', marginTop);
+            // $('.affix-pad').style('height', 0);
           })
+
+          $el.affix({
+            offset: {
+              top: $(scope.aboveTag).outerHeight() + $('.navbar-fixed-top').outerHeight() - ($el.outerHeight() * 2)
+            }
+          });
         });
 
         scope.$on("$destroy", function(){

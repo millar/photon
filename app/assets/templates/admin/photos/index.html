@@ -16,6 +16,6 @@
   </div>
 
   <div class="container">
-    <ng-include src="'admin/photos/_list.html'" onload="photos = photos"></ng-include>
+    <ng-include src="'admin/photos/_list.html'" onload="photoArray = (photos | orderBy:'created_at':true)"></ng-include>
   </div>
 </loading-icon>

@@ -16,6 +16,7 @@ class Photo < ActiveRecord::Base
       sq_150: "150x150#",
       sq_75: "75x75#",
     },
+    :preserve_files => "true",
     :convert_options => {
       :medium_800 => "-quality 75 -strip",
       :small_320 => "-quality 75 -strip",
@@ -29,20 +30,25 @@ class Photo < ActiveRecord::Base
   validates_attachment_content_type :original, :content_type => /\Aimage\/.*\Z/
   validates :original, :attachment_presence => true
 
+  acts_as_paranoid
+
   process_in_background :original
 
   belongs_to :user
 
-  has_many :album_photos
+  has_many :album_photos, dependent: :destroy
   has_many :albums, through: :album_photos
 
-  before_save :save_geometry
+  before_create :save_geometry
 
   after_save :process
 
   def process
+    return if self.processed
     self.save_averages
     self.save_exif
+    self.save_top_colors
+    self.update_attribute(:processed, true)
   end
 
   def save_geometry
@@ -97,5 +103,44 @@ class Photo < ActiveRecord::Base
 
 
     self.update_columns(columns)
+  end
+
+  def save_top_colors
+    # Photo.all.each {|photo| photo.save_top_colors}
+    image = Magick::Image.read(original.path).first
+    colors = []
+    q = image.quantize(7, Magick::RGBColorspace)
+    palette = q.color_histogram.sort {|a, b| b[1] <=> a[1]}
+
+    (0..6).each do |i|
+        c = palette[i][0].to_s.split(',').map {|x| x[/\d+/]}
+        c.pop
+        c[0], c[1], c[2] = [c[0], c[1], c[2]].map { |s|
+            s = s.to_i
+            if s / 255 > 0 # not all ImageMagicks are created equal....
+                s = s / 255
+            end
+            s = s.to_s(16)
+            if s.size == 1
+                '0' + s
+            else
+                s
+            end
+        }
+        colors << '#' + c.join('')
+    end
+
+    self.update_column(:top_colors, colors.join(','))
+  end
+
+  def top_colors
+    self.read_attribute(:top_colors).split(',')
+  end
+
+  def full_description
+    return unless self.description
+    renderer = Redcarpet::Render::HTML.new()
+    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
+    markdown.render(self.description)
   end
 end

@@ -7,6 +7,6 @@ end
 json.photo do
   json.merge! @album_photo.photo.attributes
   json.sizes Hash[@album_photo.photo.original.styles.map {|style, _| [style, "http://#{request.host}#{@album_photo.photo.original.url(style)}"]}]
-  json.position @position
+  json.position @album_photo.position
   json.album_photo_id @album_photo.id
 end

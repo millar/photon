@@ -9,12 +9,6 @@
         <h3 class="name" ng-class="{'text-muted': !photo.title}" title="Original filename: {{photo.original_file_name}}">
           {{photo.title || photo.original_file_name}}
         </h3>
-
-        <ul class="list-inline">
-          <li ng-if="photo.taken_at">Taken: <span isodate="photo.taken_at"></span></li>
-          <li ng-if="photo.model">Camera: {{photo.model}}</li>
-          <li>{{photo.width}}x{{photo.height}}</li>
-        </ul>
       </div>
     </div>
   </div>
@@ -44,8 +38,55 @@
   </div>
 </div>
 
-<div class="container separated">
-  <div class="text-center">
-    {{photo.description}}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h4 style="margin-top: 0;">Description</h4>
+      <div class="photo-description" ng-if="photo.description" ng-bind-html="description"></div>
+      <p ng-if="!photo.description">
+        <a ng-href="/admin/photos/{{photo.id}}/edit">Add description</a>
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h4 style="margin-top: 0;">&nbsp;</h4>
+      <dl class="dl-horizontal">
+        <div ng-if="photo.taken_at">
+          <dt>taken</dt>
+          <dd>
+            <span isodate="photo.taken_at"></span>
+          </dd>
+        </div>
+        <div ng-if="photo.model">
+          <dt>camera</dt>
+          <dd>
+            {{photo.model}}
+          </dd>
+        </div>
+        <div ng-if="photo.exposure_time">
+          <dt>exposure time</dt>
+          <dd>
+            {{photo.exposure_time}}
+          </dd>
+        </div>
+        <div ng-if="photo.f_number">
+          <dt>&fnof;</dt>
+          <dd>
+            {{photo.f_number}}
+          </dd>
+        </div>
+        <dt>dimensions</dt>
+        <dd>
+          {{photo.width}}x{{photo.height}}
+        </dd>
+        <dt>average color</dt>
+        <dd>
+          <div class="swatch" ng-style="{'background-color': photo.average_hex}" tooltip="{{photo.average_hex}}"></div>
+        </dd>
+        <dt>top colors</dt>
+        <dd>
+          <div style="float: left;" ng-repeat="hex in photo.top_colors" class="swatch" ng-style="{'background-color': hex}" tooltip="{{hex}}"></div>
+        </dd>
+      </dl>
+    </div>
   </div>
 </div>

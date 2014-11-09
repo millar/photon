@@ -66,7 +66,52 @@ body {
     border-style: solid;
     border-color: rgba(0,0,0, .1);
   }
+
+  &.hero-cover {
+    background-size: cover;
+    margin-top: -71px;
+    padding-top: 101px;
+    text-shadow: 0 0 6px rgba(0,0,0, .6);
+
+    &.affix {
+      bottom: 71px;
+      width: 100%;
+      z-index: 1010;
+    }
+  }
 }
+
+#navbar.navbar-transparent {
+  background-color: transparent;
+  #gradient > .vertical(rgba(0,0,0, .3), rgba(0,0,0, .1));
+  text-shadow: 0 0 1px #000;
+
+  .navbar-nav > li > a {
+    color: #fff;
+  }
+
+  .dropdown-menu {
+    text-shadow: none;
+  }
+}
+
+.hero-passed {
+  #navbar.navbar-transparent {
+    background-color: @navbar-inverse-bg;
+  }
+}
+
+// .hero-passed {
+//   .hero-cover {
+//     position: fixed;
+//     width: 100%;
+//     height: 71px;
+//     top: 0;
+//     z-index: 1009;
+//     color: transparent !important;
+//     text-shadow: none;
+//   }
+// }
 
 .modal-title {
 	font-size: 115%;
@@ -670,4 +715,11 @@ body {
 
 .affix_top .meta-row .changer .incoming {
   .transition-delay(0s);
+}
+
+.swatch {
+  height: 1em;
+  width: 1em;
+  border-radius: @border-radius-base;
+  margin-right: 4px;
 }

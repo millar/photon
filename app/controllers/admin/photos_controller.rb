@@ -14,6 +14,10 @@ class Admin::PhotosController < ApplicationController
       @photos = @photos.limit(params[:limit])
     end
 
+    if params[:offset]
+      @photos = @photos.offset(params[:offset])
+    end
+
     if params[:query]
       @photos = @photos.where("title LIKE ? or original_file_name LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%")
     end
@@ -25,6 +29,13 @@ class Admin::PhotosController < ApplicationController
 
   def show
     @photo = Photo.find(params[:id])
+  end
+
+  def destroy
+    @photo = Photo.find(params[:id])
+    @photo.destroy
+
+    head :no_content
   end
 
   def update

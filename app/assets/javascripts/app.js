@@ -36,7 +36,8 @@ window.$adminApp = {current_user: null};
         }).
         when('/admin/albums/:id', {
           controller: 'AlbumsShowController',
-          templateUrl: 'admin/albums/show.html'
+          templateUrl: 'admin/albums/show.html',
+          reloadOnSearch: false
         }).
         when('/admin/albums', {
           controller: 'AlbumsIndexController',

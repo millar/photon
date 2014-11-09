@@ -25,6 +25,19 @@
     <ng-include src="'admin/albums/_form.html'" onload="album = album"></ng-include>
 
     <div class="form-group">
+      <label class="control-label col-sm-3" for="album-client">Cover</label>
+      <div class="col-sm-6">
+        <p class="form-control-static" ng-if="!album.cover"><span tooltip="Hover over an image on album view page to reveal cover option">not set</span></p>
+        <div ng-if="album.cover">
+          <photo-square photo="album.cover" href="'/admin/photos/' + album.cover.id" height="50"></photo-square>
+        </div>
+      </div>
+      <div class="col-sm-3" ng-if="album.cover" style="line-height: 50px;">
+        <button type="button" class="btn btn-sm btn-link" ng-click="setCover(null);"><span class="text-danger">remove cover</span></button>
+      </div>
+    </div>
+
+    <div class="form-group">
       <div class="col-sm-6 col-sm-offset-3">
         <button type="submit" class="btn btn-primary">Update album</button>
       </div>

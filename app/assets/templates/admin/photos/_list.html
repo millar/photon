@@ -1,6 +1,9 @@
 <div class="row">
-  <div class="col-md-2 img-preview" ng-repeat="photo in photos | filter:search" ng-class="{'clear-left': $index % 6 == 0}">
-    <photo-square photo="photo" href="'/admin/photos/' + photo.id">
+  <div class="col-md-2 img-preview" ng-repeat="photo in photoArray | filter:search" ng-class="{'clear-left': $index % 6 == 0}">
+    <photo-square photo="photo" href="'/admin/photos/' + photo.id" data-pending="photo-{{photo.id}}">
+      <div class="hover-options">
+        <button ng-click="$event.preventDefault(); deletePhoto(photo);" class="btn btn-link" tooltip="Delete this photo"><i class="octicon octicon-x"></i></button>
+      </div>
       <div class="caption">{{photo.title || photo.original_file_name}}</div>
     </photo-square>
   </div>

@@ -49,6 +49,8 @@ gem 'delayed_paperclip'
 gem 'exifr'
 gem 'resque', '~>1'
 
+gem "paranoia", :github => "radar/paranoia", :branch => "rails4"
+
 gem 'redcarpet'
 
 # Use unicorn as the app server

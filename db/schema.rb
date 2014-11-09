@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108022019) do
+ActiveRecord::Schema.define(version: 20141109184757) do
 
   create_table "album_photos", force: true do |t|
     t.string   "title"
@@ -22,7 +22,10 @@ ActiveRecord::Schema.define(version: 20141108022019) do
     t.datetime "published_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "album_photos", ["deleted_at"], name: "index_album_photos_on_deleted_at"
 
   create_table "albums", force: true do |t|
     t.string   "title"
@@ -34,7 +37,12 @@ ActiveRecord::Schema.define(version: 20141108022019) do
     t.string   "slug"
     t.integer  "photo_count",  default: 0
     t.string   "client"
+    t.datetime "deleted_at"
+    t.integer  "cover_id"
   end
+
+  add_index "albums", ["cover_id"], name: "index_albums_on_cover_id"
+  add_index "albums", ["deleted_at"], name: "index_albums_on_deleted_at"
 
 # Could not dump table "photos" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass

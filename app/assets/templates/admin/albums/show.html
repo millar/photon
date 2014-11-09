@@ -1,5 +1,5 @@
 <loading-icon class="reveal-animation">
-  <div class="hero hero-inverse-to-dark text-center" id="hero">
+  <div class="hero hero-inverse-to-dark hero-cover text-center" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero">
     <div class="container">
       <h2 style="margin-top: 0;">{{album.title}}</h2>
       <p ng-if="album.published" style="margin-top: -10px;">
@@ -15,6 +15,8 @@
       </ul>
     </div>
   </div>
+
+  <div class="affix-pad"></div>
 
   <div class="meta-row" affix="#hero">
     <div class="container">
@@ -59,8 +61,9 @@
     <div class="row" id="photo-grid">
       <div class="col-md-3 img-preview ui-state-default" data-id="{{photo.album_photo_id}}"
         ng-repeat="photo in album.photos | orderBy:'position'" ng-class="{'clear-left': photo.position % 4 == 0}">
-        <photo-square photo="photo" href="'/admin/photos/' + photo.id" data-pending="photo-{{photo.id}}">
+        <photo-square photo="photo" ng-click="openPhoto(photo)" data-pending="photo-{{photo.id}}">
           <div class="hover-options">
+            <button ng-click="$event.preventDefault(); setCover(photo.id);" class="btn btn-link" tooltip="Choose as album cover"><i class="octicon octicon-bookmark"></i></button>
             <button ng-click="$event.preventDefault(); removeFromAlbum(photo.id, photo.position);" class="btn btn-link" tooltip="Remove from album"><i class="octicon octicon-x"></i></button>
           </div>
           <div class="caption">{{photo.title || photo.original_file_name}}</div>

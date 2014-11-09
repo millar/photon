@@ -55,9 +55,13 @@ window.$adminApp.controllers
         })
       });
     }])
-  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http', '$sce',
-    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http, $sce) {
+  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http', '$sce', '$location',
+    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http, $sce, $location) {
       $scope.loaded = false;
+
+      $scope.openPhoto = function(photo){
+        $location.search({photo: photo.id});
+      }
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
         $scope.loaded = true;
@@ -102,9 +106,11 @@ window.$adminApp.controllers
             }
           });
           $('#photo-grid').disableSelection();
+          if (album.cover) $('#navbar').addClass('navbar-transparent');
 
           $scope.$on("$destroy", function(){
             $('#photo-grid').sortable("destroy");
+            $('#navbar').removeClass('navbar-transparent');
           });
         });
       });
@@ -162,6 +168,16 @@ window.$adminApp.controllers
           $('[data-pending=photo-'+photoId+']').removeClass('pending');
         });
       }
+
+      $scope.setCover = function(photoId){
+        $http.put("/api/admin/albums/cover.json", {
+          album_id: $scope.album.id,
+          photo_id: photoId
+        }).success(function(album){
+          $scope.album.cover = album.cover;
+          $('#navbar').addClass('navbar-transparent');
+        });
+      }
     }])
   .controller('AlbumsNewController', ['$scope', 'Album', '$location',
     function($scope, Album, $location) {
@@ -196,8 +212,8 @@ window.$adminApp.controllers
         })
       }
     }])
-  .controller('AlbumsEditController', ['$scope', '$location', '$routeParams', 'Album',
-    function($scope, $location, $routeParams, Album) {
+  .controller('AlbumsEditController', ['$scope', '$location', '$routeParams', 'Album', '$http',
+    function($scope, $location, $routeParams, Album, $http) {
       $scope.loaded = false;
 
       $scope.autofillSlug = function(){}
@@ -225,4 +241,13 @@ window.$adminApp.controllers
         $scope.loaded = true;
         $scope.originallyPublished = album.published;
       });
+
+      $scope.setCover = function(photoId){
+        $http.put("/api/admin/albums/cover.json", {
+          album_id: $scope.album.id,
+          photo_id: photoId
+        }).success(function(album){
+          $scope.album.cover = null;
+        });
+      }
     }])

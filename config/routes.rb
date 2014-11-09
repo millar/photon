@@ -3,7 +3,9 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :albums do
         collection do
+          get 'clients', to: 'albums#clients'
           put 'order', to: 'albums#order'
+          put 'cover', to: 'albums#cover'
         end
 
         scope module: "albums" do

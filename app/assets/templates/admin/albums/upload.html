@@ -1,5 +1,5 @@
 <loading-icon class="reveal-animation">
-  <div class="hero hero-inverse-to-dark text-center">
+  <div class="hero hero-inverse-to-dark text-center" id="hero">
     <div class="container">
       <h2 style="margin-top: 0;">{{album.title}}</h2>
       <p ng-if="album.published" style="margin-top: -10px;">
@@ -13,14 +13,10 @@
           <span ng-if="album.user.id != current_user.id">{{album.user.username}}</span>
         </li>
       </ul>
-
-      <div>
-        {{album.description}}
-      </div>
     </div>
   </div>
 
-  <div class="meta-row" affix>
+  <div class="meta-row" affix="#hero">
     <div class="container">
       <div class="row">
         <div class="col-md-4">
