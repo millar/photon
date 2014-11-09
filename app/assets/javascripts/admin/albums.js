@@ -55,12 +55,13 @@ window.$adminApp.controllers
         })
       });
     }])
-  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http',
-    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http) {
+  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http', '$sce',
+    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http, $sce) {
       $scope.loaded = false;
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
         $scope.loaded = true;
+        $scope.description = $sce.trustAsHtml(album.full_description);
 
         $timeout(function(){
           $('#photo-grid').sortable({
@@ -101,6 +102,10 @@ window.$adminApp.controllers
             }
           });
           $('#photo-grid').disableSelection();
+
+          $scope.$on("$destroy", function(){
+            $('#photo-grid').sortable("destroy");
+          });
         });
       });
 

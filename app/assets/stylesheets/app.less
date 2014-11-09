@@ -4,6 +4,8 @@
 // Our variables
 @import "variables";
 
+@brand-secondary:     #353a43;
+
 .navbar-brand {
   font-weight: 600;
 }
@@ -46,13 +48,23 @@ body {
 .hero {
   margin-top: -10px;
   margin-bottom: 10px;
-  padding-top: 60px;
+  padding-top: 40px;
   padding-bottom: 40px;
 
   &.hero-inverse-to-dark {
-    #gradient > .vertical(#353a43, darken(#353a43, 6%));
+    #gradient > .vertical(@brand-secondary, darken(@brand-secondary, 6%));
 
     .primary-bg;
+  }
+
+  &.hero-white {
+    // background: #eef;
+  }
+
+  &.hero-bordered {
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: rgba(0,0,0, .1);
   }
 }
 
@@ -95,7 +107,7 @@ body {
 	left: 0;
   z-index: @zindex-navbar-fixed + 2;
 
-	#gradient > .vertical(#353a43, #292d34);
+	#gradient > .vertical(@brand-secondary, #292d34);
 }
 
 .embellishment {
@@ -295,7 +307,7 @@ photo-element {
 }
 
 .fade-op {
-  transition: opacity 0.2s linear;
+  .transition(~"opacity linear .2s");
 
   &.is-out {
     opacity: 0;
@@ -410,8 +422,7 @@ photo-element {
     		content: " ";
 	      	opacity: 0;
 
-	      	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
-			    transition: opacity 0.3s, transform 0.3s;
+	      	.transition(~"opacity ease-in-out .3s");
 	      }
 
 	      &:hover,
@@ -618,4 +629,45 @@ body {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.meta-row{
+  .changer {
+    position: relative;
+
+    .incoming {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      bottom: 100px;
+      opacity: 0;
+      .transition(~"opacity linear .2s, bottom linear .2s");
+      .transition-delay(.2s);
+    }
+
+    .outgoing {
+      position: absolute;
+      width: 100%;
+      right: 0%;
+      opacity: 1;
+      .transition(~"opacity linear .05s, right linear .2s");
+      .transition-delay(.2s);
+    }
+  }
+}
+
+.affix .changer {
+  .incoming {
+    opacity: 1;
+    bottom: 0px;
+  }
+
+  .outgoing {
+    opacity: 0;
+    right: 100%;
+  }
+}
+
+.affix_top .meta-row .changer .incoming {
+  .transition-delay(0s);
 }

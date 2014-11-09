@@ -47,7 +47,7 @@ class Admin::AlbumsController < ApplicationController
     @album = Album.find(params[:id])
 
     if @album.update(album_params)
-      render action: :show
+      head :no_content
     end
   end
 

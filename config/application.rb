@@ -32,6 +32,8 @@ module Photon
       domain: 'millar.io'
     }
 
+    config.active_support.escape_html_entities_in_json = false
+
     # be sure to have the adapter gem in your Gemfile and follow
     # the adapter specific installation and deployment instructions
     config.active_job.queue_adapter = :resque

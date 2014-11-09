@@ -116,10 +116,10 @@ angular.module('directives', [])
   })
   .directive('isodate', function(){
     function link(scope, element, attrs){
-      $(element).attr('title', scope.iso).livestamp(scope.iso);
+      $(element).attr('title', moment(scope.iso).format('MMMM Do YYYY [at] hh:mm')).livestamp(scope.iso);
 
       scope.$on("$destroy", function(){
-        $(element).attr('title', scope.iso).livestamp('destroy');
+        $(element).livestamp('destroy');
       });
     }
 
@@ -176,36 +176,43 @@ angular.module('directives', [])
       }
     }
   }).
-  directive('affix', function(){
+  directive('affix', ['$timeout', function($timeout){
     return {
       restrict: 'A',
       link: function(scope, el, attrs){
         var $el = $(el);
-        var $next = $el.next();
 
-        $el.affix({
-          offset: {
-            top: $('.hero').outerHeight() + $('.navbar-fixed-top').outerHeight() - $el.outerHeight()
-          }
+        $timeout(function(){
+          var $next = $el.next();
+
+          $el.affix({
+            offset: {
+              top: $(scope.aboveTag).outerHeight() + $('.navbar-fixed-top').outerHeight() - $el.outerHeight()
+            }
+          });
+
+          var marginTop = parseInt($next.css('margin-top'));
+          var metaHeight = $el.outerHeight();
+
+          $el.on('affixed.bs.affix', function(){
+            $next.css('margin-top', marginTop + metaHeight);
+          })
+
+          $el.on('affixed-top.bs.affix', function(){
+            $next.css('margin-top', marginTop);
+          })
         });
-
-        var marginTop = parseInt($next.css('margin-top'));
-        var metaHeight = $el.outerHeight();
-
-        $el.on('affixed.bs.affix', function(){
-          $next.css('margin-top', marginTop + metaHeight);
-        })
-
-        $el.on('affixed-top.bs.affix', function(){
-          $next.css('margin-top', marginTop);
-        })
 
         scope.$on("$destroy", function(){
-          $(window).off('.affix')
+          $(window).off('.affix');
+          $el.off();
         });
+      },
+      scope: {
+        aboveTag: '@affix'
       }
     }
-  })
+  }])
 
   .filter('inArray', function(){
     return function(array, notIn, attr){

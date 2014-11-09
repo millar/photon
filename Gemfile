@@ -47,7 +47,9 @@ gem 'rmagick', '2.13.2', require: 'RMagick'
 gem 'paperclip', '~> 4.2'
 gem 'delayed_paperclip'
 gem 'exifr'
-gem "resque", "~>1"
+gem 'resque', '~>1'
+
+gem 'redcarpet'
 
 # Use unicorn as the app server
 gem 'unicorn', group: :production
