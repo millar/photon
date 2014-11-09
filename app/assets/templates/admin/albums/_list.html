@@ -1,5 +1,11 @@
-<table class="table table-blocks">
-  <tr ng-repeat="album in albums">
-    <td><a ng-href="/admin/albums/{{album.id}}"><strong>{{album.title}}</strong></a></td>
-  </tr>
-</table>
+<div class="row">
+  <div class="col-md-4">
+    <ng-include src="'admin/albums/_album_panel.html'" ng-repeat="album in albums | filter:search" ng-if="$index % 3 == 0"></ng-include>
+  </div>
+  <div class="col-md-4">
+    <ng-include src="'admin/albums/_album_panel.html'" ng-repeat="album in albums | filter:search" ng-if="$index % 3 == 1"></ng-include>
+  </div>
+  <div class="col-md-4">
+    <ng-include src="'admin/albums/_album_panel.html'" ng-repeat="album in albums | filter:search" ng-if="$index % 3 == 2"></ng-include>
+  </div>
+</div>

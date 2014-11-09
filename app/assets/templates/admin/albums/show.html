@@ -1,10 +1,17 @@
-<loading-icon class="'reveal-animation'">
+<loading-icon class="reveal-animation">
   <div class="hero hero-inverse-to-dark text-center">
     <div class="container">
       <h2 style="margin-top: 0;">{{album.title}}</h2>
+      <p ng-if="album.published" style="margin-top: -10px;">
+        <a ng-href="{{siteUrl}}{{album.slug}}" class="small">{{siteUrl}}{{album.slug}}</a>
+      </p>
       <ul class="list-inline">
         <li>Created <span isodate="album.created_at"></span></li>
-        <li>by {{album.user.username}}</li>
+        <li>
+          by
+          <span ng-if="album.user.id == current_user.id">you</span>
+          <span ng-if="album.user.id != current_user.id">{{album.user.username}}</span>
+        </li>
       </ul>
 
       <div>
@@ -13,17 +20,18 @@
     </div>
   </div>
 
-  <div class="meta-row">
+  <div class="meta-row" affix>
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <ul class="list-inline" style="margin: 0; line-height: 33px">
             <li>
               <a class="text-default" ng-href="/admin/albums/{{album.id}}">
                 <i class="fa fa-photo"></i>
-                <strong>{{album.photo_count}}</strong>
+                <strong>{{album.photo_count||""}}</strong>
 
                 <ng-pluralize count="album.photo_count" when="{
+                  '0': 'no photos',
                   '1': 'photo',
                   'other': 'photos'
                 }"></ng-pluralize>
@@ -31,30 +39,38 @@
             </li>
           </ul>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-8 text-right">
           <button tooltip="Toggle published state" type="button" ng-if="!album.published" class="togglepub-btn btn btn-sm btn-danger" ng-click="togglePublish()">Unpublished</button>
           <button tooltip="Toggle published state" type="button" ng-if="album.published" class="togglepub-btn btn btn-sm btn-success" ng-click="togglePublish()">Published</button>
-          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addPhotoModal" ng-click="loadPhotos()">Add Photos</button>
-          <a class="btn btn-default btn-sm" ng-href="/admin/albums/{{album.id}}/edit">Edit Album Details</a>
+          <a class="btn btn-default btn-sm" ng-href="/admin/albums/{{album.id}}/upload">Upload Photos</a>
+          <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addPhotoModal" ng-click="loadPhotos()">Add Existing Photos</button>
+          <a class="btn btn-default btn-sm" ng-href="/admin/albums/{{album.id}}/edit">Edit Details</a>
         </div>
       </div>
     </div>
   </div>
 
-
   <div class="container separated">
-    <div class="row">
-      <div class="col-md-3 img-preview" ng-repeat="photo in album.photos" ng-class="{'clear-left': $index % 4 == 0}">
-        <photo-square photo="photo" href="'/admin/photos/' + photo.id">
+    <div class="row" id="photo-grid">
+      <div class="col-md-3 img-preview ui-state-default" data-id="{{photo.album_photo_id}}"
+        ng-repeat="photo in album.photos | orderBy:'position'" ng-class="{'clear-left': photo.position % 4 == 0}">
+        <photo-square photo="photo" href="'/admin/photos/' + photo.id" data-pending="photo-{{photo.id}}">
+          <div class="hover-options">
+            <button ng-click="$event.preventDefault(); removeFromAlbum(photo.id, photo.position);" class="btn btn-link" tooltip="Remove from album"><i class="octicon octicon-x"></i></button>
+          </div>
           <div class="caption">{{photo.title || photo.original_file_name}}</div>
         </photo-square>
       </div>
+    </div>
+
+    <div ng-if="!album.photos.length" class="text-center">
+      <a class="btn btn-success btn-lg" ng-href="/admin/albums/{{album.id}}/upload">Upload Photos</a>
     </div>
   </div>
 </loading-icon>
 
 
-<div class="modal fade" id="addPhotoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="addPhotoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">

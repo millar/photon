@@ -1,6 +1,9 @@
 /*!
  * User and Admin angular application
  *
+ * TODO: Validate slug uniqueness on clientside
+ *
+ *
  */
 
 window.$adminApp = {current_user: null};
@@ -19,6 +22,10 @@ window.$adminApp = {current_user: null};
   .config(['$routeProvider', '$locationProvider', '$httpProvider',
     function($routeProvider, $location, $httpProvider) {
       $routeProvider.
+        when('/admin/albums/:id/upload', {
+          controller: 'AlbumsUploadController',
+          templateUrl: 'admin/albums/upload.html'
+        }).
         when('/admin/albums/new', {
           controller: 'AlbumsNewController',
           templateUrl: 'admin/albums/new.html'
@@ -37,6 +44,12 @@ window.$adminApp = {current_user: null};
         }).
 
 
+        when('/admin/photos/upload/:albumId?', {
+          controller: 'UploadController',
+          templateUrl: 'admin/upload.html'
+        }).
+
+
         when('/admin/photos/uploaded', {
           controller: 'PhotosUploadedController',
           templateUrl: 'admin/photos/uploaded.html'
@@ -52,12 +65,6 @@ window.$adminApp = {current_user: null};
         when('/admin/photos', {
           controller: 'PhotosIndexController',
           templateUrl: 'admin/photos/index.html'
-        }).
-
-
-        when('/admin/upload', {
-          controller: 'UploadController',
-          templateUrl: 'admin/upload.html'
         }).
 
 

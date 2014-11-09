@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   scope '/api' do
     namespace :admin do
       resources :albums do
+        collection do
+          put 'order', to: 'albums#order'
+        end
+
         scope module: "albums" do
           resources :photos
         end
@@ -22,7 +26,7 @@ Rails.application.routes.draw do
       put 'users' => 'devise/registrations#update', :as => 'user_registration'
     end
 
-    post 'upload', to: 'upload#photos'
+    post 'upload(/:album_id)', to: 'upload#photos'
 
     get '(/*path)', to: 'site#admin'
   end

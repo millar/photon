@@ -11,6 +11,8 @@ window.$adminApp.controllers = angular.module('adminControllers', [])
       $scope.isFragment = function (viewLocation) {
         return $location.hash().match(viewLocation);
       };
+
+      $scope.siteUrl = [$location.protocol() + ":", "", $location.host(), ""].join('/');
     }])
   .controller('UserForwardController', ['$scope', '$location', '$rootScope',
     function($scope, $location, $rootScope) {
@@ -20,35 +22,42 @@ window.$adminApp.controllers = angular.module('adminControllers', [])
         $scope.loaded = true;
       }
     }])
-  .controller('UploadController', ['$scope', '$cookies',
-    function($scope, $cookies) {
+  .controller('UploadController', ['$scope', '$cookies', '$routeParams', '$timeout',
+    function($scope, $cookies, $routeParams, $timeout) {
+      $scope.albumId = $routeParams.albumId;
       $scope.loaded = true;
       $scope.started = false;
 
-      $scope.dropzone = new Dropzone('#photo-uploader', {
-        headers: {
-          'X-CSRF-Token': $cookies['XSRF-TOKEN']
-        },
-        paramName: "photo[original]",
-        acceptedFiles: 'image/*',
+      $timeout(function(){
+        $scope.dropzone = new Dropzone('#photo-uploader', {
+          headers: {
+            'X-CSRF-Token': $cookies['XSRF-TOKEN']
+          },
+          paramName: "photo[original]",
+          acceptedFiles: 'image/*',
 
-        thumbnailWidth: 150,
-        thumbnailHeight: 150,
+          thumbnailWidth: 150,
+          thumbnailHeight: 150,
 
-        parallelUploads: 1
+          parallelUploads: 1
+        });
+
+        $scope.dropzone.on('addedfile', function(){
+          $scope.started = true;
+          $scope.loaded = false;
+        })
+
+        $scope.dropzone.on('queuecomplete', function(){
+          $scope.loaded = true;
+        })
+
+        $scope.dropzone.on('totaluploadprogress', function(percent){
+          $('#upload-percentage').text((percent + "").split('.')[0]);
+        })
       });
 
-      $scope.dropzone.on('addedfile', function(){
-        $scope.started = true;
-        $scope.loaded = false;
-      })
-
-      $scope.dropzone.on('queuecomplete', function(){
-        $scope.loaded = true;
-      })
-
-      $scope.dropzone.on('totaluploadprogress', function(percent){
-        $('#upload-percentage').text((percent + "").split('.')[0]);
+      $scope.$on('$destroy', function(){
+        $scope.dropzone.disable();
       })
     }]);
 

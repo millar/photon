@@ -2,18 +2,18 @@
   <h1>Upload Photos</h1>
   <p class="lead">Photos will not be visible to viewers until published later.</p>
 
-  <form action="/admin/upload" method="post" class="dropzone" id="photo-uploader">
+  <form action="{{'/admin/upload/'+albumId}}" method="post" class="dropzone" id="photo-uploader">
     <div class="fallback">
-      <input name="photo[original]" type="file" multiple />
+      <input name="photo[original]" type="file" />
     </div>
   </form>
 
-  <div ng-if="started && !loaded">
+  <!-- <div ng-if="started && !loaded">
     <p><i class="fa fa-circle-o-notch fa-spin"></i></p>
     <p>Uploading photos (<span id="upload-percentage">0</span>%)</p>
-  </div>
+  </div> -->
 
-  <p class="view-uploaded reveal-animation" ng-if="loaded && started">
+  <p class="view-uploaded reveal-animation" ng-if="loaded && started && !albumId">
     <a href="/admin/photos/uploaded" class="btn btn-primary">Manage Uploaded Photos</a>
   </p>
 </div>

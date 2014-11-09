@@ -1,0 +1,56 @@
+<loading-icon class="reveal-animation">
+  <div class="hero hero-inverse-to-dark text-center">
+    <div class="container">
+      <h2 style="margin-top: 0;">{{album.title}}</h2>
+      <p ng-if="album.published" style="margin-top: -10px;">
+        <a ng-href="{{siteUrl}}{{album.slug}}" class="small">{{siteUrl}}{{album.slug}}</a>
+      </p>
+      <ul class="list-inline">
+        <li>Created <span isodate="album.created_at"></span></li>
+        <li>
+          by
+          <span ng-if="album.user.id == current_user.id">you</span>
+          <span ng-if="album.user.id != current_user.id">{{album.user.username}}</span>
+        </li>
+      </ul>
+
+      <div>
+        {{album.description}}
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-row" affix>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <ul class="list-inline" style="margin: 0; line-height: 33px">
+            <li>
+              <a class="text-default" ng-href="/admin/albums/{{album.id}}">
+                <i class="fa fa-photo"></i>
+                <strong>{{album.photo_count||""}}</strong>
+
+                <ng-pluralize count="album.photo_count" when="{
+                  '0': 'no photos',
+                  '1': 'photo',
+                  'other': 'photos'
+                }"></ng-pluralize>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-8 text-right">
+          <a class="btn btn-default btn-sm" ng-href="/admin/albums/{{album.id}}">Return to album</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container separated">
+    <form action="{{'/admin/upload/'+album.id}}" method="post" class="dropzone" id="photo-uploader">
+      <div class="fallback">
+        <input name="photo[original]" type="file" />
+      </div>
+    </form>
+  </div>
+</loading-icon>

@@ -1,11 +1,21 @@
-<loading-icon></loading-icon>
-
-<div class="container reveal-animation" ng-if="loaded">
-
-  <div class="text-center">
-    <h1>All Photos</h1>
-    <p class="lead">View all photos stored in system.</p>
+<loading-icon class="reveal-animation">
+  <div class="meta-row">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group has-feedback-left" style="margin-bottom: 0;">
+            <span class="octicon octicon-search form-control-feedback text-muted"></span>
+            <input type="text" class="form-control" ng-model="search" placeholder="search photos">
+          </div>
+        </div>
+        <div class="col-md-6 text-right">
+          <a href="/admin/photos/upload" class="btn btn-primary btn-sm"><span class="octicon octicon-plus"></span> Upload Photos</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <ng-include src="'admin/photos/_list.html'" onload="photos = photos"></ng-include>
-</div>
+  <div class="container">
+    <ng-include src="'admin/photos/_list.html'" onload="photos = photos"></ng-include>
+  </div>
+</loading-icon>

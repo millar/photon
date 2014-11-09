@@ -1,0 +1,29 @@
+<div class="panel album-block panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><a ng-href="/admin/albums/{{album.id}}">{{album.title}}</a></h3>
+  </div>
+  <div class="panel-body">
+    <div ng-if="!album.photos.length" class="text-muted">
+      <div style="margin-bottom: 6px;">This album contains no photos.</div>
+    </div>
+    <div class="photo-grid">
+      <div class="photo-holder" ng-class="{'clear-left': $index % 8 == 0}"
+        ng-repeat="photo in album.photos | orderBy:'position' | limitTo:(album.photo_count > 24 ? 23 : 24)">
+        <photo-square photo="photo" href="'/admin/photos/' + photo.id"></photo-square>
+      </div>
+      <div class="photo-holder more" ng-if="album.photo_count > 24">
+        <p><a ng-href="/admin/albums/{{album.id}}">+ {{album.photo_count - 23}}</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer small">
+    <ul class="list-inline" style="margin-bottom: 0;">
+      <li ng-pluralize count="album.photo_count" when="{
+        '1': '{} photo',
+        'other': '{} photos'
+      }"></li>
+      <li ng-if="album.published">published <span isodate="album.published_at"></span></li>
+      <li ng-if="!album.published"><span class="text-danger">unpublished</span></li>
+    </ul>
+  </div>
+</div>

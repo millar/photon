@@ -11,12 +11,97 @@ window.$adminApp.controllers
         $scope.loaded = true;
       });
     }])
-  .controller('AlbumsShowController', ['$scope', '$routeParams', 'Album', 'Photo', 'AlbumPhoto',
-    function($scope, $routeParams, Album, Photo, AlbumPhoto) {
+  .controller('AlbumsUploadController', ['$scope', 'Album', '$timeout', '$cookies', '$routeParams',
+    function($scope, Album, $timeout, $cookies, $routeParams) {
       $scope.loaded = false;
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
         $scope.loaded = true;
+
+        $timeout(function(){
+          $scope.dropzone = new Dropzone('#photo-uploader', {
+            headers: {
+              'X-CSRF-Token': $cookies['XSRF-TOKEN']
+            },
+            paramName: "photo[original]",
+            acceptedFiles: 'image/*',
+
+            thumbnailWidth: 150,
+            thumbnailHeight: 150,
+
+            parallelUploads: 1
+          });
+
+          $scope.dropzone.on('addedfile', function(){
+            $scope.started = true;
+            $scope.loaded = false;
+          })
+
+          $scope.dropzone.on('success', function(file, response){
+            $scope.album.photo_count++
+          })
+
+          $scope.dropzone.on('queuecomplete', function(){
+            $scope.loaded = true;
+          })
+
+          $scope.dropzone.on('totaluploadprogress', function(percent){
+            $('#upload-percentage').text((percent + "").split('.')[0]);
+          })
+        });
+
+        $scope.$on('$destroy', function(){
+          $scope.dropzone.disable();
+        })
+      });
+    }])
+  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http',
+    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http) {
+      $scope.loaded = false;
+
+      $scope.album = Album.get({id: $routeParams.id}, function(album){
+        $scope.loaded = true;
+
+        $timeout(function(){
+          $('#photo-grid').sortable({
+            forcePlaceholderSize: true,
+            change: function(event, ui){
+              var i = 0;
+              $('#photo-grid > div').removeClass('clear-left').each(function(_, el){
+                var $el = $(el);
+                var id = $el.data('id') || ui.item.data('id');
+                if (i % 4 == 0){
+                  if ($el.data('id') != ui.item.data('id')){
+                    $el.addClass('clear-left');
+                  }
+                }
+                if ($el.data('id') != ui.item.data('id')){
+                  i++;
+                }
+              });
+            },
+            update: function(event, ui){
+              $('#photo-grid').sortable("disable").addClass('fade-op pending');
+              var positions = [];
+              $.each($scope.album.photos, function(idx, photo){
+                positions[photo.album_photo_id] = idx;
+              })
+
+              $('#photo-grid > div').each(function(i, el){
+                $scope.album.photos[positions[$(el).data('id')]].position = i;
+              });
+              var order = {};
+              $.each($scope.album.photos, function(i, o){order[o.album_photo_id] = o.position});
+              $http.put("/api/admin/albums/order.json", {
+                album_photo_id: ui.item.data('id'),
+                position: order[ui.item.data('id')]}
+              ).success(function(){
+                $('#photo-grid').sortable("enable").removeClass('fade-op pending');
+              });
+            }
+          });
+          $('#photo-grid').disableSelection();
+        });
       });
 
       $scope.togglePublish = function(){
@@ -53,19 +138,22 @@ window.$adminApp.controllers
 
         ap.$create(function(ap){
           $scope.album.photos.push(ap.photo);
+          $scope.album.photo_count += 1;
           $('[data-pending=photo-'+photoId+']').removeClass('pending');
         });
       }
 
-      $scope.removeFromAlbum = function(photoId){
+      $scope.removeFromAlbum = function(photoId, position){
         var ap = new AlbumPhoto({photo_id: photoId, album_id: $scope.album.id});
 
         $('[data-pending=photo-'+photoId+']').addClass('pending');
 
         ap.$destroy(function(){
           $scope.album.photos = $.grep($scope.album.photos, function(photo){
+            if (photo.position > position) photo.position--;
             return photo.id != photoId;
           });
+          $scope.album.photo_count -= 1;
           $('[data-pending=photo-'+photoId+']').removeClass('pending');
         });
       }
@@ -73,6 +161,20 @@ window.$adminApp.controllers
   .controller('AlbumsNewController', ['$scope', 'Album', '$location',
     function($scope, Album, $location) {
       $scope.album = new Album();
+      $scope.new = true;
+
+      $scope.autofillSlug = function(){
+        if (!$scope.albumForm.slug.$dirty){
+          if ($scope.album.title){
+            $scope.album.slug = $scope.album.title
+              .replace(/[ ]/ig, '-')
+              .replace(/[^0-9a-z\-_]/ig, '')
+              .replace(/--/g, '-').toLowerCase();
+          } else {
+            $scope.album.slug = undefined;
+          }
+        }
+      }
 
       $scope.submit = function(){
         if ($scope.album.published){
@@ -93,11 +195,15 @@ window.$adminApp.controllers
     function($scope, $location, $routeParams, Album) {
       $scope.loaded = false;
 
+      $scope.autofillSlug = function(){}
+
       $scope.submit = function(){
-        if ($scope.album.published){
-          $scope.album.published_at = new Date();
-        } else {
-          $scope.album.published_at = null;
+        if ($scope.album.published != $scope.originallyPublished){
+          if ($scope.album.published){
+            $scope.album.published_at = new Date();
+          } else {
+            $scope.album.published_at = null;
+          }
         }
 
         $scope.$broadcast('show-errors');
@@ -112,5 +218,6 @@ window.$adminApp.controllers
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
         $scope.loaded = true;
+        $scope.originallyPublished = album.published;
       });
     }])

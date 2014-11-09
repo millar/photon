@@ -9,11 +9,11 @@ angular.module('directives', [])
     }
 
     return {
-      template: '<div ng-if="!loaded || !$parent.loaded" class="text-center"><span class="fa fa-circle-o-notch fa-spin text-muted"></span></div>' +
+      template: '<div ng-if="!loaded || !$parent.loaded" class="text-center"><p><span class="fa fa-circle-o-notch fa-spin text-muted"></span></p></div>' +
                 '<div ng-if="loaded && $parent.loaded" class="{{class}}" ng-transclude></div>',
       scope: {
         loaded: '=?',
-        class: '=?'
+        class: '@?'
       },
       link: link,
       transclude: true
@@ -21,7 +21,7 @@ angular.module('directives', [])
   })
   .directive('photoSquare', function(){
     function link(scope, element, attrs){
-      $el = $(element);
+      var $el = $(element);
       if (!scope.size) scope.size = $el.parent().width();
 
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
@@ -32,15 +32,26 @@ angular.module('directives', [])
           )
       }
 
-      $el.find('.image')
+      function imageLoad(){
+        this.className += " fade-op";
+        this.style.opacity = 1;
+      }
+
+      function imageError(){
+        this.style.display = "none";
+      }
+
+      scope.images = $el.find('.image');
+
+      scope.images
         .css('opacity', 0)
-        .on('load', function(){
-          this.className += " fade-op";
-          this.style.opacity = 1;
-        })
-        .on('error', function(){
-          this.style.display = "none";
-        })
+        .on('load', imageLoad)
+        .on('error', imageError);
+
+      scope.$on("$destroy", function(){
+        scope.images.off();
+      });
+
     }
 
     return {
@@ -58,7 +69,7 @@ angular.module('directives', [])
   })
   .directive('photoElement', function(){
     function link(scope, element, attrs){
-      $el = $(element);
+      var $el = $(element);
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
         $el.find('.background')
           .css(
@@ -71,15 +82,25 @@ angular.module('directives', [])
       scope.width = scope.photo.width * sf;
       scope.height = scope.photo.height * sf;
 
-      $el.find('.image')
-        .css('opacity', 0)
-        .on('load', function(){
+      function imageLoad(){
           this.className += " fade-op";
           this.style.opacity = 1;
-        })
-        .on('error', function(){
+        }
+
+        function imageError(){
           this.style.display = "none";
-        })
+        }
+
+        scope.image = $el.find('.image');
+
+        scope.image
+          .css('opacity', 0)
+          .on('load', imageLoad)
+          .on('error', imageError);
+
+        scope.$on("$destroy", function(){
+          scope.image.off();
+        });
     }
 
     return {
@@ -96,6 +117,10 @@ angular.module('directives', [])
   .directive('isodate', function(){
     function link(scope, element, attrs){
       $(element).attr('title', scope.iso).livestamp(scope.iso);
+
+      scope.$on("$destroy", function(){
+        $(element).attr('title', scope.iso).livestamp('destroy');
+      });
     }
 
     return {
@@ -109,6 +134,10 @@ angular.module('directives', [])
   .directive('tooltip', function(){
     function link(scope, element, attrs){
       $(element).tooltip({title: scope.message, placement: 'bottom'});
+
+      scope.$on("$destroy", function(){
+        $(element).tooltip('destroy');
+      });
     }
 
     return {
@@ -140,6 +169,40 @@ angular.module('directives', [])
         scope.$on('show-errors', function() {
           el.toggleClass('has-error', formCtrl[inputName].$invalid);
         });
+
+        scope.$on("$destroy", function(){
+          inputNgEl.unbind();
+        });
+      }
+    }
+  }).
+  directive('affix', function(){
+    return {
+      restrict: 'A',
+      link: function(scope, el, attrs){
+        var $el = $(el);
+        var $next = $el.next();
+
+        $el.affix({
+          offset: {
+            top: $('.hero').outerHeight() + $('.navbar-fixed-top').outerHeight() - $el.outerHeight()
+          }
+        });
+
+        var marginTop = parseInt($next.css('margin-top'));
+        var metaHeight = $el.outerHeight();
+
+        $el.on('affixed.bs.affix', function(){
+          $next.css('margin-top', marginTop + metaHeight);
+        })
+
+        $el.on('affixed-top.bs.affix', function(){
+          $next.css('margin-top', marginTop);
+        })
+
+        scope.$on("$destroy", function(){
+          $(window).off('.affix')
+        });
       }
     }
   })
@@ -147,7 +210,7 @@ angular.module('directives', [])
   .filter('inArray', function(){
     return function(array, notIn, attr){
       attr = attr || "id";
-      notInIds = $.map(notIn, function(o){return o[attr]});
+      var notInIds = $.map(notIn, function(o){return o[attr]});
       return $.grep(array, function(obj){
         return $.inArray(obj[attr], notInIds) !== -1;
       });
@@ -156,7 +219,7 @@ angular.module('directives', [])
   .filter('notInArray', function(){
     return function(array, notIn, attr){
       attr = attr || "id";
-      notInIds = $.map(notIn, function(o){return o[attr]});
+      var notInIds = $.map(notIn, function(o){return o[attr]});
       return $.grep(array, function(obj){
         return $.inArray(obj[attr], notInIds) == -1;
       });

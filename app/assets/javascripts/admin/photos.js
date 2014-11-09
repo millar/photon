@@ -33,9 +33,6 @@ window.$adminApp.controllers
 
         $scope.photo.$update(function(photo){
           $scope.photo = photo;
-          // var redirectTo = $location.path().split('/');
-          // redirectTo.pop();
-          // $location.path(redirectTo.join('/'));
           $scope.saving -= 1;
           $scope.saved = true;
         });
@@ -60,6 +57,7 @@ window.$adminApp.controllers
 
         ap.$create(function(ap){
           $scope.photo.albums.push(ap.album);
+          $scope.photo.album_count += 1;
           $('[data-pending=album-'+albumId+']').removeClass('pending');
         });
       }
@@ -73,6 +71,7 @@ window.$adminApp.controllers
           $scope.photo.albums = $.grep($scope.photo.albums, function(album){
             return album.id != albumId;
           });
+          $scope.photo.album_count -= 1;
           $('[data-pending=album-'+albumId+']').removeClass('pending');
         });
       }

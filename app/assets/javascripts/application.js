@@ -29,6 +29,8 @@
 //= require moment/moment
 //= require livestampjs/livestamp
 
+//= require jquery-ui
+
 //= require app
 //= require controllers
 

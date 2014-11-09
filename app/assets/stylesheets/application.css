@@ -4,4 +4,5 @@
 *= require octicons/octicons/sprockets-octicons
 *= require font-awesome
 *= require dropzone/downloads/css/basic
+*= require jquery-ui-sortable/jquery-ui
 */

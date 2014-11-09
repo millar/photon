@@ -3,7 +3,8 @@
 <div class="container reveal-animation separated" ng-if="loaded">
   <div class="row">
     <div class="col-md-6 col-md-offset-3">
-      <h2 style="margin-top: 0;"><a ng-href="/admin/albums/{{album.id}}">{{album.title}}</a></h2>
+      <h2 style="margin: 0;"><a ng-href="/admin/albums/{{album.id}}">{{album.title}}</a></h2>
+      <p><small class="text-muted">{{siteUrl}}{{album.slug}}</small></p>
       <ul class="list-inline">
         <li>Created <span isodate="album.created_at"></span></li>
         <li>
