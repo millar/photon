@@ -9,7 +9,7 @@
     <div class="photo-grid">
       <div class="photo-holder" ng-class="{'clear-left': $index % 8 == 0}"
         ng-repeat="photo in album.photos | orderBy:'position' | limitTo:(album.photo_count > 24 ? 23 : 24)">
-        <photo-square photo="photo" href="'/admin/photos/' + photo.id"></photo-square>
+        <photo-square photo="photo" href="'/admin/albums/' + album.id + '?photo=' + photo.id"></photo-square>
       </div>
       <div class="photo-holder more" ng-if="album.photo_count > 24">
         <p><a ng-href="/admin/albums/{{album.id}}">+ {{album.photo_count - 23}}</a></p>

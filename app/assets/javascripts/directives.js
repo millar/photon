@@ -30,6 +30,14 @@ angular.module('directives', [])
             "background-image",
             "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
           )
+          .css(
+            "background-image",
+            "-o-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
+          )
+          .css(
+            "background-image",
+            "linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
+          )
       }
 
       function imageLoad(){
@@ -71,11 +79,16 @@ angular.module('directives', [])
   .directive('photoElement', function(){
     function link(scope, element, attrs){
       var $el = $(element);
+
+      if (!scope.size) scope.size = $el.parent().width();
+
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
         $el.find('.background')
           .css(
             "background-image",
-            "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
+            "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")," +
+            "-o-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")," +
+            "linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
         )
       }
 
@@ -108,10 +121,10 @@ angular.module('directives', [])
       templateUrl: 'directives/photo-element.html',
       scope: {
         photo: '=',
-        size: '=',
-        labels: '='
+        size: '=?'
       },
       restrict: 'E',
+      transclude: true,
       link: link
     }
   })
@@ -187,18 +200,15 @@ angular.module('directives', [])
           var $next = $el.next();
           var marginTop = parseInt($next.css('margin-top'));
           var metaHeight = $el.outerHeight();
-          // var affixPad = $(scope.aboveTag).outerHeight();
 
           $el.on('affixed.bs.affix', function(){
             $('body').addClass('hero-passed');
             $next.css('margin-top', marginTop + metaHeight);
-            // $('.affix-pad').style('height', affixPad);
           })
 
           $el.on('affixed-top.bs.affix', function(){
             $('body').removeClass('hero-passed');
             $next.css('margin-top', marginTop);
-            // $('.affix-pad').style('height', 0);
           })
 
           $el.affix({

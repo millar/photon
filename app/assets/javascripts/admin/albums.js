@@ -55,12 +55,71 @@ window.$adminApp.controllers
         })
       });
     }])
-  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http', '$sce', '$location',
-    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http, $sce, $location) {
+  .controller('AlbumsShowController', ['$scope', '$routeParams', '$timeout', 'Album', 'Photo', 'AlbumPhoto', '$http', '$sce', '$location', '$document',
+    function($scope, $routeParams, $timeout, Album, Photo, AlbumPhoto, $http, $sce, $location, $document) {
       $scope.loaded = false;
 
-      $scope.openPhoto = function(photo){
-        $location.search({photo: photo.id});
+      $scope.showingPhoto = null;
+      $scope.modalPhoto = null;
+
+      $scope.setPhoto = function(photoId){
+        $timeout(function(){
+          $location.search({photo: photoId});
+          $scope.openPhoto();
+        });
+      }
+
+      $scope.closePhoto = function(){
+        $scope.showingPhoto = null;
+        $scope.modalPhoto = null;
+        $timeout(function(){
+          $location.search('photo', null);
+        })
+        $('#photoModal').modal('hide');
+      }
+
+      $document.on('keydown', function(event) {
+        if ($scope.showingPhoto){
+          if (event.keyCode == 37 && $scope.modalPrev){
+            $scope.setPhoto($scope.modalPrev);
+          } else if (event.keyCode == 39 && $scope.modalNext){
+            $scope.setPhoto($scope.modalNext);
+          }
+        }
+      })
+
+      $scope.openPhoto = function(){
+        $scope.modalPhoto = null;
+        var photoId = parseInt($location.search().photo);
+
+        $scope.modalPrev = null;
+        $scope.modalNext = null;
+
+        var last;
+        var past = false;
+
+        var albums = angular.copy($scope.album.photos);
+        albums.sort(function(a,b){return a.position-b.position});
+
+        $.each(albums, function(idx, p){
+          if (photoId == p.id){
+            $scope.modalPrev = last;
+            past = true;
+          } else if (past && !$scope.modalNext){
+            $scope.modalNext = p.id;
+          }
+
+          last = p.id;
+        });
+
+        $('#photoModal').modal('show');
+
+        $scope.showingPhoto = photoId;
+        $scope.modalPhoto = $.grep($scope.album.photos, function(p){return p.id == photoId})[0];
+
+        if ($scope.modalPhoto.description){
+          $scope.modalPhoto.full_description = $sce.trustAsHtml($scope.modalPhoto.full_description); // TODO: bugs?
+        }
       }
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
@@ -107,12 +166,27 @@ window.$adminApp.controllers
           });
           $('#photo-grid').disableSelection();
           if (album.cover) $('#navbar').addClass('navbar-transparent');
-
-          $scope.$on("$destroy", function(){
-            $('#photo-grid').sortable("destroy");
-            $('#navbar').removeClass('navbar-transparent');
-          });
         });
+
+        $('#photoModal').on('hidden.bs.modal', function(e){
+          $location.search('photo', null);
+          if ($scope.showingPhoto){
+            e.preventDefault();
+            e.stopPropagation();
+            $scope.closePhoto();
+          }
+        });
+
+        $scope.$on("$destroy", function(){
+          $('#photo-grid').sortable("destroy");
+          $('#navbar').removeClass('navbar-transparent');
+          $('#photoModal').off();
+          $document.off('keydown');
+        });
+
+        if ($location.search().photo){
+          $scope.openPhoto();
+        }
       });
 
       $scope.togglePublish = function(){

@@ -312,7 +312,6 @@ photo-square {
 
 photo-element {
   display: block;
-  margin-bottom: 20px;
 
   .background {
     position: relative;
@@ -722,4 +721,30 @@ body {
   width: 1em;
   border-radius: @border-radius-base;
   margin-right: 4px;
+}
+
+.photo-modal {
+  .modal-content {
+    background: #222;
+    .dark;
+    margin-top: 100px;
+
+    .modal-footer {
+      text-align: left;
+      border-color: transparent;
+      background: #000;
+      // color: #333;
+
+      .btn.btn-xs {
+        font-weight: 400;
+        padding:  3px 8px;
+        margin-top: -2px;
+        margin-bottom: -2px;
+      }
+    }
+  }
+}
+
+.btn.btn-xs {
+  font-weight: 400;
 }

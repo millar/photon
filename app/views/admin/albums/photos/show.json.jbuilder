@@ -9,4 +9,7 @@ json.photo do
   json.sizes Hash[@album_photo.photo.original.styles.map {|style, _| [style, "http://#{request.host}#{@album_photo.photo.original.url(style)}"]}]
   json.position @album_photo.position
   json.album_photo_id @album_photo.id
+  json.full_description @album_photo.photo.full_description
+  json.top_colors @album_photo.photo.top_colors
+  json.album_photo_created_at @album_photo.created_at
 end

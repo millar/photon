@@ -61,10 +61,9 @@
     <div class="row" id="photo-grid">
       <div class="col-md-3 img-preview ui-state-default" data-id="{{photo.album_photo_id}}"
         ng-repeat="photo in album.photos | orderBy:'position'" ng-class="{'clear-left': photo.position % 4 == 0}">
-        <photo-square photo="photo" ng-click="openPhoto(photo)" data-pending="photo-{{photo.id}}">
+        <photo-square photo="photo" ng-click="setPhoto(photo.id)" data-pending="photo-{{photo.id}}">
           <div class="hover-options">
-            <button ng-click="$event.preventDefault(); setCover(photo.id);" class="btn btn-link" tooltip="Choose as album cover"><i class="octicon octicon-bookmark"></i></button>
-            <button ng-click="$event.preventDefault(); removeFromAlbum(photo.id, photo.position);" class="btn btn-link" tooltip="Remove from album"><i class="octicon octicon-x"></i></button>
+            <button ng-click="$event.stopPropagation(); removeFromAlbum(photo.id, photo.position);" class="btn btn-link" tooltip="Remove from album"><i class="octicon octicon-x"></i></button>
           </div>
           <div class="caption">{{photo.title || photo.original_file_name}}</div>
         </photo-square>
@@ -148,6 +147,77 @@
       </loading-icon>
       <div class="modal-footer" style="text-align:center;">
         <small class="text-muted">Click on a photo to add it to this album</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal photo-modal" id="photoModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" ng-if="modalPhoto">
+      <photo-element photo="modalPhoto"></photo-element>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-7">
+            <h4><a ng-href="/admin/photos/{{modalPhotor.id}}">{{modalPhoto.title||modalPhoto.original_file_name}}</a></h4>
+            <div class="smaller-description" ng-bind-html="modalPhoto.full_description" ng-if="modalPhoto.description"></div>
+            <p class="text-muted" ng-if="!modalPhoto.description">No description</p>
+          </div>
+          <div class="col-md-5">
+            <dl class="dl-horizontal" style="margin-top: 11px;">
+              <div ng-if="modalPhoto.taken_at">
+                <dt>taken</dt>
+                <dd>
+                  <span isodate="modalPhoto.taken_at"></span>
+                </dd>
+              </div>
+              <div ng-if="modalPhoto.model">
+                <dt>camera</dt>
+                <dd>
+                  {{modalPhoto.model}}
+                </dd>
+              </div>
+              <div ng-if="modalPhoto.exposure_time">
+                <dt>exposure time</dt>
+                <dd>
+                  {{modalPhoto.exposure_time}}
+                </dd>
+              </div>
+              <div ng-if="modalPhoto.f_number">
+                <dt>&fnof;</dt>
+                <dd>
+                  {{modalPhoto.f_number}}
+                </dd>
+              </div>
+              <dt>dimensions</dt>
+              <dd>
+                {{modalPhoto.width}}x{{modalPhoto.height}}
+              </dd>
+              <dt>average color</dt>
+              <dd>
+                <div class="swatch" ng-style="{'background-color': modalPhoto.average_hex}" tooltip="{{modalPhoto.average_hex}}"></div>
+              </dd>
+              <dt>top colors</dt>
+              <dd>
+                <div style="float: left;" ng-repeat="hex in modalPhoto.top_colors" class="swatch" ng-style="{'background-color': hex}" tooltip="{{hex}}"></div>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-inline" style="margin: 0;">
+              <li>{{modalPhoto.position + 1}} of {{album.photo_count}}</li>
+              <li class="small">added <span isodate="modalPhoto.album_photo_created_at"></span></li>
+            </ul>
+          </div>
+          <div class="col-md-6 text-right">
+            <button ng-if="album.cover.id != modalPhoto.id" ng-click="$event.stopPropagation(); setCover(modalPhoto.id);" class="btn btn-warning btn-xs">Set As Cover</button>
+            <button type="button" class="btn btn-primary btn-xs">Edit Details</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
