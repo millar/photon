@@ -86,10 +86,16 @@ angular.module('directives', [])
         $el.find('.background')
           .css(
             "background-image",
-            "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")," +
-            "-o-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")," +
+            "-webkit-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
+          )
+          .css(
+            "background-image",
+            "-o-linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
+          )
+          .css(
+            "background-image",
             "linear-gradient(-45deg, "+scope.photo.average_nw_hex+", "+scope.photo.average_se_hex+")"
-        )
+          )
       }
 
       var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
