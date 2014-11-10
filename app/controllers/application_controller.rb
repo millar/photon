@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     if devise_controller?
       return "admin"
     end
-    "user"
+    "client"
   end
 
   def configure_permitted_parameters

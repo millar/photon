@@ -20,8 +20,8 @@
       })(document);
     </script>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag    'client', media: 'all' %>
+    <%= javascript_include_tag 'client' %>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +30,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body <% if content_for(:ng_app) %>ng-app="<%= content_for :ng_app%>"<% end %>>
+  <body ng-app="clientApp">
     <div ng-controller="MainController">
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
@@ -61,7 +61,8 @@
         <% end %>
       </div>
 
-      <%= yield %>
+      <div ng-view></div>
+      <div id="yield"><%= yield %></div>
 
       <% if user_signed_in? %>
         <footer>
@@ -76,5 +77,13 @@
         </footer>
       <% end %>
     </div>
+
+    <script type="text/javascript">
+      <% if user_signed_in? %>
+      window.$clientApp.current_user = <%= current_user.to_json.html_safe %>;
+      <% else %>
+      window.$clientApp.current_user = null;
+      <% end %>
+    </script>
   </body>
 </html>

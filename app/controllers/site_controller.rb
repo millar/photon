@@ -1,12 +1,12 @@
 class SiteController < ApplicationController
   before_action :authenticate_user!, only: :admin
 
-  def user
-    render :layout => 'user'
+  def client
+    render layout: 'client', html: ""
   end
 
   def admin
-    render :layout => 'admin'
+    render layout: 'admin', html: ""
   end
 
   def not_found

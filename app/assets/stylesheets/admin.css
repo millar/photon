@@ -1,5 +1,6 @@
 /*
 *= depend_on variables
+*= depend_on shared
 *= require admin-app
 *= require octicons/octicons/sprockets-octicons
 *= require font-awesome

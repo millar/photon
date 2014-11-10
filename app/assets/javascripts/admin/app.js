@@ -1,5 +1,5 @@
 /*!
- * User and Admin angular application
+ * Admin angular application
  *
  * TODO: Validate slug uniqueness on clientside
  *
@@ -8,7 +8,7 @@
 
 window.$adminApp = {current_user: null};
 
- angular.module('adminApp', [
+angular.module('adminApp', [
   'templates',
   'ngRoute',
   'ngCookies',
@@ -18,7 +18,7 @@ window.$adminApp = {current_user: null};
 
   'adminControllers',
   'adminServices'
- ])
+])
   .config(['$routeProvider', '$locationProvider', '$httpProvider',
     function($routeProvider, $location, $httpProvider) {
       $routeProvider.
@@ -96,25 +96,3 @@ window.$adminApp = {current_user: null};
 
       Dropzone.autoDiscover = false;
     }]);
-
-
-angular.module('userApp', [
- 'templates',
- 'ngRoute',
-
- 'userControllers'
-])
- .config(['$routeProvider', '$locationProvider',
-   function($routeProvider, $location) {
-     $routeProvider.
-       when('/', {
-         templateUrl: 'user/index.html'
-       }).
-       when('/admin/:path*?', {
-         controller: 'AdminForwardController',
-         template: " "
-       });
-
-     $location.html5Mode(true).hashPrefix('!');
-   }
- ]);

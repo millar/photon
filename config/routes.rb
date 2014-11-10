@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   end
 
   get 'photo-img/(*path)', to: 'site#not_found'
-  get '(*path)', to: 'site#user'
+  get '(*path)', to: 'site#client'
 
   # You can have the root of your site routed with "root"
   root 'site#user'
