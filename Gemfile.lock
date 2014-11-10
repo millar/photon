@@ -52,6 +52,7 @@ GEM
     bcrypt (3.1.9)
     binding_of_caller (0.7.3.pre1)
       debug_inspector (>= 0.0.1)
+    browser (0.7.1)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -264,6 +265,7 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
+  browser
   byebug
   capistrano-bundler
   capistrano-nginx-unicorn

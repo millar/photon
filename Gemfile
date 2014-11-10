@@ -53,6 +53,8 @@ gem "paranoia", :github => "radar/paranoia", :branch => "rails4"
 
 gem 'redcarpet'
 
+gem 'browser'
+
 # Use unicorn as the app server
 gem 'unicorn', group: :production
 

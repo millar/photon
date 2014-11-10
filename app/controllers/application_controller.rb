@@ -7,8 +7,13 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_filter :set_csrf_cookie_for_ng
+  before_filter :set_tracking_cookie
 
   protected
+
+  def set_tracking_cookie
+    cookies.permanent[:user_uuid] = SecureRandom.uuid unless cookies[:user_uuid]
+  end
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?

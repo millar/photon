@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109184757) do
+ActiveRecord::Schema.define(version: 20141110230126) do
 
   create_table "album_photos", force: true do |t|
     t.string   "title"
@@ -27,6 +27,24 @@ ActiveRecord::Schema.define(version: 20141109184757) do
 
   add_index "album_photos", ["deleted_at"], name: "index_album_photos_on_deleted_at"
 
+  create_table "album_views", force: true do |t|
+    t.integer  "album_id",        null: false
+    t.string   "context"
+    t.text     "context_data"
+    t.string   "ip_address"
+    t.string   "user_agent"
+    t.string   "referrer"
+    t.string   "browser_name"
+    t.string   "browser_version"
+    t.boolean  "mobile"
+    t.boolean  "tablet"
+    t.string   "platform"
+    t.boolean  "bot"
+    t.boolean  "search_engine"
+    t.string   "tracking_id"
+    t.datetime "created_at",      null: false
+  end
+
   create_table "albums", force: true do |t|
     t.string   "title"
     t.text     "description"
@@ -39,10 +57,30 @@ ActiveRecord::Schema.define(version: 20141109184757) do
     t.string   "client"
     t.datetime "deleted_at"
     t.integer  "cover_id"
+    t.integer  "views_count",  default: 0
   end
 
   add_index "albums", ["cover_id"], name: "index_albums_on_cover_id"
   add_index "albums", ["deleted_at"], name: "index_albums_on_deleted_at"
+
+  create_table "photo_views", force: true do |t|
+    t.integer  "photo_id",        null: false
+    t.integer  "album_id"
+    t.string   "context"
+    t.text     "context_data"
+    t.string   "ip_address"
+    t.string   "user_agent"
+    t.string   "referrer"
+    t.string   "browser_name"
+    t.string   "browser_version"
+    t.boolean  "mobile"
+    t.boolean  "tablet"
+    t.string   "platform"
+    t.boolean  "bot"
+    t.boolean  "search_engine"
+    t.string   "tracking_id"
+    t.datetime "created_at",      null: false
+  end
 
 # Could not dump table "photos" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
