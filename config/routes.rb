@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   scope '/api' do
+    resources :albums
+    resources :photos
+
     namespace :admin do
       resources :albums do
         collection do
