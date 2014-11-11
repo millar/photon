@@ -34,7 +34,6 @@ window.$adminApp.controllers
 
           $scope.dropzone.on('addedfile', function(){
             $scope.started = true;
-            $scope.loaded = false;
           })
 
           $scope.dropzone.on('success', function(file, response){
@@ -42,11 +41,10 @@ window.$adminApp.controllers
           })
 
           $scope.dropzone.on('queuecomplete', function(){
-            $scope.loaded = true;
           })
 
           $scope.dropzone.on('totaluploadprogress', function(percent){
-            $('#upload-percentage').text((percent + "").split('.')[0]);
+            // $('#upload-percentage').text((percent + "").split('.')[0]);
           })
         });
 
@@ -198,8 +196,8 @@ window.$adminApp.controllers
           $scope.album.published_at = null;
         }
 
-        $scope.album.$update(function(album){
-          $scope.album.published = album.published;
+        $scope.album.$update(function(){
+          $scope.album.published = !$scope.album.published;
           $('.togglepub-btn').removeClass('pending');
         });
       };
@@ -211,7 +209,7 @@ window.$adminApp.controllers
       $scope.photosLoaded = false;
       $scope.loadPhotos = function(){
         $scope.photosLoaded = false;
-        $scope.photos = Photo.query({query: $scope.newPhotoQuery, limit: 20, order: "created_at", not_in: $scope.album.id}, function(albums){
+        $scope.photos = Photo.query({query: $scope.newPhotoQuery, limit: 20, order: "created_at desc", not_in: $scope.album.id}, function(albums){
           $scope.photosLoaded = true;
         });
       }

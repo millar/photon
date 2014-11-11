@@ -1,0 +1,44 @@
+
+<div class="container" id="palette">
+  <div class="row">
+    <div ng-repeat="photo in photos" class="col-md-2 photo-swatch-grid">
+      <div class="the-photo">
+        <photo-square photo="photo" size="167" height="170"></photo-square>
+      </div>
+
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[5]}"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[1]}"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[7]}"></div>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[3]}"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[0]}"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[4]}"></div>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 28px;">
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[8]}"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[2]}"></div>
+        </div>
+        <div class="col-md-4">
+          <div class="swatch" ng-style="{'background-color': photo.top_colors[6]}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

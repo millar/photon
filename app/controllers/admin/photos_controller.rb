@@ -14,6 +14,10 @@ class Admin::PhotosController < ApplicationController
       @photos = @photos.limit(params[:limit])
     end
 
+    if params[:order]
+      @photos = @photos.order(params[:order])
+    end
+
     if params[:offset]
       @photos = @photos.offset(params[:offset])
     end

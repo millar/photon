@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   scope '/api' do
     resources :albums
-    resources :photos
+    resources :photos do
+      collection do
+        get 'colors', to: 'photos#colors'
+      end
+    end
 
     namespace :admin do
       resources :albums do

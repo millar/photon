@@ -25,6 +25,10 @@ angular.module('clientApp', [
           when('/', {
             templateUrl: 'client/index.html'
           }).
+          when('/colors', {
+            controller: 'ColorsController',
+            templateUrl: 'client/colors.html'
+          }).
           when('/admin/:path*?', {
             controller: 'AdminForwardController',
             template: " "

@@ -109,10 +109,10 @@ class Photo < ActiveRecord::Base
     # Photo.all.each {|photo| photo.save_top_colors}
     image = Magick::Image.read(original.path).first
     colors = []
-    q = image.quantize(7, Magick::RGBColorspace)
+    q = image.quantize(9, Magick::RGBColorspace)
     palette = q.color_histogram.sort {|a, b| b[1] <=> a[1]}
 
-    (0..6).each do |i|
+    palette.length.times.each do |i|
         c = palette[i][0].to_s.split(',').map {|x| x[/\d+/]}
         c.pop
         c[0], c[1], c[2] = [c[0], c[1], c[2]].map { |s|

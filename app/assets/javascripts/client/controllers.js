@@ -21,4 +21,10 @@ window.$clientApp.controllers = angular.module('clientControllers', [])
   .controller('HomeController', ['$scope',
     function($scope) {
 
-    }]);
+    }])
+  .controller('ColorsController', ['$scope', '$http',
+    function($scope, $http) {
+      $http.get('/api/photos/colors.json').success(function(photos){
+        $scope.photos = photos;
+      });
+    }]);;

@@ -8,6 +8,8 @@
 
 @brand-secondary:     #353a43;
 
+@body-bg: #fff;
+
 footer {
   padding: 30px 0;
   margin-top: 15px;
@@ -16,5 +18,38 @@ footer {
   ul {
     padding-left: 20px !important;
     display: inline;
+  }
+}
+
+.swatch {
+  border-radius: @border-radius-base;
+  margin-right: 4px;
+}
+
+#palette {
+  .swatch {
+    border-radius: @border-radius-base;
+    width: 50px;
+    height: 50px;
+    margin: auto;
+  }
+}
+
+.photo-swatch-grid {
+  width: 15% !important;
+  margin-right: 1.66666667% !important;
+
+  .the-photo {
+    position: absolute;
+    top: 0;
+    left: 15px;
+    display: none;
+    z-index: 100;
+  }
+
+  &:hover {
+    .the-photo {
+      display: block;
+    }
   }
 }
