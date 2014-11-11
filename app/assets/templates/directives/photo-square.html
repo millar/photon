@@ -1,5 +1,5 @@
-<a class="background" ng-style="{width: size, height: height||size}" ng-href="{{href}}">
-  <img class="image" ng-class="{'img-responsive': !size}" ng-src="{{photo.sizes.sq_300}}" ng-style="{width: size, height: height||size}">
+<a class="background" ng-style="{width: width||size, height: height||size}" ng-href="{{href}}">
+  <img class="image" ng-class="{'img-responsive': !size}" ng-src="{{photo.sizes.sq_300}}" ng-style="{width: width||size, height: height||size}">
 
   <div class="inside" ng-transclude></div>
 </a>

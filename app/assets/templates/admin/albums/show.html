@@ -159,7 +159,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-md-7">
-            <h4><a ng-href="/admin/photos/{{modalPhotor.id}}">{{modalPhoto.title||modalPhoto.original_file_name}}</a></h4>
+            <h4><a ng-href="/admin/photos/{{modalPhoto.id}}">{{modalPhoto.title||modalPhoto.original_file_name}}</a></h4>
             <div class="smaller-description" ng-bind-html="modalPhoto.full_description" ng-if="modalPhoto.description"></div>
             <p class="text-muted" ng-if="!modalPhoto.description">No description</p>
           </div>
@@ -172,7 +172,7 @@
                 </dd>
               </div>
               <div ng-if="modalPhoto.model">
-                <dt>camera</dt>
+                <dt>hardware</dt>
                 <dd>
                   {{modalPhoto.model}}
                 </dd>
@@ -215,7 +215,7 @@
           </div>
           <div class="col-md-6 text-right">
             <button ng-if="album.cover.id != modalPhoto.id" ng-click="$event.stopPropagation(); setCover(modalPhoto.id);" class="btn btn-warning btn-xs">Set As Cover</button>
-            <button type="button" class="btn btn-primary btn-xs">Edit Details</button>
+            <a ng-href="/admin/photos/{{modalPhoto.id}}/edit" class="btn btn-primary btn-xs">Edit Details</a>
           </div>
         </div>
       </div>

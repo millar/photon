@@ -23,6 +23,10 @@ angular.module('adminServices', ['ngResource'])
         'destroy': { params: {photoId:'@photo_id', albumId:'@album_id'}, method:'DELETE' }
       });
     }])
+  .factory('User', ['$resource',
+    function($resource){
+      return $resource('/api/admin/users.json');
+    }])
   .factory('srv', function($q,$http) {
     var queue=[];
     var execNext = function() {

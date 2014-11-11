@@ -86,6 +86,16 @@ window.$adminApp.controllers
         }
       })
 
+      $scope.$on("$locationChangeSuccess", function(event, next){
+        if (parseInt($location.search().photo) != $scope.showingPhoto){
+          if ($location.search().photo){
+            $scope.openPhoto();
+          } else {
+            $scope.closePhoto();
+          }
+        }
+      });
+
       $scope.openPhoto = function(){
         $scope.modalPhoto = null;
         var photoId = parseInt($location.search().photo);

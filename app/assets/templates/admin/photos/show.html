@@ -17,10 +17,12 @@
 <div ng-if="loaded" class="meta-row">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <ul class="list-inline" style="margin: 0; line-height: 33px">
           <li>Uploaded <span isodate="photo.created_at"></span></li>
           <li>by {{photo.user.username}}</li>
+          <li ng-if="photo.published" class="text-success">published</li>
+          <li ng-if="!photo.published" class="text-danger">unpublished</li>
           <li ng-if="photo.album_count" ng-pluralize count="photo.album_count" when="{
             '1': 'contained in {{photo.albums[0].title}}',
             'other': 'contained in {} albums'
@@ -31,7 +33,8 @@
           </li>
         </ul>
       </div>
-      <div class="col-md-6 text-right">
+      <div class="col-md-4 text-right">
+        <a ng-if="photo.published" class="btn btn-default btn-sm" ng-href="/photos/{{photo.id}}" target="_self">View On Site</a>
         <a class="btn btn-default btn-sm" ng-href="/admin/photos/{{photo.id}}/edit">Edit Photo Details</a>
       </div>
     </div>
@@ -46,6 +49,31 @@
       <p ng-if="!photo.description">
         <a ng-href="/admin/photos/{{photo.id}}/edit">Add description</a>
       </p>
+
+      <hr>
+
+      <p class="text-muted" ng-if="!photo.albums.length">
+        Not included in any albums yet.
+      </p>
+      <div ng-if="photo.albums.length">
+        <h4>
+          Featured in
+        </h4>
+        <table class="table table-wide">
+          <tr>
+            <th>Album Title</th>
+            <th colspan="2">Created</th>
+          </tr>
+          <tr ng-repeat="album in photo.albums" data-pending="album-{{album.id}}">
+            <td><a ng-href="/admin/albums/{{album.id}}"><strong>{{album.title}}</strong></a></td>
+            <td><span isodate="album.created_at" class="small"></span></td>
+            <td class="text-right small text-muted" ng-pluralize count="album.photo_count" when="{
+              '1': '{} photo',
+              'other': '{} photos'
+            }"></td>
+          </tr>
+        </table>
+      </div>
     </div>
     <div class="col-md-6">
       <h4 style="margin-top: 0;">&nbsp;</h4>
@@ -57,7 +85,7 @@
           </dd>
         </div>
         <div ng-if="photo.model">
-          <dt>camera</dt>
+          <dt>hardware</dt>
           <dd>
             {{photo.model}}
           </dd>

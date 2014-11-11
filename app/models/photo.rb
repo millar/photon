@@ -143,4 +143,9 @@ class Photo < ActiveRecord::Base
     markdown = Redcarpet::Markdown.new(renderer, extensions = {})
     markdown.render(self.description)
   end
+
+  def published
+    self.albums
+    !self.albums.where("albums.published_at IS NOT NULL and albums.published_at < ?", Time.now).empty?
+  end
 end

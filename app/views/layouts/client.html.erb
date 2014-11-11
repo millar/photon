@@ -13,7 +13,7 @@
     <script>
       (function(d) {
         var config = {
-          kitId: 'muo5zjq',
+          kitId: 'kdk0jsz',
           scriptTimeout: 3000
         },
         h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
@@ -32,7 +32,7 @@
   </head>
   <body ng-app="clientApp">
     <div ng-controller="MainController">
-      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <!-- <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -48,11 +48,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
-      </div>
+      </div> -->
 
-      <div class="container alert-holder">
+      <div class="container alert-holder" style="display: none;">
         <% flash.each do |type, message| %>
           <div class="alert <%= bootstrap_class_for(type) %>">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -67,13 +67,22 @@
       <% if user_signed_in? %>
         <footer>
           <div class="container">
-            &copy; <%= Time.now.year %>
-            <ul class="list-inline">
-              <% if user_signed_in? %>
-                <li><a href="/admin/" target="_self">Admin Dashboard</a></li>
-              <% end %>
-            </ul>
-        </div>
+            <div class="row">
+              <div class="col-md-6">
+                &copy; <%= Time.now.year %> <a href="https://millar.io" class="attribution">Sam Millar</a>
+                <ul class="list-inline">
+                  <% if user_signed_in? %>
+                    <li><a href="/admin/" target="_self">Admin Dashboard</a></li>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="col-md-6 text-right">
+                <ul class="list-inline">
+                    <li><a href="/colors">Colors</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </footer>
       <% end %>
     </div>

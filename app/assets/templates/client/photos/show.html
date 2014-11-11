@@ -1,0 +1,15 @@
+<loading-icon class="reveal-animation">
+  <div class="container text-center">
+    <photo-element photo="photo"></photo-element>
+  </div>
+
+  <div class="photo-description" ng-bing-html="photo.full_description" ng-if="photo.description"></div>
+
+  <admin-box>
+    <div class="container">
+      <div class="admin-opts">
+        <a ng-href="/admin/photos/{{photo.id}}" target="_self" class="btn btn-default btn-sm">Mange Photo</a>
+      </div>
+    </div>
+  </admin-box>
+</loading-icon>

@@ -1,0 +1,15 @@
+<div class="container separated">
+  <table class="table table-blocks">
+    <tr>
+      <th>Username</th>
+      <th colspan="2">Email</th>
+    </tr>
+    <tr ng-repeat="user in users|orderBy:'active':true">
+      <td ng-if="user.active">{{user.username}}</td>
+      <td ng-if="!user.active"><span class="text-muted">pending invitation</span></td>
+      <td>{{user.email}}</td>
+      <td ng-if="user.active">user since <span isodate="user.created_at"></span></td>
+      <td ng-if="!user.active">invited <span isodate="user.invited_at"></span></td>
+    </tr>
+  </table>
+</div>

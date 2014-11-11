@@ -54,6 +54,7 @@
               <li class="dropdown">
                 <a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.username %> <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
+                  <li><a href="/admin/users">View Users</a></li>
                   <li><%= link_to('Edit Profile', edit_user_registration_path, target: "_self") %></li>
                   <li><%= link_to('Invite New Admin', new_user_invitation_path, target: "_self") %></li>
                   <li class="divider"></li>

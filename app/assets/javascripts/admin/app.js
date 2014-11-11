@@ -69,6 +69,12 @@ angular.module('adminApp', [
         }).
 
 
+        when('/admin/users', {
+          controller: 'UsersIndexController',
+          templateUrl: 'admin/users/index.html'
+        }).
+
+
         when('/admin/', {
           templateUrl: 'admin/index.html'
         }).

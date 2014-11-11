@@ -1,0 +1,26 @@
+<div ng-if="notFound" class="container text-center" style="margin-top: 40px;">
+Not found
+</div>
+
+<loading-icon class="reveal-animation" ng-if="!notFound">
+  <div class="cover" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero"></div>
+
+  <div class="container">
+    <div class="cover-cutter">
+      <div class="shadow"></div>
+
+      <photo-element photo="photo" ng-if="photo"></photo-element>
+
+      <h2>{{album.title}}</h2>
+
+      <div class="row" id="photo-grid">
+        <div class="col-md-3 img-preview ui-state-default" data-id="{{photo.album_photo_id}}"
+          ng-repeat="photo in album.photos | orderBy:'position'" ng-class="{'clear-left': photo.position % 4 == 0}">
+          <photo-square photo="photo" href="'/' + album.slug + '/photo/' + photo.id" ng-click="$event.preventDefault(); setPhoto(photo.id);">
+            <div class="caption">{{photo.title || photo.original_file_name}}</div>
+          </photo-square>
+        </div>
+      </div>
+    </div>
+  </div>
+</loading-icon>

@@ -17,4 +17,5 @@ end
 
 json.photos album.photos do |photo|
   json.partial! 'photos/photo', photo: photo
+  json.position @album_photos[photo.id].position
 end

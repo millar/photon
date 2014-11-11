@@ -17,6 +17,10 @@
   #gradient > .vertical(rgba(0,0,0, .3), rgba(0,0,0, .1));
   text-shadow: 0 0 1px #000;
 
+  &:hover {
+    #gradient > .vertical(rgba(0,0,0, .6), rgba(0,0,0, .4));
+  }
+
   .navbar-nav > li > a {
     color: #fff;
   }
@@ -28,6 +32,7 @@
 
 .hero-passed {
   #navbar.navbar-transparent {
+    background-image: none !important;
     background-color: @navbar-inverse-bg;
   }
 }
@@ -160,10 +165,6 @@
   }
 }
 
-.img-preview {
-  margin-bottom: 25px;
-}
-
 .text-right {
   photo-square {
     .background {
@@ -208,10 +209,6 @@
 @keyframes enter_sequence {
   from { opacity:0; }
   to { opacity:1; }
-}
-
-.separated {
-  margin-top: 40px;
 }
 
 .table.table-blocks {
@@ -392,10 +389,6 @@ a[ng-click], photo-square[ng-click] {
   opacity: 0.3;
 }
 
-.clear-left {
-  clear: left;
-}
-
 .has-feedback-left {
 	position: relative;
 	left: 0;
@@ -560,6 +553,7 @@ body {
   width: 1em;
   border-radius: @border-radius-base;
   margin-right: 4px;
+  margin-bottom: 4px;
 }
 
 .photo-modal {

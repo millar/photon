@@ -69,7 +69,8 @@ angular.module('directives', [])
         caption: '=',
         href: '=',
         size: '=?',
-        height: '@?'
+        height: '@?',
+        width: '@?'
       },
       transclude: true,
       restrict: 'E',
@@ -233,7 +234,14 @@ angular.module('directives', [])
         aboveTag: '@affix'
       }
     }
-  }])
+  }]).
+  directive('adminBox', function(){
+    return {
+      restrict: 'E',
+      transclude: true,
+      template: '<div ng-transclude ng-if="current_user"></div>'
+    }
+  })
 
   .filter('inArray', function(){
     return function(array, notIn, attr){

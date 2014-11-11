@@ -5,6 +5,11 @@
 window.$clientApp.controllers = angular.module('clientControllers', [])
   .controller('MainController', ['$scope', '$location',
     function($scope, $location) {
+      // $title = $('title');
+      $scope.setTitle = function(value, suffix){
+        // $title.text(value);
+      }
+
       $scope.isActive = function (viewLocation) {
         return $location.path().match(viewLocation);
 	    };
@@ -20,7 +25,7 @@ window.$clientApp.controllers = angular.module('clientControllers', [])
       }])
   .controller('HomeController', ['$scope',
     function($scope) {
-
+      $scope.setTitle("Welcome to Photon", false);
     }])
   .controller('ColorsController', ['$scope', '$http',
     function($scope, $http) {

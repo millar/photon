@@ -11,7 +11,7 @@ class Album < ActiveRecord::Base
   validates :title, presence: true
   validates :slug, presence: true, uniqueness: {
     case_sensitive: false
-  }
+  }, exclusion: { in: %w(admin photo photos album albums colors api) }
 
   def published
     !!(self.published_at and self.published_at < Time.now)
