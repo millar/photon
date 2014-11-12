@@ -99,6 +99,12 @@ angular.module('adminApp', [
         if ($rootScope.changes < 2) $rootScope.changes++;
       });
 
-
       Dropzone.autoDiscover = false;
+
+      $( window ).resize(function(){
+        $('[data-resize=height]').each(function(){
+          $this = $(this);
+          $this.css('height', $this.width());
+        });
+      });
     }]);

@@ -1,5 +1,6 @@
 <div class="background" ng-style="{width: width, height: height}">
-  <img class="image" ng-style="{width: width, height: height}" ng-src="{{photo.sizes.medium_640}}">
+  <img class="image" ng-class="{'img-responsive': !size}" ng-src="{{photo.sizes.small_240}}">
+  <img class="image" ng-class="{'img-responsive': !size}" ng-src="{{photo.sizes[topSize]}}">
 
   <div class="inside" ng-transclude></div>
 </div>

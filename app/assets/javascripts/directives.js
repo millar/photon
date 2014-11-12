@@ -22,7 +22,7 @@ angular.module('directives', [])
   .directive('photoSquare', function(){
     function link(scope, element, attrs){
       var $el = $(element);
-      if (!scope.size) scope.size = $el.parent().width();
+      if (!scope.size) scope.height = $el.parent().width();
 
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
         $el.find('.background')
@@ -83,6 +83,10 @@ angular.module('directives', [])
 
       if (!scope.size) scope.size = $el.parent().width();
 
+      var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
+      scope.width = scope.photo.width * sf;
+      scope.height = scope.photo.height * sf;
+
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
         $el.find('.background')
           .css(
@@ -99,29 +103,65 @@ angular.module('directives', [])
           )
       }
 
-      var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
-      scope.width = scope.photo.width * sf;
-      scope.height = scope.photo.height * sf;
+      scope.topSize = 'large_2048';
 
       function imageLoad(){
-          this.className += " fade-op";
-          this.style.opacity = 1;
+        this.className += " fade-op";
+        this.style.opacity = 1;
+      }
+
+      function imageError(){
+        this.style.display = "none";
+      }
+
+      var sizes = {
+        1600: 'large_1600',
+        1024: 'large_1024',
+        800: 'medium_800',
+        640: 'medium_640',
+        500: 'medium_500',
+        320: 'small_320',
+        240: 'small_240'
+      };
+
+      $.each(sizes, function(size, name){
+        if (size >= scope.size){
+          scope.topSize = name;
         }
+      });
 
-        function imageError(){
-          this.style.display = "none";
-        }
+      scope.image = $el.find('.image');
 
-        scope.image = $el.find('.image');
+      // scope.first = true;
+      // scope.second = false;
+      //
+      // scope.$watch('photo', function(){
+      //   if (scope.first){
+      //     scope.first = false;
+      //     scope.second = true;
+      //     return;
+      //   }
+      //   if (scope.second){
+      //     scope.second = false;
+      //
+      //     scope.image.on('load', function(){
+      //       // if (!scope.size) scope.size = $el.parent().width();
+      //       //
+      //       // var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
+      //       // scope.width = scope.photo.width * sf;
+      //       // scope.height = scope.photo.height * sf;
+      //     })
+      //   }
+      // });
 
-        scope.image
-          .css('opacity', 0)
-          .on('load', imageLoad)
-          .on('error', imageError);
+      scope.image
+        .css('opacity', 0)
+        .on('load', imageLoad)
+        .on('error', imageError);
 
-        scope.$on("$destroy", function(){
-          scope.image.off();
-        });
+      scope.$on("$destroy", function(){
+        scope.image.off();
+      });
     }
 
     return {
