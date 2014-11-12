@@ -2,7 +2,7 @@
   <table class="table table-blocks">
     <tr>
       <th>Username</th>
-      <th colspan="2">Email</th>
+      <th colspan="3">Email</th>
     </tr>
     <tr ng-repeat="user in users|orderBy:'active':true">
       <td ng-if="user.active">{{user.username}}</td>
@@ -10,6 +10,7 @@
       <td>{{user.email}}</td>
       <td ng-if="user.active">user since <span isodate="user.created_at"></span></td>
       <td ng-if="!user.active">invited <span isodate="user.invited_at"></span></td>
+      <td class="small"><span ng-if="user.invited_by">invited by {{user.invited_by.username}}</span></td>
     </tr>
   </table>
 </div>

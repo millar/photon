@@ -3,15 +3,20 @@ Not found
 </div>
 
 <loading-icon class="reveal-animation" ng-if="!notFound">
-  <div class="cover" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero"></div>
+  <div class="swatch-strip" ng-if="album.cover">
+    <div class="swatch-row" ng-repeat="color in album.cover.top_colors | limitTo:9" ng-style="{'background': color}"></div>
+  </div>
+  <div class="hero hero-cover text-center" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero">
+    <h1>{{album.title}}</h1>
+  </div>
+
+  <div class="hero hero-white">
+    <div class="container">
+      <div class="album-description" ng-if="album.description" ng-bind-html="description"></div>
+    </div>
+  </div>
 
   <div class="container">
-    <div class="cover-cutter">
-      <div class="shadow"></div>
-
-      <photo-element photo="photo" ng-if="photo"></photo-element>
-
-      <h2>{{album.title}}</h2>
 
       <div class="row" id="photo-grid">
         <div class="col-md-3 img-preview ui-state-default" data-id="{{photo.album_photo_id}}"

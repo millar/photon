@@ -16,7 +16,7 @@ window.$clientApp.controllers
         });
 
         $scope.openPhoto();
-        $scope.full_description = $sce.trustAsHtml(album.full_description);
+        $scope.description = $sce.trustAsHtml(album.description);
 
         $scope.loaded = true;
       }, function(e){

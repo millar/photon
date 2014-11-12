@@ -1,17 +1,19 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-      <h2>Create Album</h2>
-    </div>
-  </div>
-
-  <form name="albumForm" class="form-horizontal" novalidate ng-submit="submit()">
-    <ng-include src="'admin/albums/_form.html'" onload="album = album"></ng-include>
-
-    <div class="form-group">
-      <div class="col-sm-6 col-sm-offset-3">
-        <button type="submit" class="btn btn-primary">Create album</button>
+<div class="hero hero-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h2>Create Album</h2>
       </div>
     </div>
-  </form>
+
+    <form name="albumForm" class="form-horizontal" novalidate ng-submit="submit()">
+      <ng-include src="'admin/albums/_form.html'" onload="album = album"></ng-include>
+
+      <div class="form-group">
+        <div class="col-sm-6 col-sm-offset-3">
+          <button type="submit" class="btn btn-primary">Create album</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

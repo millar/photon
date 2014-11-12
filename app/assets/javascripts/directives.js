@@ -9,7 +9,7 @@ angular.module('directives', [])
     }
 
     return {
-      template: '<div ng-if="!loaded || !$parent.loaded" class="text-center"><p><span class="fa fa-circle-o-notch fa-spin text-muted"></span></p></div>' +
+      template: '<div ng-if="!loaded || !$parent.loaded" class="text-center loader"><p><span class="fa fa-circle-o-notch fa-spin text-muted"></span></p></div>' +
                 '<div ng-if="loaded && $parent.loaded" class="{{class}}" ng-transclude></div>',
       scope: {
         loaded: '=?',

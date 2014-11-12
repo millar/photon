@@ -1,9 +1,9 @@
 <loading-icon class="reveal-animation">
-  <div class="hero hero-inverse-to-dark hero-cover text-center" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero">
+  <div class="hero hero-inverse-to-dark hero-cover text-center" ng-class="{'no-cover': !album.cover}" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero">
     <div class="container">
       <h2 style="margin-top: 0;">{{album.title}}</h2>
       <p ng-if="album.published" style="margin-top: -10px;">
-        <a ng-href="{{siteUrl}}{{album.slug}}" class="small">{{siteUrl}}{{album.slug}}</a>
+        <a ng-href="{{siteUrl}}{{album.slug}}" target="_self" class="small">{{siteUrl}}{{album.slug}}</a>
       </p>
       <ul class="list-inline">
         <li>Created <span isodate="album.created_at"></span></li>
@@ -15,8 +15,6 @@
       </ul>
     </div>
   </div>
-
-  <div class="affix-pad"></div>
 
   <div class="meta-row" affix="#hero">
     <div class="container">

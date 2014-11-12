@@ -64,27 +64,25 @@
       <div ng-view></div>
       <div id="yield"><%= yield %></div>
 
-      <% if user_signed_in? %>
-        <footer>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6">
-                &copy; <%= Time.now.year %> <a href="https://millar.io" class="attribution">Sam Millar</a>
-                <ul class="list-inline">
-                  <% if user_signed_in? %>
-                    <li><a href="/admin/" target="_self">Admin Dashboard</a></li>
-                  <% end %>
-                </ul>
-              </div>
-              <div class="col-md-6 text-right">
-                <ul class="list-inline">
-                    <li><a href="/colors">Colors</a></li>
-                </ul>
-              </div>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              &copy; <%= Time.now.year %> <a href="https://millar.io" class="attribution">Sam Millar</a>
+              <ul class="list-inline">
+                <% if user_signed_in? %>
+                  <li><a href="/admin/" target="_self">Admin Dashboard</a></li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="col-md-6 text-right">
+              <ul class="list-inline">
+                  <li><a href="/colors">Colors</a></li>
+              </ul>
             </div>
           </div>
-        </footer>
-      <% end %>
+        </div>
+      </footer>
     </div>
 
     <script type="text/javascript">

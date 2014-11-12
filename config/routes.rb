@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :admin do
-  get 'users/index'
+    get 'users/index'
   end
 
   scope '/api' do
@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     post 'upload(/:album_id)', to: 'upload#photos'
 
     get '(/*path)', to: 'site#admin'
+    get '', to: 'site#admin', as: :user_root_path
   end
 
   get 'photo-img/(*path)', to: 'site#not_found'

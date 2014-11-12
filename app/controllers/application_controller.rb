@@ -11,6 +11,18 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def after_accept_path_for(user)
+    user_root_path
+  end
+
+  def after_invite_path_for(user)
+    "/admin/users"
+  end
+
+  def after_sign_out_path_for(user)
+    root_path
+  end
+
   def set_tracking_cookie
     cookies.permanent[:user_uuid] = SecureRandom.uuid unless cookies[:user_uuid]
   end
