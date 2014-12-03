@@ -3,29 +3,15 @@ Not found
 </div>
 
 <loading-icon class="reveal-animation" ng-if="!notFound">
-  <div class="swatch-strip" ng-if="album.cover">
-    <div class="swatch-row" ng-repeat="color in album.cover.top_colors | limitTo:9" ng-style="{'background': color}"></div>
-  </div>
-  <div class="hero hero-cover text-center" ng-style="{'background-image': (album.cover ? 'url('+album.cover.sizes.large_1600+')' : null)}" id="hero">
-    <h1>{{album.title}}</h1>
-  </div>
-
-  <div class="hero hero-white">
+  <!-- <div class="hero hero-white">
     <div class="container">
+      <h1>{{album.title}}</h1>
       <div class="album-description" ng-if="album.description" ng-bind-html="description"></div>
     </div>
-  </div>
+  </div> -->
 
+
+  <photo-reel class="project-reel" photos="album.photos" style="height: 800px"></photo-reel>
   <div class="container">
-
-      <div class="row" id="photo-grid">
-        <div class="col-md-3 img-preview ui-state-default" data-id="{{photo.album_photo_id}}"
-          ng-repeat="photo in album.photos | orderBy:'position'" ng-class="{'clear-left': photo.position % 4 == 0}">
-          <photo-square photo="photo" href="'/' + album.slug + '/photo/' + photo.id" ng-click="$event.preventDefault(); setPhoto(photo.id);">
-            <div class="caption">{{photo.title || photo.original_file_name}}</div>
-          </photo-square>
-        </div>
-      </div>
-    </div>
   </div>
 </loading-icon>

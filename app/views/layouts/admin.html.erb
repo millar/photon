@@ -52,7 +52,11 @@
             <ul class="nav navbar-nav navbar-right">
               <li ng-class="{ active: isActive('/admin/albums/new')}"><a href="/admin/albums/new">New Album</a></li>
               <li class="dropdown">
-                <a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.username %> <span class="caret"></span></a>
+                <a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="<%= current_user.gravatar_url %>?s=20&d=blank" class="img-circle">
+                  <span style="padding-left: 10px;"><%= current_user.username %></span>
+                  <span class="caret"></span>
+                </a>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="/admin/users">View Users</a></li>
                   <li><%= link_to('Edit Profile', edit_user_registration_path, target: "_self") %></li>

@@ -81,11 +81,17 @@ angular.module('directives', [])
     function link(scope, element, attrs){
       var $el = $(element);
 
-      if (!scope.size) scope.size = $el.parent().width();
+      if (scope.height){
+        scope.size = scope.height;
 
-      var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
-      scope.width = scope.photo.width * sf;
-      scope.height = scope.photo.height * sf;
+        scope.width = (scope.photo.width / scope.photo.height) * scope.height;
+      } else {
+        if (!scope.size) scope.size = $el.parent().width();
+
+        var sf = scope.size / (scope.photo.width > scope.photo.height ? scope.photo.width : scope.photo.height);
+        scope.width = scope.photo.width * sf;
+        scope.height = scope.photo.height * sf;
+      }
 
       if (scope.photo.average_nw_hex && scope.photo.average_se_hex){
         $el.find('.background')
@@ -168,10 +174,66 @@ angular.module('directives', [])
       templateUrl: 'directives/photo-element.html',
       scope: {
         photo: '=',
-        size: '=?'
+        size: '=?',
+        height: '=?'
       },
       restrict: 'E',
       transclude: true,
+      link: link
+    }
+  })
+  .directive('photoReel', function(){
+    function link(scope, element, attrs){
+      var $el = $(element);
+
+      scope.height = $el.height();
+
+      $scroller = $el.find('.reel-row');
+      var containerWidth = $scroller.width();
+
+      // target elements with the "draggable" class
+      interact($scroller[0])
+        .draggable({
+          // allow dragging of multple elements at the same time
+          max: Infinity,
+
+          maxPerElement: Infinity,
+
+          // call this function on every dragmove event
+          onmove: function (event) {
+            var newVal = parseInt($scroller.css('margin-left')) + event.dx;
+
+            // if (newVal > 0){
+            //   newVal = 0;
+            // } else if (newVal < -totalWidth) {
+            //   // newVal = totalWidth;
+            // }
+            $scroller.css('margin-left', newVal);
+          }
+        })
+        // enable inertial throwing
+        .inertia({
+          resistance: 8,
+          allowResume: true,
+          zeroResumeDelta: true
+        })
+        // keep the element within the area of it's parent
+        // .restrict({
+        //   drag: "parent",
+        //   endOnly: true,
+        //   elementRect: { top: 0, left: 0, bottom: 0, right: 1 }
+        // });
+
+      interact.maxInteractions(Infinity);
+    }
+
+    return {
+      templateUrl: 'directives/photo-reel.html',
+      scope: {
+        photos: '=',
+      },
+      transclude: true,
+      restrict: 'E',
       link: link
     }
   })

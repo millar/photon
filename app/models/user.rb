@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  require 'digest/md5'
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -30,5 +32,10 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+
+  def gravatar_url
+    hash = Digest::MD5.hexdigest(self.email.downcase)
+    "http://www.gravatar.com/avatar/#{hash}"
   end
 end

@@ -16,6 +16,8 @@
 //= require moment/moment
 //= require livestampjs/livestamp
 
+//= require interact/interact
+
 //= require client/app
 //= require client/controllers
 
