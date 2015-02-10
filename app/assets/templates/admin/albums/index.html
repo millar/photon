@@ -3,13 +3,28 @@
   <div class="meta-row">
     <div class="container">
       <div class="row">
+        <div class="col-md-3">
+          <h4 style="margin-bottom: 0; margin-top: 8px;" class="dropdown">
+            <a ng-click="" class="header-btn dropdown-toggle" data-toggle="dropdown">
+              <span ng-if="search.album_category_id === undefined">All Albums</span>
+              <span ng-if="search.album_category_id">{{categories[search.album_category_id].name}}</span>
+              <span ng-if="search.album_category_id == null && search.album_category_id !== undefined"><em>Uncategorized</em></span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a tabindex="-1" ng-click="showAll()" ng-class="{'strong': search.album_category_id === undefined}">All albums</a></li>
+              <li ng-repeat="(id, category) in categories"><a ng-class="{'strong': search.album_category_id == id}" tabindex="-1" ng-click="search.album_category_id = id">{{category.name}}</a></li>
+              <li><a tabindex="-1" ng-click="search.album_category_id = null" ng-class="{'strong': search.album_category_id == -1}"><em>Uncategorized</em></a></li>
+            </ul>
+          </h4>
+        </div>
         <div class="col-md-6">
           <div class="form-group has-feedback-left" style="margin-bottom: 0;">
             <span class="octicon octicon-search form-control-feedback text-muted"></span>
             <input type="text" class="form-control" ng-model="search.title" placeholder="search albums">
           </div>
         </div>
-        <div class="col-md-6 text-right">
+        <div class="col-md-3 text-right">
           <a href="/admin/albums/new" class="btn btn-primary btn-sm">Create new album</a>
         </div>
       </div>

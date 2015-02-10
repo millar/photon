@@ -97,6 +97,11 @@
           <dd>
             <span isodate="album.updated_at"></span>
           </dd>
+          <dt>category</dt>
+          <dd>
+            <span ng-if="album.album_category"><a ng-href="/admin/albums?cat={{album.album_category_id}}">{{album.album_category.name}}</a></span>
+            <span ng-if="!album.album_category"><em class="text-muted">none</em></span>
+          </dd>
           <dt>client</dt>
           <dd>
             <span ng-if="album.client">{{album.client}}</span>

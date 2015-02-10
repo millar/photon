@@ -1,18 +1,24 @@
 Rails.application.routes.draw do
   namespace :admin do
+  get 'categories/index'
+  end
+
+  namespace :admin do
     get 'users/index'
   end
 
-  scope '/api' do
-    resources :albums, defaults: {format: :json}
-    resources :photos, defaults: {format: :json} do
+  scope '/api', defaults: {format: :json} do
+    resources :albums
+    resources :photos do
       collection do
         get 'colors', to: 'photos#colors'
       end
     end
 
     namespace :admin do
-      resources :albums, defaults: {format: :json} do
+      resources :categories, only: [:index]
+
+      resources :albums do
         collection do
           get 'clients', to: 'albums#clients'
           put 'order', to: 'albums#order'
@@ -20,13 +26,13 @@ Rails.application.routes.draw do
         end
 
         scope module: "albums" do
-          resources :photos, defaults: {format: :json}
+          resources :photos
         end
       end
 
-      resources :users, only: [:index], defaults: {format: :json}
+      resources :users, only: [:index]
 
-      resources :photos, defaults: {format: :json} do
+      resources :photos do
         collection do
           get 'unprocessed', to: 'photos#index', params: {unprocessed: true}
         end

@@ -202,9 +202,7 @@ photo-element {
     width: 100%;
     z-index: 1010;
   }
-}
 
-.meta-row{
   .changer {
     position: relative;
 
@@ -226,6 +224,20 @@ photo-element {
       .transition(~"opacity linear .05s, right linear .2s");
       .transition-delay(.2s);
     }
+  }
+
+  &.second {
+    // background: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  &.dropdown {
+    width: 33%;
+    border: 1px solid #e5e5e5;
+    position: absolute;
+    top: -1px;
+    margin: 0 !important;
+    z-index: 15;
   }
 }
 

@@ -54,6 +54,7 @@ class Admin::AlbumsController < ApplicationController
     @album = current_user.albums.build(album_params)
 
     if @album.save
+      @album.category = params[:category]
       render action: :show
     else
       render status: 500, json: @album.errors.to_hash
@@ -64,7 +65,10 @@ class Admin::AlbumsController < ApplicationController
     @album = Album.find(params[:id])
 
     if @album.update(album_params)
-      head :no_content
+      @album.category = params[:category]
+      render action: :show
+    else
+      render status: 500, json: @album.errors.to_hash
     end
   end
 

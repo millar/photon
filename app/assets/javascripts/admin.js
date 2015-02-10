@@ -18,6 +18,8 @@
 //= require moment/moment
 //= require livestampjs/livestamp
 
+//= require typeahead.js/dist/typeahead.bundle
+
 //= require jquery-ui
 
 //= require admin/app

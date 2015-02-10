@@ -3,11 +3,37 @@
 /* Admin Controllers */
 
 window.$adminApp.controllers
-  .controller('AlbumsIndexController', ['$scope', 'Album',
-    function($scope, Album) {
+  .controller('AlbumsIndexController', ['$scope', 'Album', '$location',
+    function($scope, Album, $location) {
       $scope.loaded = false;
 
+      // $scope.toggleDropdown = function(){
+      //   $scope.dropdown == !$scope.dropdown;
+      // }
+
+      $scope.search = {};
+
+      $scope.showAll = function(){
+        delete $scope.search.album_category_id;
+      };
+
       $scope.albums = Album.query(function(albums){
+        $scope.categories = {};
+
+        $.each(albums, function(idx, album){
+          if (album.album_category){
+            $scope.categories[album.album_category.id] = album.album_category;
+          }
+        });
+
+        if ($location.search().cat){
+          $scope.search.album_category_id = $location.search().cat;
+        }
+
+        $scope.$watch('search.album_category_id', function(val){
+          $location.search('cat', val);
+        });
+
         $scope.loaded = true;
       });
     }])
@@ -310,7 +336,7 @@ window.$adminApp.controllers
         }
 
         $scope.$broadcast('show-errors');
-        if ($scope.albumForm.$invalid) { return; }
+        if ($scope.albumForm && $scope.albumForm.$invalid) { return; }
 
         $scope.album.$update(function(){
           var redirectTo = $location.path().split('/');
@@ -320,6 +346,7 @@ window.$adminApp.controllers
       }
 
       $scope.album = Album.get({id: $routeParams.id}, function(album){
+        $scope.album.category = album.album_category&&album.album_category.name;
         $scope.loaded = true;
         $scope.originallyPublished = album.published;
       });

@@ -1,6 +1,8 @@
 // Bootstrap framework
 @import "twitter/bootstrap";
 
+@import "typeahead.js-bootstrap3.less/typeahead";
+
 // Our variables
 @import "variables";
 
@@ -523,7 +525,7 @@ body {
 }
 
 .btn.btn-xs {
-  font-weight: 400;
+  // font-weight: 400;
 }
 
 .alert-holder .alert {
@@ -535,4 +537,92 @@ body {
   border-radius: 0;
   border-width: 0 0;
   opacity: 0.95;
+}
+
+#alerts, #alerts-placeholder {
+  text-align: center;
+  cursor: pointer;
+
+  > div {
+    padding: 15px 0;
+    margin-top: -1px;
+    border-width: 1px 0 0;
+    border-style: solid;
+    border-color: rgba(0,0,0, 0.08);
+  }
+
+  .animate-repeat.ng-move,
+  .animate-repeat.ng-enter,
+  .animate-repeat.ng-leave {
+    .transition(~"padding ease-out 0.02s, height ease-out 0.02s");
+  }
+
+  .animate-repeat.ng-leave.ng-leave-active,
+  .animate-repeat.ng-move,
+  .animate-repeat.ng-enter {
+    height: 0;
+    padding: 0;
+    color: transparent;
+  }
+
+  .animate-repeat.ng-leave,
+  .animate-repeat.ng-move.ng-move-active,
+  .animate-repeat.ng-enter.ng-enter-active {
+    height: auto;
+    padding: 15px 0;
+  }
+}
+
+#alerts-placeholder {
+  visibility: hidden;
+}
+
+.nav-me {
+  border-radius: 3px;
+}
+
+.panel .list-group-item {
+  padding: 12px 15px;
+}
+
+a.list-group-item.active,
+a.list-group-item.active:hover,
+a.list-group-item.active:focus {
+  color: @list-group-link-color;
+  // font-weight: 600;
+  // border-right: 2px solid @link-color !important;
+}
+
+a.list-group-item {
+  // font-weight: 600;
+}
+
+a.list-group-item.active::after {
+  content: " ";
+  z-index: 10;
+  position: absolute;
+  right: 15px;
+  height: 10px;
+  width: 10px;
+  top: 50%;
+  margin-top: -5px;
+  border-radius: 2px;
+  // background: lighten(@link-color, 10%);
+  background: lighten(@list-group-link-color, 20%);
+}
+
+.dark-subhead {
+  background: #3c3d3f;
+  .dark;
+  margin-top: -40px;
+  margin-right: -15px;
+}
+
+a.header-btn {
+  color: inherit !important;
+  text-decoration: none;
+}
+
+.strong {
+  font-weight: 600 !important;
 }

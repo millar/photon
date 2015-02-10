@@ -1,6 +1,8 @@
 json.merge! @album.attributes
 json.published @album.published
 
+json.album_category @album.album_category
+
 json.full_description @album.full_description
 
 json.user do

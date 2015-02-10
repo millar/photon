@@ -1,6 +1,7 @@
 json.array! @albums do |album|
   json.merge! album.attributes
   json.published album.published
+  json.album_category album.album_category
 
   json.user do
     json.(album.user, :id, :username)

@@ -1,4 +1,4 @@
-json.(album, :id, :title, :published_at, :slug)
+json.(album, :id, :title, :published_at, :slug, :category)
 
 if album.full_description
   json.description album.full_description

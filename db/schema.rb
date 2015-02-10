@@ -11,9 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110230126) do
+ActiveRecord::Schema.define(version: 20150209213625) do
 
-  create_table "album_photos", force: true do |t|
+  create_table "album_categories", force: :cascade do |t|
+    t.string  "name"
+    t.boolean "visible",      default: false
+    t.integer "albums_count", default: 0
+    t.integer "position"
+    t.string  "name_lower"
+  end
+
+  add_index "album_categories", ["position"], name: "index_album_categories_on_position"
+
+  create_table "album_photos", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "position"
@@ -27,7 +37,7 @@ ActiveRecord::Schema.define(version: 20141110230126) do
 
   add_index "album_photos", ["deleted_at"], name: "index_album_photos_on_deleted_at"
 
-  create_table "album_views", force: true do |t|
+  create_table "album_views", force: :cascade do |t|
     t.integer  "album_id",        null: false
     t.string   "context"
     t.text     "context_data"
@@ -45,25 +55,27 @@ ActiveRecord::Schema.define(version: 20141110230126) do
     t.datetime "created_at",      null: false
   end
 
-  create_table "albums", force: true do |t|
+  create_table "albums", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "user_id"
     t.datetime "published_at"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "slug"
-    t.integer  "photo_count",  default: 0
+    t.integer  "photo_count",       default: 0
     t.string   "client"
     t.datetime "deleted_at"
     t.integer  "cover_id"
-    t.integer  "views_count",  default: 0
+    t.integer  "views_count",       default: 0
+    t.integer  "album_category_id"
   end
 
+  add_index "albums", ["album_category_id"], name: "index_albums_on_album_category_id"
   add_index "albums", ["cover_id"], name: "index_albums_on_cover_id"
   add_index "albums", ["deleted_at"], name: "index_albums_on_deleted_at"
 
-  create_table "photo_views", force: true do |t|
+  create_table "photo_views", force: :cascade do |t|
     t.integer  "photo_id",        null: false
     t.integer  "album_id"
     t.string   "context"
@@ -85,7 +97,7 @@ ActiveRecord::Schema.define(version: 20141110230126) do
 # Could not dump table "photos" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: ""
     t.string   "reset_password_token"

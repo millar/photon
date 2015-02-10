@@ -1,5 +1,6 @@
 class Album < ActiveRecord::Base
   belongs_to :user
+  belongs_to :album_category, counter_cache: true
 
   acts_as_paranoid
 
@@ -29,5 +30,20 @@ class Album < ActiveRecord::Base
     renderer = Redcarpet::Render::HTML.new(no_links: true, no_images: true, filter_html: true)
     markdown = Redcarpet::Markdown.new(renderer, extensions = {})
     markdown.render(self.description)
+  end
+
+  def category=(new_category)
+    if new_category.blank?
+      self.album_category = nil
+    else
+      self.album_category = AlbumCategory.find_or_create_by(name_lower: new_category.downcase)
+
+      if self.album_category.name != new_category
+        self.album_category.name = new_category
+        self.album_category.save
+      end
+    end
+
+    self.save
   end
 end

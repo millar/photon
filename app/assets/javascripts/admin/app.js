@@ -41,7 +41,8 @@ angular.module('adminApp', [
         }).
         when('/admin/albums', {
           controller: 'AlbumsIndexController',
-          templateUrl: 'admin/albums/index.html'
+          templateUrl: 'admin/albums/index.html',
+          reloadOnSearch: false
         }).
 
 
@@ -88,8 +89,8 @@ angular.module('adminApp', [
       $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
     }
   ])
-  .run(['$rootScope',
-    function($rootScope){
+  .run(['$rootScope', '$sce',
+    function($rootScope, $sce){
       $rootScope.changes = 0;
       $rootScope.current_user = window.$adminApp.current_user;
 
@@ -107,4 +108,24 @@ angular.module('adminApp', [
           $this.css('height', $this.width());
         });
       });
+
+      $rootScope.alerts = [];
+
+      $rootScope.alert = function(obj){
+        if (obj.name){
+          $rootScope.removeAlert(obj.name);
+        }
+
+        if ($rootScope.alerts.length >= 5) $rootScope.alerts.shift();
+
+        obj.body = $sce.trustAsHtml(obj.body);
+
+        $rootScope.alerts.push(obj);
+      };
+
+      $rootScope.removeAlert = function(name){
+        $.each($rootScope.alerts, function(idx, alert){
+          if (alert && alert.name == name) $rootScope.alerts.splice(idx, 1);
+        })
+      };
     }]);

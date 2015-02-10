@@ -362,4 +362,74 @@ angular.module('directives', [])
         return $.inArray(obj[attr], notInIds) == -1;
       });
     }
-  });
+  })
+
+  .directive('ngTypeahead', function ($parse) {
+    return {
+      restrict: 'A',
+      scope: {
+        filter: '&',
+        ngModel: '=',
+        selectedItem: '=',
+        limit: '=',
+        rateLimitWait: '='
+      },
+      link: function (scope, element, attrs) {
+
+        var foods = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.obj.whitespace('id'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          prefetch: attrs.url.replace('%QUERY', ''),
+          remote: attrs.url
+        });
+
+        foods.initialize();
+
+        if (attrs.limit) {
+          construct.limit = attrs.limit;
+        }
+
+        if (attrs.rateLimitWait) {
+          construct.remote.rateLimitWait = attrs.rateLimitWait;
+        }
+
+        element.typeahead(null, {
+          source: foods.ttAdapter(),
+          displayKey: attrs.valueKey,
+          name: 'food-items'
+        });
+
+        element.on('change', function (event) {
+          if (attrs.ngModel) {
+            scope.ngModel = $(event.target).val();
+          }
+
+          scope.$apply();
+        });
+
+        element.on('typeahead:selected', function (event, datum, dataset) {
+          if (attrs.ngModel) {
+            scope.ngModel = attrs.valueKey?datum[attrs.valueKey]:datum;
+          }
+
+          scope.$apply();
+          $(event.target).val(attrs.valueKey?datum[attrs.valueKey]:datum);
+        });
+
+        element.on('typeahead:autocompleted', function (event, datum, dataset) {
+          if (attrs.ngModel) {
+            scope.ngModel = attrs.valueKey?datum[attrs.valueKey]:datum;
+          }
+
+          scope.$apply();
+          $(event.target).val(attrs.valueKey?datum[attrs.valueKey]:datum);
+
+          element.typeahead('close')
+        });
+
+        scope.$on('$destroy', function () {
+          element.typeahead('destroy');
+        });
+      }
+    };
+  })

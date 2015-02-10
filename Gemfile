@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0.beta4'
+gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record in development
 gem 'sqlite3', group: :development
 # Use mysql in production
@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', platforms: :ruby
 
 # Use jQuery as the JavaScript library
-gem 'jquery-rails', '~> 4.0.0.beta2'
+gem 'jquery-rails', '~> 4.0'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -43,13 +43,15 @@ gem 'mailgun_rails'
 
 gem 'font-awesome-rails'
 
+gem 'acts_as_singleton'
+
 gem 'rmagick', '2.13.2', require: 'RMagick'
 gem 'paperclip', '~> 4.2'
 gem 'delayed_paperclip'
 gem 'exifr'
 gem 'resque', '~>1'
 
-gem "paranoia", :github => "radar/paranoia", :branch => "rails4"
+gem "paranoia", github: "radar/paranoia", branch: "rails4"
 
 gem 'redcarpet'
 
@@ -68,6 +70,8 @@ gem "capistrano-resque", "~> 0.2.1", group: :development, require: false
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+
+  gem 'rspec-rails'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0.0.beta4'
