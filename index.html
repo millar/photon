@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Photon by millar</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Photon</h1>
+        <p>A Rails/AngularJS based photo management system.</p>
+
+        <p class="view"><a href="https://github.com/millar/photon">View the Project on GitHub <small>millar/photon</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/millar/photon/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/millar/photon/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/millar/photon">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="photon" class="anchor" href="#photon" aria-hidden="true"><span class="octicon octicon-link"></span></a>Photon</h1>
+
+<p>Photon is an application for managing and publishing collections photographs.</p>
+
+<h1>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h1>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-sh"><pre>$ bundle install
+$ bower install</pre></div>
+
+<h2>
+<a id="running-application" class="anchor" href="#running-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Application</h2>
+
+<p>The Resque worker must be running to properly handle photo uploads (requires redis to be installed).</p>
+
+<div class="highlight highlight-sh"><pre>$ rake resque:work QUEUE=<span class="pl-s1"><span class="pl-pds">'</span>*<span class="pl-pds">'</span></span></pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/millar">millar</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
