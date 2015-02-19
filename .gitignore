@@ -15,5 +15,15 @@
 /log/*.log
 /tmp
 
-.DS_Store
 public/photo-img/
+
+/vendor/assets/components
+
+Capfile
+config/deploy.rb
+config/deploy/
+lib/capistrano
+.capistrano
+
+.powenv
+.rbenv-vars

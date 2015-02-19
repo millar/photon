@@ -28,8 +28,8 @@ module Photon
 
     config.action_mailer.delivery_method = :mailgun
     config.action_mailer.mailgun_settings = {
-      api_key: 'key-a0ad6409f0d186af7b5b67148cbf741f',
-      domain: 'millar.io'
+      api_key: ENV["MAILGUN_API_KEY"],
+      domain: ENV["MAILGUN_DOMAIN"]
     }
 
     config.active_support.escape_html_entities_in_json = false

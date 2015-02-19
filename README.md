@@ -1,7 +1,7 @@
 Photon
 ======
 
-Photon is an application for managing and publishing collections photographs. Also provides blogging system and visualisations.
+Photon is an application for managing and publishing collections photographs.
 
 # Setup
 
