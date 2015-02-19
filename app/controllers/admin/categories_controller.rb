@@ -4,7 +4,9 @@ class Admin::CategoriesController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @categories = AlbumCategory.order(id: :desc)
+    AlbumCategory.destroy_all("albums_count <= 0")
+
+    @categories = AlbumCategory.order(:position).where("albums_count > 0")
 
     if params[:limit]
       @categories = @categories.limit(params[:limit])
@@ -15,5 +17,21 @@ class Admin::CategoriesController < ApplicationController
     end
 
     respond_with @categories
+  end
+
+  def update
+    @category = AlbumCategory.find(params[:id])
+
+    if @category.update(category_params)
+      respond_with @category
+    else
+      render status: 500, json: @category.errors.to_hash
+    end
+  end
+
+  private
+
+  def category_params
+    params.permit(:name, :visible, :position, :slug)
   end
 end

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   after_filter :set_csrf_cookie_for_ng
   before_filter :set_tracking_cookie
 
+  # respond_to :json
+
   protected
 
   def after_accept_path_for(user)

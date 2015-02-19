@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="col-md-3 text-right">
-          <a href="/admin/albums/new" class="btn btn-primary btn-sm">Create new album</a>
+          <a ng-href="/admin/albums/new?cat={{categories[search.album_category_id]&&categories[search.album_category_id].name}}" class="btn btn-primary btn-sm">Create new album</a>
         </div>
       </div>
     </div>

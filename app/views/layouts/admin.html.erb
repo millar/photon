@@ -40,13 +40,6 @@
               <span ng-bind-html="alert.body"></span>
             </div>
           </div>
-          <% flash.each do |type, message| %>
-            <div class="animate-repeat <%= bootstrap_class_for(type) %>">
-              <div class="container">
-                <%= message %>
-              </div>
-            </div>
-          <% end %>
         </div>
         <div class="container">
           <div class="navbar-header">
@@ -62,9 +55,9 @@
             <ul class="nav navbar-nav">
               <li ng-class="{ active: isActive('/admin/albums')}"><a href="/admin/albums">Albums</a></li>
               <li ng-class="{ active: isActive('/admin/photos')}"><a href="/admin/photos">Photos</a></li>
+              <li ng-class="{ active: isActive('/admin/posts')}"><a href="/admin/posts">Blog Posts</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li ng-class="{ active: isActive('/admin/albums/new')}"><a href="/admin/albums/new">New Album</a></li>
               <li class="dropdown">
                 <a style="cursor: pointer" class="dropdown-toggle" data-toggle="dropdown">
                   <img class="nav-me" src="<%= current_user.gravatar_url %>?s=20&amp;d=blank">
@@ -79,6 +72,23 @@
                   <li><%= link_to('Logout', destroy_user_session_path, method: :delete, target: "_self") %></li>
                 </ul>
               </li>
+              <!-- <li ng-class="{ active: isActive('/admin/albums/new')}"><a href="/admin/albums/new">New Album</a></li> -->
+              <!-- <li ng-class="{ active: isActive('/admin/posts/new')}"><a href="/admin/posts/new">New Post</a></li> -->
+              <li ng-class="{ active: isActive('/admin/settings')}"><a href="/admin/settings"><span class="octicon octicon-gear"></span></a></li>
+              <li ng-class="{ active: isActive('/admin/albums/new')}">
+    						<div>
+    							<a class="btn btn-success btn-sm navbar-btn"
+                    style="margin-right: 10px;"
+    								href="/admin/albums/new">New Album</a>
+    						</div>
+    					</li>
+              <li ng-class="{ active: isActive('/admin/posts/new')}">
+    						<div>
+    							<a class="btn btn-success btn-sm navbar-btn"
+                    style="margin-right: 10px;"
+    								href="/admin/posts/new">New Post</a>
+    						</div>
+    					</li>
               <!-- <li><a href="/" target="_self">View Site</a></li> -->
             </ul>
           </div><!--/.nav-collapse -->
@@ -92,15 +102,8 @@
             <span ng-bind-html="alert.body"></span>
           </div>
         </div>
-
-        <% flash.each do |type, message| %>
-          <div class="animate-repeat <%= bootstrap_class_for(type) %>">
-            <div class="container">
-              <%= message %>
-            </div>
-          </div>
-        <% end %>
       </div>
+
       <div ng-view id="main-view"></div>
       <div id="yield"><%= yield %></div>
 
@@ -123,6 +126,9 @@
         <% else %>
         window.$adminApp.current_user = null;
         <% end %>
+
+        window.$adminApp.flashes = <%= flash.map { |type, message| {css: bootstrap_class_for(type), body: message} } %>
+
       </script>
     </div>
   </body>

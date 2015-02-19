@@ -292,6 +292,8 @@ window.$adminApp.controllers
       $scope.album = new Album();
       $scope.new = true;
 
+      $scope.album.category = $location.search().cat;
+
       $scope.autofillSlug = function(){
         if (!$scope.albumForm.slug.$dirty){
           if ($scope.album.title){

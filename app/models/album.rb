@@ -36,7 +36,8 @@ class Album < ActiveRecord::Base
     if new_category.blank?
       self.album_category = nil
     else
-      self.album_category = AlbumCategory.find_or_create_by(name_lower: new_category.downcase)
+      ac = AlbumCategory.find_or_create_by(name_lower: new_category.downcase)
+      self.album_category = ac if ac != self.album_category
 
       if self.album_category.name != new_category
         self.album_category.name = new_category

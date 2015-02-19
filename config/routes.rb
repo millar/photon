@@ -1,14 +1,7 @@
 Rails.application.routes.draw do
-  namespace :admin do
-  get 'categories/index'
-  end
-
-  namespace :admin do
-    get 'users/index'
-  end
-
   scope '/api', defaults: {format: :json} do
     resources :albums
+    resources :categories, only: [:show]
     resources :photos do
       collection do
         get 'colors', to: 'photos#colors'
@@ -16,7 +9,10 @@ Rails.application.routes.draw do
     end
 
     namespace :admin do
-      resources :categories, only: [:index]
+      resources :categories, only: [:index, :update]
+
+      get 'config' => 'config#index'
+      put 'config' => 'config#update'
 
       resources :albums do
         collection do

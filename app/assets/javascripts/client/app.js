@@ -41,15 +41,20 @@ angular.module('clientApp', [
             template: " "
           }).
 
-          when('/:id*/photo/:photo_id', {
+          when('/:album/:id*/photo/:photo_id', {
+            templateUrl: 'client/albums/show.html',
+            controller: 'AlbumsShowController'
+          }).
+
+          when('/:album/:id*', {
             templateUrl: 'client/albums/show.html',
             controller: 'AlbumsShowController'
           }).
 
           when('/:id*', {
-            templateUrl: 'client/albums/show.html',
-            controller: 'AlbumsShowController'
-          });
+            templateUrl: 'client/categories/show.html',
+            controller: 'CategoriesShowController'
+          })
 
       $location.html5Mode(true).hashPrefix('!');
 

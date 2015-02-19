@@ -1,0 +1,118 @@
+<!-- <div class="hero hero-inverse-to-dark">
+  <div class="container">
+    <h2>Settings</h2>
+  </div>
+</div> -->
+
+<div class="container separated">
+  <div class="row">
+    <div class="col-md-3">
+      <!-- <div class="panel panel-default">
+        <div class="list-group">
+          <a href="/admin/settings" class="list-group-item active">
+            All Settings
+          </a>
+        </div>
+      </div> -->
+
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active">
+          <a href="/admin/settings">Site Settings</a>
+        </li>
+        <li>
+          <a href="/admin/users/edit">Account Settings</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Appearance</h3>
+        </div>
+        <div class="panel-body">
+          <form ng-submit="save()">
+            <div class="form-group">
+              <label for="site-name">Site Name</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="site-name" ng-model="config.site_title">
+                </div>
+                <div class="col-sm-6">
+                  <span class="help-block">Will be displayed in site header</span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="panel-heading">
+          <h3 class="panel-title">Navigation</h3>
+        </div>
+        <div class="panel-body text-muted" ng-if="!categoriesLoaded">
+          Loading album categories&hellip;
+        </div>
+        <div class="panel-body" ng-if="categoriesLoaded && !categories.length">
+          You have not created any categories yet. Create an album and give it a category to get started.
+        </div>
+        <div class="panel-body" ng-if="categoriesLoaded && categories.length">
+          <span class="pull-right">
+            <span ng-if="savingCategoryOrder" class="text-muted small">saving&hellip;</span>
+            <span ng-if="savingCategoryOrder === false" class="text-muted small">order saved</span>
+          </span>
+          <span class="text-muted">Which categories of albums should be visible in the site navigation.</span>
+        </div>
+        <div class="list-group" id="album-links">
+          <div class="list-group-item" ng-repeat="category in categories" data-category="{{category}}" data-category-id="{{category.id}}">
+            <span class="pull-right text-muted handle"><span class="octicon octicon-three-bars"></span></span>
+            <a ng-click="category.edit = !category.edit; category.pending = undefined" style="margin-right: 10px;" class="pull-right text-muted"><span class="octicon octicon-pencil"></span></a>
+            <label style="margin-bottom: 0;" ng-if="!category.edit">
+              <input type="checkbox" ng-model="category.visible" ng-click="updateCategory(category, $event)" id="category-{{category.id}}" style="margin-right: 4px;">
+              <strong ng-class="{'text-muted': !category.visible}">{{category.name}}</strong>
+            </label>
+            <span ng-if="category.pending && category.edit == false" class="text-muted small">saving&hellip;</span>
+            <span ng-if="category.pending === false" class="text-muted small">saved</span>
+            <div ng-if="category.edit">
+              <form class="form-inline" ng-submit="updateCategory(category, $event)">
+                <div class="form-group">
+                  <label for="category-{{category.id}}-name">Name</label>
+                  <input type="text" class="form-control" id="category-{{category.id}}-name" ng-model="category.name">
+                </div>
+                <div class="form-group">
+                  <label for="category-{{category.id}}-slug">URL</label>
+                  <input type="text" class="form-control" id="category-{{category.id}}-slug" ng-model="category.slug">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" ng-model="category.visible"> Visible
+                  </label>
+                </div>
+                <button type="submit" class="btn btn-default btn-sm" ng-if="!category.pending">Save Category</button>
+                <span ng-if="category.pending" class="text-muted" style="margin-left: 6px;">saving&hellip;</span>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="panel-heading" style="margin-top: 30px;">
+          <h3 class="panel-title">Blog</h3>
+        </div>
+        <div class="panel-body">
+          <form ng-submit="save()">
+            <!-- <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="config.blog"> Enable Blog
+              </label>
+            </div> -->
+            <div class="form-group">
+              <label for="blog-name">Blog Name</label>
+              <input type="text" class="form-control" id="blog-name" ng-model="config.blog_title" placeholder="e.g. Blog or Notes">
+            </div>
+          </form>
+        </div>
+        <form ng-submit="save()">
+          <div class="panel-footer">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -589,7 +589,7 @@ a.list-group-item.active,
 a.list-group-item.active:hover,
 a.list-group-item.active:focus {
   color: @list-group-link-color;
-  // font-weight: 600;
+  font-weight: 600;
   // border-right: 2px solid @link-color !important;
 }
 
@@ -597,19 +597,19 @@ a.list-group-item {
   // font-weight: 600;
 }
 
-a.list-group-item.active::after {
-  content: " ";
-  z-index: 10;
-  position: absolute;
-  right: 15px;
-  height: 10px;
-  width: 10px;
-  top: 50%;
-  margin-top: -5px;
-  border-radius: 2px;
-  // background: lighten(@link-color, 10%);
-  background: lighten(@list-group-link-color, 20%);
-}
+// a.list-group-item.active::after {
+//   content: " ";
+//   z-index: 10;
+//   position: absolute;
+//   right: 15px;
+//   height: 10px;
+//   width: 10px;
+//   top: 50%;
+//   margin-top: -5px;
+//   border-radius: 2px;
+//   // background: lighten(@link-color, 10%);
+//   background: lighten(@list-group-link-color, 20%);
+// }
 
 .dark-subhead {
   background: #3c3d3f;
@@ -625,4 +625,8 @@ a.header-btn {
 
 .strong {
   font-weight: 600 !important;
+}
+
+.handle {
+  cursor: move;
 }

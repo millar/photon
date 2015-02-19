@@ -1,0 +1,9 @@
+<div ng-if="notFound" class="container text-center" style="margin-top: 40px;">
+Not found
+</div>
+
+<div class="container">
+  <loading-icon class="reveal-animation" ng-if="!notFound">
+    <h2>{{category.name}}</h2>
+  </loading-icon>
+</div>

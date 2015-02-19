@@ -1,4 +1,4 @@
-json.(album, :id, :title, :published_at, :slug, :category)
+json.(album, :id, :title, :published_at, :slug, :album_category)
 
 if album.full_description
   json.description album.full_description
@@ -17,5 +17,7 @@ end
 
 json.photos album.photos do |photo|
   json.partial! 'photos/photo', photo: photo
-  json.position @album_photos[photo.id].position
+  if @album_photos
+    json.position @album_photos[photo.id].position
+  end
 end

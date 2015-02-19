@@ -10,4 +10,8 @@ angular.module('clientServices', ['ngResource'])
   .factory('Album', ['$resource',
     function($resource){
       return $resource('/api/albums/:id.json');
-    }]);
+    }])
+  .factory('Category', ['$resource',
+    function($resource){
+      return $resource('/api/categories/:id.json');
+    }]);;

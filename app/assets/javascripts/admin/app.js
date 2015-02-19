@@ -8,7 +8,7 @@
 
 window.$adminApp = {current_user: null};
 
-angular.module('adminApp', [
+window.$adminApp.registry = [
   'templates',
   'ngRoute',
   'ngCookies',
@@ -18,7 +18,9 @@ angular.module('adminApp', [
 
   'adminControllers',
   'adminServices'
-])
+];
+
+angular.module('adminApp', window.$adminApp.registry)
   .config(['$routeProvider', '$locationProvider', '$httpProvider',
     function($routeProvider, $location, $httpProvider) {
       $routeProvider.
@@ -109,7 +111,7 @@ angular.module('adminApp', [
         });
       });
 
-      $rootScope.alerts = [];
+      $rootScope.alerts = window.$adminApp.flashes||[];
 
       $rootScope.alert = function(obj){
         if (obj.name){

@@ -28,3 +28,4 @@
 //= require directives
 
 //= require_tree ./admin
+//= require ./admin/app

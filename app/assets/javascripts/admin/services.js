@@ -16,6 +16,18 @@ angular.module('adminServices', ['ngResource'])
         'update': { params: {id:'@id'}, method:'PUT' }
       });
     }])
+  .factory('Config', ['$resource',
+    function($resource){
+      return $resource('/api/admin/config.json', {}, {
+        'update': { method:'PUT' }
+      });
+    }])
+  .factory('Category', ['$resource',
+    function($resource){
+      return $resource('/api/admin/categories/:id.json', {}, {
+        'update': { params: {id:'@id'}, method:'PUT' }
+      });
+    }])
   .factory('AlbumPhoto', ['$resource',
     function($resource){
       return $resource('/api/admin/albums/:albumId/photos/:photoId.json', {}, {

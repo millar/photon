@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150209213625) do
+ActiveRecord::Schema.define(version: 20150213191524) do
 
   create_table "album_categories", force: :cascade do |t|
     t.string  "name"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20150209213625) do
     t.integer "albums_count", default: 0
     t.integer "position"
     t.string  "name_lower"
+    t.string  "slug"
+    t.boolean "slug_set",     default: false
   end
 
   add_index "album_categories", ["position"], name: "index_album_categories_on_position"
@@ -75,6 +77,11 @@ ActiveRecord::Schema.define(version: 20150209213625) do
   add_index "albums", ["cover_id"], name: "index_albums_on_cover_id"
   add_index "albums", ["deleted_at"], name: "index_albums_on_deleted_at"
 
+  create_table "config", force: :cascade do |t|
+    t.string "site_title"
+    t.string "blog_title", default: "Blog"
+  end
+
   create_table "photo_views", force: :cascade do |t|
     t.integer  "photo_id",        null: false
     t.integer  "album_id"
@@ -96,6 +103,17 @@ ActiveRecord::Schema.define(version: 20150209213625) do
 
 # Could not dump table "photos" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "title"
+    t.text     "raw_content"
+    t.text     "html_content"
+    t.string   "slug"
+    t.integer  "user_id"
+    t.datetime "published_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
