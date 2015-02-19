@@ -14,7 +14,7 @@ $ bower install
 
 ## Running Application
 
-The Resque worker must be running to properly handle photo uploads.
+The Resque worker must be running to properly handle photo uploads (requires redis to be installed).
 ```sh
 $ rake resque:work QUEUE='*'
 ```

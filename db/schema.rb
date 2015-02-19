@@ -101,8 +101,39 @@ ActiveRecord::Schema.define(version: 20150213191524) do
     t.datetime "created_at",      null: false
   end
 
-# Could not dump table "photos" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "photos", force: :cascade do |t|
+    t.string   "original_file_name"
+    t.string   "original_content_type"
+    t.integer  "original_file_size"
+    t.datetime "original_updated_at"
+    t.string   "title"
+    t.string   "description"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "original_width"
+    t.integer  "original_height"
+    t.boolean  "exif",                  default: false
+    t.string   "model"
+    t.datetime "taken_at"
+    t.string   "exposure_time"
+    t.float    "f_number"
+    t.decimal  "lat"
+    t.decimal  "lng"
+    t.integer  "user_id"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.string   "average_hex"
+    t.string   "slug"
+    t.boolean  "processed",             default: false
+    t.string   "average_nw_hex"
+    t.string   "average_se_hex"
+    t.integer  "album_count",           default: 0
+    t.string   "top_colors"
+    t.datetime "deleted_at"
+    t.integer  "views_count",           default: 0
+  end
+
+  add_index "photos", ["deleted_at"], name: "index_photos_on_deleted_at"
 
   create_table "posts", force: :cascade do |t|
     t.string   "title"
