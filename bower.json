@@ -6,7 +6,7 @@
     "Sam Millar"
   ],
   "license": "None",
-  "homepage": "http://photon.millar.io",
+  "homepage": "https://github.com/millar/photon",
   "private": true,
   "ignore": [
     "**/.*",

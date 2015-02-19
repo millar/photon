@@ -27,3 +27,5 @@ lib/capistrano
 
 .powenv
 .rbenv-vars
+
+npm-debug.log
